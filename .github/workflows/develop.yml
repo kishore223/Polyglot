@@ -23,7 +23,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
       -
         name: Build jar
-        run: cd ./Back-End/slu-polyglot/ && gradlew build
+        run: cd ./Back-End/slu-polyglot/ && ./gradlew build
       -
         name: Build and push
         uses: docker/build-push-action@v4
