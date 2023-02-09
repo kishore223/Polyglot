@@ -11,6 +11,51 @@ import Alert from "react-bootstrap/Alert";
 import CloseButton from "react-bootstrap/CloseButton";
 
 function Signup() {
+  const [username, setUsername] = useState("");
+  const [messUserSignUp, setMessUserSignUp] = useState("");
+
+  const [password, setPassword] = useState("");
+  const [messPassSignUp, setMessPassSignUp] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [messSignUp, setMessSignUp] = useState("");
+
+  const [messEmail, setMessageEmail] = useState("");
+  const [messPassword, setMessagePassword] = useState("");
+  const [messUsername, setMessageUsername] = useState("");
+  const [messInvalid, setMessageInvalid] = useState("");
+
+  const navigate = useNavigate();
+
+  const signUp = (e) => {
+    e.preventDefault();
+    const player = { username, email, password };
+    if (
+      messEmail === "Valid Email" &&
+      messUsername === "Valid Username" &&
+      messPassword === "Valid Password"
+    ) {
+      console.log(player);
+      setMessageInvalid("Successful Credentials");
+      navigate("/Login");
+      fetch("http://localhost/signIn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(player),
+      }).then(() => {
+        console.log("Added");
+      });
+    } else {
+      setMessageInvalid("Invalid Credentials");
+    }
+  };
+
+  const removestyle = () => {
+    setMessageInvalid("");
+  };
+
   return (
     <div id="con" className="contact">
       <p className="about-p">Create an Account</p>

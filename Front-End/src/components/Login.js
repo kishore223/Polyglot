@@ -9,6 +9,36 @@ import { InputGroup } from "react-bootstrap";
 import { checkEmail, checkPass } from "./LoginSignupFunctions.js";
 
 function Login() {
+  const [password, setPassword] = useState("");
+  const [messPassLogin, setMessPassLogin] = useState("");
+
+  const [email, setEmail] = React.useState("");
+  const [messLogin, setMessLogin] = React.useState("");
+
+  const [messEmail, setMessageEmail] = React.useState("");
+  const [messPassword, setMessagePassword] = React.useState("");
+
+  const [cookies, setCookie] = useCookies(["user"]);
+
+  const login = (e) => {
+    e.preventDefault();
+    const player = { email, password };
+    if (messEmail === "Valid Email" && messPassword === "Valid Password") {
+      setCookie("user", email, { path: "/" });
+      console.log(cookies);
+      console.log(player);
+      fetch("http://localhost/signIn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(player),
+      }).then(() => {
+        console.log("Added");
+      });
+    }
+  };
+
   return (
     <div id="con" className="contact">
       <p className="about-p">Signin to Continue</p>
