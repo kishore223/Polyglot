@@ -31,10 +31,18 @@ jobs:
         name: Build jar
         run: cd ./Back-End/slu-polyglot/ && ./gradlew build
       -
-        name: Build and push
+        name: Build and push springboot
         uses: docker/build-push-action@v4
         with:
           context: .
           file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/polyglot-csci-5030-01-2023:testci
+      -
+        name: Build and push react
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Front-End/DockerfileReact
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/polyglot-csci-5030-01-2023-fe:testci

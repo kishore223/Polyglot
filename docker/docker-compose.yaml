@@ -1,25 +1,29 @@
 version: '3.7'
 
+x-xxx-common-services-config: &common-settings-config
+  restart: always
+
 services:
   be:
+    <<: *common-settings-config
     image: ${IMAGE_NAME}
     ports:
       - "8080:8080"
-    restart: always
     depends_on:
       - db
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/polyglot?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
     networks:
       - backend
+      - frontend
 
   db:
+    <<: *common-settings-config
     build:
       context : .
       dockerfile: ./DockerfileMysql
     ports:
       - "3306:3306"
-    restart: always
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER : ${MYSQL_USER}
@@ -33,9 +37,23 @@ services:
     networks:
       - backend
 
+  fe:
+    <<: *common-settings-config
+    build:
+      context: ../Front-End/
+      dockerfile: DockerfileReact
+    networks:
+      - frontend
+    volumes:
+      - ../Front-End/:/app
+      - '/app/node_modules'
+    ports: 
+      - 3000:3000
+
 # Volumes
 volumes:
   my-db:
 
 networks:
   backend:
+  frontend:
