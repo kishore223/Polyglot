@@ -6,7 +6,7 @@ x-xxx-common-services-config: &common-settings-config
 services:
   be:
     <<: *common-settings-config
-    image: ${IMAGE_NAME}
+    image: ${CUSTOM_IMAGE_SPRINGBOOT}
     ports:
       - "8080:8080"
     depends_on:
@@ -39,9 +39,7 @@ services:
 
   fe:
     <<: *common-settings-config
-    build:
-      context: ../Front-End/
-      dockerfile: DockerfileReact
+    image: ${CUSTOM_IMAGE_REACT}
     networks:
       - frontend
     volumes:
