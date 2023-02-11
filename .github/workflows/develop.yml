@@ -42,7 +42,7 @@ jobs:
         name: Build and push react
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./Front-End/
           file: ./Front-End/DockerfileReact
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/polyglot-csci-5030-01-2023-fe:testci
