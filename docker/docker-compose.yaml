@@ -19,9 +19,7 @@ services:
 
   db:
     <<: *common-settings-config
-    build:
-      context : .
-      dockerfile: ./DockerfileMysql
+    image: ${CUSTOM_IMAGE_MYSQL}
     ports:
       - "3306:3306"
     environment:
