@@ -8,6 +8,11 @@ public class ResponseJson
     private String errorCode;
     private String errorMessage;
 
+    public ResponseJson(String errorCode,String errorMessage) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+    }
+    
     public ResponseJson(String errorCode,String errorMessage,String email, String name, String score) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
@@ -16,9 +21,9 @@ public class ResponseJson
         this.score = score;
     }
 
-    public ResponseJson(String errorCode,String errorMessage) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+    
+
+    public ResponseJson() {
     }
 
     public String getErrorCode() {
@@ -31,9 +36,7 @@ public class ResponseJson
     public String getErrorMessage() {
         return errorMessage;
     }
-    public void setEerrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+
 
     public String getEmail() {
         return email;

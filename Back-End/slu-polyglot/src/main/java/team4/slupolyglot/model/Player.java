@@ -30,31 +30,15 @@ public class Player {
     return score;
   }
 
-  public void setScore(String score) {
-    this.score = score;
-  }
-
   public String getPassWord() {
     return password;
-  }
-
-  public void setPassWord(String password) {
-    this.password = password;
   }
 
   public String getUserName() {
     return name;
   }
 
-  public void setUserName(String userName) {
-    this.name = userName;
-  }
-
   public String getEmail() {
     return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 }
