@@ -1,6 +1,6 @@
 package team4.slupolyglot.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,14 +15,14 @@ import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.PlayerRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(path="/polyglot/player")
 public class Controller {
     @Autowired 
     private PlayerRepository userRepository;
     
-@GetMapping(path="/signIn")
+@PostMapping(path="/signIn")
 public @ResponseBody ResponseJson signInPlayer(@RequestBody RequestJsonGetMapping requestJsonGetMapping) 
 {
     try{
