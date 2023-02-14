@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import team4.slupolyglot.model.Authenticator;
-import team4.slupolyglot.model.RequestJson;
+import team4.slupolyglot.model.RequestJsonPostMapping;
+import team4.slupolyglot.model.RequestJsonGetMapping;
 import team4.slupolyglot.model.ResponseJson;
 import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.PlayerRepository; 
@@ -22,17 +23,17 @@ public class Controller {
     private PlayerRepository userRepository;
     
 @GetMapping(path="/signIn")
-public @ResponseBody ResponseJson signInPlayer(@RequestBody RequestJson requestJson) 
-{ 
+public @ResponseBody ResponseJson signInPlayer(@RequestBody RequestJsonGetMapping requestJsonGetMapping) 
+{
     try{
             Player player;
             ResponseJson responseJson = new ResponseJson("10404","please check the login credentials" );
-            player = userRepository.findByEmail(requestJson.getEmail());
-            
+            player = userRepository.findByEmail(requestJsonGetMapping.getUserName());
+
             if(player != null)
             {
                 Authenticator authenticator = new Authenticator();        
-                if(authenticator.playerDetailsValidator(requestJson,player))
+                if(authenticator.playerDetailsValidator(requestJsonGetMapping,player))
                 {
                     responseJson = new ResponseJson("10200","Player sucessfully validated",player.getEmail(), player.getUserName(), player.getScore());
                 }
@@ -47,14 +48,14 @@ public @ResponseBody ResponseJson signInPlayer(@RequestBody RequestJson requestJ
 }
   
 @PostMapping(path = "/signUp")
-public @ResponseBody ResponseJson createUser(@RequestBody RequestJson requestJson)
+public @ResponseBody ResponseJson createUser(@RequestBody RequestJsonPostMapping requestJsonPostMapping)
 {
     try{
             ResponseJson responseJson = new ResponseJson("10404","user already exsists" );
-            if(userRepository.findByEmail(requestJson.getEmail()) == null)
+            if(userRepository.findByEmail(requestJsonPostMapping.getEmail()) == null)
             {
-                userRepository.save(new Player(requestJson.getEmail(),requestJson.getName(),"0",requestJson.getPassword()));
-                responseJson = new ResponseJson("10200","User sucessfully created",requestJson.getEmail(),requestJson.getName(),"0");
+                userRepository.save(new Player(requestJsonPostMapping.getEmail(),requestJsonPostMapping.getName(),"0",requestJsonPostMapping.getPassword()));
+                responseJson = new ResponseJson("10200","User sucessfully created",requestJsonPostMapping.getEmail(),requestJsonPostMapping.getName(),"0");
             }
             return responseJson;
         }
