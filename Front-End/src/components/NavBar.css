@@ -1,0 +1,92 @@
+.navbar-main {
+  background-color: rgba(26, 166, 183, 0.3) !important;
+}
+
+.brand-name {
+  color: #002d40;
+  font-weight: 800;
+  font-size: 1.5rem;
+}
+
+.link {
+  color: #002d40;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0 5% !important;
+  text-align: center;
+}
+
+.cont {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.btn-nav {
+  margin-right: 2.5rem;
+  background-color: unset;
+  border: none;
+  border-radius: 30px;
+  text-align: center;
+  padding: 0.5rem 2% !important;
+}
+
+button:hover {
+  background-color: #002d40 !important;
+}
+
+.link-sign {
+  color: white;
+  font-weight: 700;
+  background-color: #002d40 !important;
+  font-size: 1.1rem;
+  padding: 0 5% !important;
+  text-align: center;
+}
+
+.link-sign:hover {
+  color: #1aa6b7;
+  background-color: white !important;
+}
+
+.link-add {
+  margin-left: 5% !important;
+}
+
+button a {
+  text-decoration: none !important;
+  color: unset !important;
+}
+
+.link-sign-two {
+  color: white;
+  font-weight: 700;
+  background-color: #002d40 !important;
+  font-size: 1.1rem;
+  padding: 0 5% !important;
+  text-align: center;
+}
+
+.dropdown-toggle {
+  color: white;
+  font-weight: 700;
+  background-color: #002d40 !important;
+  font-size: 1.1rem;
+  border-color: unset;
+  border: 0px;
+}
+
+.dropdown-menu:hover {
+  background-color: unset;
+}
+
+.dropdown-item:active {
+  color: white !important;
+  background-color: #1aa6b7 !important;
+}
+
+.dropdown-item {
+  color: #1aa6b7 !important;
+  background-color: white !important;
+  font-weight: 700;
+  text-align: center;
+}
