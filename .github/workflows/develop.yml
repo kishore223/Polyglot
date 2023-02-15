@@ -3,7 +3,7 @@ name: polyglotci
 on:
   push:
     branches:
-      - "ci-cd"
+      - "develop"
 
 jobs:
   build:
