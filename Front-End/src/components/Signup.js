@@ -11,6 +11,7 @@ import Alert from "react-bootstrap/Alert";
 import CloseButton from "react-bootstrap/CloseButton";
 import { GoSignIn } from "react-icons/go";
 import { useCookies } from "react-cookie";
+import {API_BASE_URL} from "../constants";
 
 function Signup() {
   const [name, setUsername] = useState("");
@@ -51,7 +52,7 @@ function Signup() {
       messUsername === "Valid Username" &&
       messPassword === "Valid Password"
     ) {
-      fetch("http://localhost:8080/polyglot/player/signUp", {
+      fetch(API_BASE_URL+"/polyglot/player/signUp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

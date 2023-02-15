@@ -11,6 +11,7 @@ import { BiLogInCircle } from "react-icons/bi";
 import Alert from "react-bootstrap/Alert";
 import CloseButton from "react-bootstrap/CloseButton";
 import Cookies from "universal-cookie";
+import { API_BASE_URL } from '../constants';
 
 function Login() {
   const [password, setPassword] = useState("");
@@ -39,7 +40,7 @@ function Login() {
   const login = (e) => {
     const player = { userName, password };
     if (messEmail === "Valid Email" && messPassword === "Valid Password") {
-      fetch("http://localhost:8080/polyglot/player/signIn", {
+      fetch(API_BASE_URL+"polyglot/player/signIn", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
