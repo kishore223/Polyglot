@@ -8,7 +8,6 @@ public class Player {
 
   public Player() {
   }
-
   @Id
   private String email;
 
@@ -20,11 +19,8 @@ public class Player {
   }
 
   private String name;
-
   private String score;
-
   private String password;
-
 
   public String getScore() {
     return score;

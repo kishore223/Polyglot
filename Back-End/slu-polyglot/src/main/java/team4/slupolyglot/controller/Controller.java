@@ -8,61 +8,94 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import team4.slupolyglot.model.Authenticator;
-import team4.slupolyglot.model.RequestJsonSignUpMapping;
-import team4.slupolyglot.model.RequestJsonSignInMapping;
-import team4.slupolyglot.model.ResponseJson;
+import team4.slupolyglot.model.SignUpRequestJson;
+import team4.slupolyglot.model.SignInRequestJson;
 import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.PlayerRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.*;
+
 @CrossOrigin
 @RestController
 @RequestMapping(path="/polyglot/player")
-public class Controller {
-    @Autowired 
-    private PlayerRepository userRepository;
-    
-@PostMapping(path="/signIn")
-public @ResponseBody ResponseJson signInPlayer(@RequestBody RequestJsonSignInMapping requestJsonSignIntMapping) 
-{
-    try{
-            Player player;
-            ResponseJson responseJson = new ResponseJson("10404","please check the login credentials" );
-            player = userRepository.findByEmail(requestJsonSignIntMapping.getUserName());
 
-            if(player != null)
-            {
+public class Controller 
+{
+    //Defining all response attributes
+    private String failureCode = "10404";
+    private String successCode = "10200";
+    private String signInFailureMsg = "please check the login credentials";
+    private String signUpFailureMsg = "user already exsists";
+    private String signInSuccessMsg = "Player sucessfully validated";
+    private String signUpSuccessMsg = "User sucessfully created";
+    private Map<String, String> response;
+
+    @Autowired
+    private PlayerRepository userRepo;
+    
+    @PostMapping(path="/signIn")
+    public @ResponseBody Map<String, String> signInPlayer
+    (@RequestBody SignInRequestJson signInRequestJson){
+        try{
+            Player player;
+            player = userRepo.findByEmail(signInRequestJson.getUserName());
+            if(player != null){
                 Authenticator authenticator = new Authenticator();        
-                if(authenticator.playerDetailsValidator(requestJsonSignIntMapping,player))
-                {
-                    responseJson = new ResponseJson("10200","Player sucessfully validated",player.getEmail(), player.getUserName(), player.getScore());
+                if(authenticator.playerDetailsValidator(signInRequestJson,player)){
+                    //Json structure mapping
+                    response = new HashMap<>();
+                    response.put("errorCode",successCode);
+                    response.put("errorMessage",signInSuccessMsg);
+                    response.put("email",player.getEmail());
+                    response.put("name",player.getUserName());
+                    response.put("score",player.getScore());
                 }
             }
-            return responseJson;
-        }
-    catch(Exception e)
-        {
-            ResponseJson responseJson = new ResponseJson("10404",e.getMessage());
-            return responseJson;
-        }
-}
-  
-@PostMapping(path = "/signUp")
-public @ResponseBody ResponseJson createUser(@RequestBody RequestJsonSignUpMapping requestJsonSignUpMapping)
-{
-    try{
-            ResponseJson responseJson = new ResponseJson("10404","user already exsists" );
-            if(userRepository.findByEmail(requestJsonSignUpMapping.getEmail()) == null)
-            {
-                userRepository.save(new Player(requestJsonSignUpMapping.getEmail(),requestJsonSignUpMapping.getName(),"0",requestJsonSignUpMapping.getPassword()));
-                responseJson = new ResponseJson("10200","User sucessfully created",requestJsonSignUpMapping.getEmail(),requestJsonSignUpMapping.getName(),"0");
+            else{
+                response = new HashMap<>();
+                response.put("errorCode",failureCode);
+                response.put("errorMessage",signInFailureMsg);
             }
-            return responseJson;
+            return response;
         }
-    catch (Exception e )
-        {
-            ResponseJson responseJson = new ResponseJson("10404",e.getMessage());
-            return responseJson;
+        catch(Exception e)
+        {   
+            response = new HashMap<>();
+            response.put("errorCode",failureCode);
+            response.put("errorMessage",e.getMessage());
+            return response;
         }
-}
+    }
+  
+    @PostMapping(path = "/signUp")
+    public @ResponseBody Map<String, String> createUser
+    (@RequestBody SignUpRequestJson signUpRequestJson){
+        try{            
+            if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
+                userRepo.save(new Player(signUpRequestJson.getEmail(),
+                signUpRequestJson.getName(),"0",signUpRequestJson.getPassword()));
+                //Json structure mapping
+                response = new HashMap<>();
+                response.put("errorCode",successCode);
+                response.put("errorMessage",signUpSuccessMsg);
+                response.put("email",signUpRequestJson.getEmail());
+                response.put("name",signUpRequestJson.getName());
+                response.put("score","0");
+            }
+            else{
+                response = new HashMap<>();
+                response.put("errorCode",failureCode);
+                response.put("errorMessage",signUpFailureMsg);
+            }
+            return response;
+        }
+        catch (Exception e )
+        {   
+            response = new HashMap<>();
+            response.put("errorCode",failureCode);
+            response.put("errorMessage",e.getMessage());
+            return response;
+        }
+    }
 }

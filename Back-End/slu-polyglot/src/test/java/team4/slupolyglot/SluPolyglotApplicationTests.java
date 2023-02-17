@@ -1,7 +1,7 @@
 package team4.slupolyglot;
 
 import org.junit.jupiter.api.Test;
-
+import java.util.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,9 +11,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
-import team4.slupolyglot.model.RequestJsonSignInMapping;
-import team4.slupolyglot.model.ResponseJson;
-import team4.slupolyglot.model.RequestJsonSignUpMapping;
+import team4.slupolyglot.model.SignInRequestJson;
+import team4.slupolyglot.model.SignUpRequestJson;
+import team4.slupolyglot.controller.Controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -25,18 +25,20 @@ public class SluPolyglotApplicationTests {
 
    @Test
    public void validateSignInTest() throws Exception {
-       RequestJsonSignInMapping requestJsonSignInMapping = new RequestJsonSignInMapping("priyal@gmail.com","Priyal@123");
-       ObjectMapper objectMapper = new ObjectMapper();
-       String requestJson = objectMapper.writeValueAsString(requestJsonSignInMapping);
-
-       ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/polyglot/player/signIn")
+        SignInRequestJson signInRequestJson = 
+        new SignInRequestJson("priyal@gmail.com","Priyal@123");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestJson = objectMapper.writeValueAsString(signInRequestJson);
+        ResultActions resultActions = 
+        mockMvc.perform(MockMvcRequestBuilders.post("/polyglot/player/signIn")
                .contentType(MediaType.APPLICATION_JSON)
                .content(requestJson))
                .andExpect(status().isOk());
 
-       ResponseJson responseJson = objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsString(), ResponseJson.class);
-       Assert.assertEquals("10200", responseJson.getErrorCode()); 
-       Assert.assertEquals("Player sucessfully validated", responseJson.getErrorMessage());
+               
+        Map<String, String> responseJson = controller.signInPlayer(signInRequestJson);
+        Assert.assertEquals("10200", responseJson.getErrorCode()); 
+        Assert.assertEquals("Player sucessfully validated", responseJson.getErrorMessage());
    }
 
    @Test

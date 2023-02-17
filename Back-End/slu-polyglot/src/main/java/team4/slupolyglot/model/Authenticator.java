@@ -1,22 +1,13 @@
 package team4.slupolyglot.model;
 
 public class Authenticator {
-
-
-    public boolean playerDetailsValidator(RequestJsonSignInMapping requestJsonSignInMapping, Player player)
-    {
+    
+    public boolean playerDetailsValidator(SignInRequestJson signInRequestJson, Player player){
         boolean flag = false;
-
-        if(requestJsonSignInMapping.getUserName().equals(player.getEmail()) && requestJsonSignInMapping.getPassword().equals(player.getPassWord()))
-        {
+        if(signInRequestJson.getUserName().equals(player.getEmail()) &&
+         signInRequestJson.getPassword().equals(player.getPassWord())){
             flag = true;
         }
-
         return flag;
     }
-
-    
-
-
-
 }
