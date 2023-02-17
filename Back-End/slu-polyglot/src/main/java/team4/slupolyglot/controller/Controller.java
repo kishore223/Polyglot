@@ -45,6 +45,7 @@ public class Controller
             if(player != null && authenticator.playerDetailsValidator
             (signInRequestJson,player)){
                 //Json structure mapping
+                //I have created the hasmap for every individual requirment to avoid multiple puts
                 response = new HashMap<>();
                 response.put("errorCode",successCode);
                 response.put("errorMessage",signInSuccessMsg);
