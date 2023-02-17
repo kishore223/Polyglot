@@ -11,7 +11,7 @@ public class Player {
   @Id
   private String email;
 
-  public Player(String email, String userName,String score, String password) {
+  public Player(String email, String userName,String score,String password) {
     this.email = email;
     this.name = userName;
     this.password = password;

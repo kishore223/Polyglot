@@ -40,17 +40,17 @@ public class Controller
         try{
             Player player;
             player = userRepo.findByEmail(signInRequestJson.getUserName());
-            if(player != null){
-                Authenticator authenticator = new Authenticator();        
-                if(authenticator.playerDetailsValidator(signInRequestJson,player)){
-                    //Json structure mapping
-                    response = new HashMap<>();
-                    response.put("errorCode",successCode);
-                    response.put("errorMessage",signInSuccessMsg);
-                    response.put("email",player.getEmail());
-                    response.put("name",player.getUserName());
-                    response.put("score",player.getScore());
-                }
+            Authenticator authenticator = new Authenticator();
+            // Validating user details in Authenticator class
+            if(player != null && authenticator.playerDetailsValidator
+            (signInRequestJson,player)){
+                //Json structure mapping
+                response = new HashMap<>();
+                response.put("errorCode",successCode);
+                response.put("errorMessage",signInSuccessMsg);
+                response.put("email",player.getEmail());
+                response.put("name",player.getUserName());
+                response.put("score",player.getScore());
             }
             else{
                 response = new HashMap<>();
@@ -73,8 +73,10 @@ public class Controller
     (@RequestBody SignUpRequestJson signUpRequestJson){
         try{            
             if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
+                //Creating a new user if the user details not available
                 userRepo.save(new Player(signUpRequestJson.getEmail(),
-                signUpRequestJson.getName(),"0",signUpRequestJson.getPassword()));
+                signUpRequestJson.getName(),"0",
+                signUpRequestJson.getPassword()));
                 //Json structure mapping
                 response = new HashMap<>();
                 response.put("errorCode",successCode);
