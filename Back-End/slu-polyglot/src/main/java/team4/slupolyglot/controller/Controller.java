@@ -11,6 +11,7 @@ import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.SignUpRequestJson;
 import team4.slupolyglot.model.SignInRequestJson;
 import team4.slupolyglot.model.Player;
+import team4.slupolyglot.model.ResponseJson;
 import team4.slupolyglot.model.PlayerRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,82 +24,78 @@ import java.util.*;
 public class Controller 
 {
     //Defining all response attributes
-    private String failureCode = "10404";
-    private String successCode = "10200";
-    private String signInFailureMsg = "please check the login credentials";
-    private String signUpFailureMsg = "user already exsists";
-    private String signInSuccessMsg = "Player sucessfully validated";
-    private String signUpSuccessMsg = "User sucessfully created";
-    private Map<String, String> response;
+    private ResponseJson responseJson;
+    private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
+        put("successCode", "10200");
+        put("failureCode", "10404");
+        put("signInFailureMsg", "please check the login credentials");
+        put("signUpFailureMsg", "user already exsists");
+        put("signInSuccessMsg", "Player sucessfully validated");
+        put("signUpSuccessMsg", "User sucessfully created");
+        put("DefaultScore","0");
+    }};
 
     @Autowired
     private PlayerRepository userRepo;
     
     @PostMapping(path="/signIn")
-    public @ResponseBody Map<String, String> signInPlayer
+    public @ResponseBody ResponseJson signInPlayer
     (@RequestBody SignInRequestJson signInRequestJson){
         try{
             Player player;
             player = userRepo.findByEmail(signInRequestJson.getUserName());
+            responseJson = new ResponseJson
+            (responseValuesMap.get("failureCode"),
+            responseValuesMap.get("signInFailureMsg")); 
             Authenticator authenticator = new Authenticator();
             // Validating user details in Authenticator class
             if(player != null && authenticator.playerDetailsValidator
-            (signInRequestJson,player)){
-                //Json structure mapping
-                //I have created the hasmap for every individual requirment to avoid multiple puts
-                response = new HashMap<>();
-                response.put("errorCode",successCode);
-                response.put("errorMessage",signInSuccessMsg);
-                response.put("email",player.getEmail());
-                response.put("name",player.getUserName());
-                response.put("score",player.getScore());
+            (signInRequestJson,player)){               
+                responseJson = new ResponseJson
+                (responseValuesMap.get("successCode"),
+                responseValuesMap.get("signInSuccessMsg"),
+                player.getEmail(),
+                player.getUserName(),
+                player.getScore());
             }
-            else{
-                response = new HashMap<>();
-                response.put("errorCode",failureCode);
-                response.put("errorMessage",signInFailureMsg);
-            }
-            return response;
+            return responseJson;
         }
-        catch(Exception e)
-        {   
-            response = new HashMap<>();
-            response.put("errorCode",failureCode);
-            response.put("errorMessage",e.getMessage());
-            return response;
+        catch(Exception e){   
+            ResponseJson responseJson = new ResponseJson
+            (responseValuesMap.get("failureCode"),
+            e.getMessage());
+            return responseJson;
         }
     }
   
     @PostMapping(path = "/signUp")
-    public @ResponseBody Map<String, String> createUser
+    public @ResponseBody ResponseJson createUser
     (@RequestBody SignUpRequestJson signUpRequestJson){
-        try{            
+        try{     
+            ResponseJson responseJson = new ResponseJson
+            (responseValuesMap.get("failureCode"),
+            responseValuesMap.get("signUpFailureMsg"));       
             if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
                 userRepo.save(new Player(signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),"0",
                 signUpRequestJson.getPassword()));
-                //Json structure mapping
-                response = new HashMap<>();
-                response.put("errorCode",successCode);
-                response.put("errorMessage",signUpSuccessMsg);
-                response.put("email",signUpRequestJson.getEmail());
-                response.put("name",signUpRequestJson.getName());
-                response.put("score","0");
+                responseJson = new ResponseJson
+                (responseValuesMap.get("successCode"),
+                responseValuesMap.get("signUpSuccessMsg"),
+                signUpRequestJson.getEmail(),
+                signUpRequestJson.getName(),
+                responseValuesMap.get("DefaultScore")
+                );
             }
-            else{
-                response = new HashMap<>();
-                response.put("errorCode",failureCode);
-                response.put("errorMessage",signUpFailureMsg);
-            }
-            return response;
+            return responseJson;
         }
         catch (Exception e )
         {   
-            response = new HashMap<>();
-            response.put("errorCode",failureCode);
-            response.put("errorMessage",e.getMessage());
-            return response;
+            ResponseJson responseJson = new ResponseJson
+            (responseValuesMap.get("failureCode"),
+            e.getMessage());
+            return responseJson;
         }
     }
 }
