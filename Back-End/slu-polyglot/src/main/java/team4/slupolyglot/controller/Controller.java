@@ -25,12 +25,24 @@ public class Controller
 {
     //Defining all response attributes
     private ResponseJson responseJson;
+    public static final String signInSuccessCode = "10200";
+    public static final String signInFailureCode = "10404";
+    public static final String signUpSuccessCode = "10201";
+    public static final String signUpFailureCode = "10409";
+    public static final String 
+    signInSuccessDescription = "Player sucessfully validated";
+    public static final String 
+    signInFailureDescription = "Please check the login credentials";
+    public static final String 
+    signUpSuccessDescription = "User sucessfully Created";
+    public static final String 
+    signUpFailureDescription = "User already exsists";
+    public static final String defaultScore = "0";
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
-        put("10200", "Player sucessfully validated");
-        put("10404", "please check the login credentials");
-        put("10409", "user already exsists");
-        put("10201", "Player sucessfully validated");
-        put("DefaultScore","0");
+        put(signInSuccessCode, signInSuccessDescription);
+        put(signInFailureCode, signInFailureDescription);
+        put(signUpSuccessCode, signUpSuccessDescription);
+        put(signUpFailureCode, signUpFailureDescription);
     }};
 
     @Autowired
@@ -43,15 +55,15 @@ public class Controller
             Player player;
             player = userRepo.findByEmail(signInRequestJson.getUserName());
             responseJson = new ResponseJson
-            ("10404",
-            responseValuesMap.get("10404")); 
+            (signInFailureCode,
+            responseValuesMap.get(signInFailureCode)); 
             Authenticator authenticator = new Authenticator();
             // Validating user details in Authenticator class
             if(player != null && authenticator.playerDetailsValidator
             (signInRequestJson,player)){               
                 responseJson = new ResponseJson
-                ("10200",
-                responseValuesMap.get("10200"),
+                (signInSuccessCode,
+                responseValuesMap.get(signInSuccessCode),
                 player.getEmail(),
                 player.getUserName(),
                 player.getScore());
@@ -60,7 +72,7 @@ public class Controller
         }
         catch(Exception e){   
             ResponseJson responseJson = new ResponseJson
-            (responseValuesMap.get("10404"),
+            (responseValuesMap.get(signInFailureCode),
             e.getMessage());
             return responseJson;
         }
@@ -71,19 +83,19 @@ public class Controller
     (@RequestBody SignUpRequestJson signUpRequestJson){
         try{     
             ResponseJson responseJson = new ResponseJson
-            ("10409",
-            responseValuesMap.get("10409"));       
+            (signUpFailureCode,
+            responseValuesMap.get(signUpFailureCode));       
             if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
                 userRepo.save(new Player(signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),"0",
                 signUpRequestJson.getPassword()));
                 responseJson = new ResponseJson
-                ("10201",
-                responseValuesMap.get("10201"),
+                (signUpSuccessCode,
+                responseValuesMap.get(signUpSuccessCode),
                 signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),
-                responseValuesMap.get("DefaultScore")
+                defaultScore
                 );
             }
             return responseJson;
@@ -91,7 +103,7 @@ public class Controller
         catch (Exception e )
         {   
             ResponseJson responseJson = new ResponseJson
-            (responseValuesMap.get("10404"),
+            (responseValuesMap.get(signUpFailureCode),
             e.getMessage());
             return responseJson;
         }
