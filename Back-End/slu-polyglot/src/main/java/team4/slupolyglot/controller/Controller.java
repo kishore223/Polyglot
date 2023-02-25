@@ -28,25 +28,25 @@ public class Controller
 {
     //Defining all response attributes
     private ResponseJson responseJson;
-    public static final String signInSuccessCode = "10200";
-    public static final String signInFailureCode = "10404";
-    public static final String signUpSuccessCode = "10201";
-    public static final String signUpFailureCode = "10409";
-    public static final String languageCodePrefix = "200";
+    public static final String SIGN_IN_SUCCESS_CODE = "10200";
+    public static final String SIGN_IN_FAILURE_CODE = "10404";
+    public static final String SIGN_UP_SUCCESS_CODE = "10201";
+    public static final String SIGN_UP_FAILURE_CODE = "10409";
+    public static final int BASE_LANGUAGE_CODE = 2000;
     public static final String 
-    signInSuccessDescription = "Player sucessfully validated";
+    SIGN_IN_SUCCESS_DESCRIPTION = "Player sucessfully validated";
     public static final String 
-    signInFailureDescription = "Please check the login credentials";
+    SIGN_IN_FAILURE_DESCRIPTION = "Please check the login credentials";
     public static final String 
-    signUpSuccessDescription = "User sucessfully Created";
+    SIGN_UP_SUCCESS_DESCRIPTION = "User sucessfully Created";
     public static final String 
-    signUpFailureDescription = "User already exsists";
-    public static final String defaultScore = "0";
+    SIGN_UP_FAILURE_DESCRIPTION = "User already exsists";
+    public static final int DEFAULT_SCORE = 0;
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
-        put(signInSuccessCode, signInSuccessDescription);
-        put(signInFailureCode, signInFailureDescription);
-        put(signUpSuccessCode, signUpSuccessDescription);
-        put(signUpFailureCode, signUpFailureDescription);
+        put(SIGN_IN_SUCCESS_CODE, SIGN_IN_SUCCESS_DESCRIPTION);
+        put(SIGN_IN_FAILURE_CODE, SIGN_IN_FAILURE_DESCRIPTION);
+        put(SIGN_UP_SUCCESS_CODE, SIGN_UP_SUCCESS_DESCRIPTION);
+        put(SIGN_UP_FAILURE_CODE, SIGN_UP_FAILURE_DESCRIPTION);
     }};
 
     @Autowired
@@ -61,15 +61,15 @@ public class Controller
             Player player;
             player = userRepo.findByEmail(signInRequestJson.getUserName());
             responseJson = new ResponseJson
-            (signInFailureCode,
-            responseValuesMap.get(signInFailureCode)); 
+            (SIGN_IN_FAILURE_CODE,
+            responseValuesMap.get(SIGN_IN_FAILURE_CODE)); 
             Authenticator authenticator = new Authenticator();
             // Validating user details in Authenticator class
             if(player != null && authenticator.playerDetailsValidator
             (signInRequestJson,player)){               
                 responseJson = new ResponseJson
-                (signInSuccessCode,
-                responseValuesMap.get(signInSuccessCode),
+                (SIGN_IN_SUCCESS_CODE,
+                responseValuesMap.get(SIGN_IN_SUCCESS_CODE),
                 player.getEmail(),
                 player.getUserName(),
                 player.getScore());
@@ -78,7 +78,7 @@ public class Controller
         }
         catch(Exception e){   
             ResponseJson responseJson = new ResponseJson
-            (responseValuesMap.get(signInFailureCode),
+            (responseValuesMap.get(SIGN_IN_FAILURE_CODE),
             e.getMessage());
             return responseJson;
         }
@@ -89,26 +89,26 @@ public class Controller
     (@RequestBody SignUpRequestJson signUpRequestJson){
         try{     
             ResponseJson responseJson = new ResponseJson
-            (signUpFailureCode,
-            responseValuesMap.get(signUpFailureCode));       
+            (SIGN_UP_FAILURE_CODE,
+            responseValuesMap.get(SIGN_UP_FAILURE_CODE));       
             if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
                 userRepo.save(new Player(signUpRequestJson.getEmail(),
-                signUpRequestJson.getName(),"0",
+                signUpRequestJson.getName(),Integer.toString(DEFAULT_SCORE),
                 signUpRequestJson.getPassword()));
                 responseJson = new ResponseJson
-                (signUpSuccessCode,
-                responseValuesMap.get(signUpSuccessCode),
+                (SIGN_UP_SUCCESS_CODE,
+                responseValuesMap.get(SIGN_UP_SUCCESS_CODE),
                 signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),
-                defaultScore
+                Integer.toString(DEFAULT_SCORE)
                 );
             }
             return responseJson;
         }
         catch (Exception e ){   
             ResponseJson responseJson = new ResponseJson
-            (responseValuesMap.get(signUpFailureCode),
+            (responseValuesMap.get(SIGN_UP_FAILURE_CODE),
             e.getMessage());
             return responseJson;
         }
@@ -129,7 +129,7 @@ public class Controller
                 languageResponse.put
                 ("languageName",language.getName());
                 languageResponse.put("languageCode",
-                 languageCodePrefix + language.getId());
+                Integer.toString(BASE_LANGUAGE_CODE + Integer.parseInt(language.getId())));
                 languageResponseList.add(languageResponse);
             }
             output.put("languages", languageResponseList);
