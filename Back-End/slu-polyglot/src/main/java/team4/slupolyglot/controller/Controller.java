@@ -84,7 +84,7 @@ public class Controller
         }
     }
 
-    @PostMapping(path = "/signUp")
+    @PostMapping(path = "/player/signUp")
     public @ResponseBody ResponseJson createUser
     (@RequestBody SignUpRequestJson signUpRequestJson){
         try{     
