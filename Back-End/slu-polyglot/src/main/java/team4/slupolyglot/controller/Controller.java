@@ -1,6 +1,7 @@
 package team4.slupolyglot.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import team4.slupolyglot.model.Authenticator;
+import team4.slupolyglot.model.Languages;
+import team4.slupolyglot.model.LanguagesRepository;
 import team4.slupolyglot.model.SignUpRequestJson;
 import team4.slupolyglot.model.SignInRequestJson;
 import team4.slupolyglot.model.Player;
@@ -19,7 +22,7 @@ import java.util.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="/polyglot/player")
+@RequestMapping(path="/polyglot")
 
 public class Controller 
 {
@@ -29,6 +32,7 @@ public class Controller
     public static final String signInFailureCode = "10404";
     public static final String signUpSuccessCode = "10201";
     public static final String signUpFailureCode = "10409";
+    public static final String languageCodePrefix = "200";
     public static final String 
     signInSuccessDescription = "Player sucessfully validated";
     public static final String 
@@ -47,8 +51,10 @@ public class Controller
 
     @Autowired
     private PlayerRepository userRepo;
+    @Autowired
+    private LanguagesRepository languagesRepository;
     
-    @PostMapping(path="/signIn")
+    @PostMapping(path="/player/signIn")
     public @ResponseBody ResponseJson signInPlayer
     (@RequestBody SignInRequestJson signInRequestJson){
         try{
@@ -77,7 +83,7 @@ public class Controller
             return responseJson;
         }
     }
-  
+
     @PostMapping(path = "/signUp")
     public @ResponseBody ResponseJson createUser
     (@RequestBody SignUpRequestJson signUpRequestJson){
@@ -100,12 +106,42 @@ public class Controller
             }
             return responseJson;
         }
-        catch (Exception e )
-        {   
+        catch (Exception e ){   
             ResponseJson responseJson = new ResponseJson
             (responseValuesMap.get(signUpFailureCode),
             e.getMessage());
             return responseJson;
+        }
+    }
+
+    @GetMapping(path="/getLanguages")
+    public Map<String,List<Map<String, String>>> getAllLanguages() {
+        try {
+            Iterable<Languages> languages = 
+            languagesRepository.findAll();
+            Map<String, List<Map<String, String>>> output = 
+            new HashMap<String, List<Map<String, String>>>();
+            List<Map<String, String>> languageResponseList = 
+            new ArrayList<>();
+            for (Languages language : languages) {
+                Map<String, String> languageResponse = 
+                new HashMap<String, String>();
+                languageResponse.put
+                ("languageName",language.getName());
+                languageResponse.put("languageCode",
+                 languageCodePrefix + language.getId());
+                languageResponseList.add(languageResponse);
+            }
+            output.put("languages", languageResponseList);
+            return output;
+            } catch (Exception e) {
+            //returning empty response in case of error
+            Map<String, List<Map<String, String>>> output =
+            new HashMap<String, List<Map<String, String>>>();
+            List<Map<String, String>> languageResponseList = 
+            new ArrayList<>();
+            output.put("languages", languageResponseList);
+            return output;
         }
     }
 }
