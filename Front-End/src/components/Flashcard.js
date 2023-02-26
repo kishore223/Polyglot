@@ -12,11 +12,11 @@ import BgLearning from "./Bg-Learning.svg";
 
 function Flashcard(props) {
   const [isFlipped, setFlip] = useState(false);
-  const link = "https://source.unsplash.com/200x200/?";
   const headings = props.headings;
   const trans = props.trans;
-  const descrp = props.descrp;
+  //const descrp = props.descrp;
   const score = props.score;
+  const images = props.images;
   const cardNo = props.cardNo;
   const [count, setCount] = useState(score / cardNo - 1);
   const navigate = useNavigate();
@@ -57,8 +57,8 @@ function Flashcard(props) {
         <div className="button-contianer">
           <BsXCircleFill className="btn-color" onClick={direct} />
           <ProgressBar
-            now={(count + 1) * 10}
-            label={`${(count + 1) * 10}%`}
+            now={(count + 1) * (100 / cardNo)}
+            label={`${(count + 1) * (100 / cardNo)}%`}
             className="prg-bar"
           />
         </div>
@@ -71,7 +71,7 @@ function Flashcard(props) {
                 </h4>
                 <Card.Img
                   variant="top"
-                  src={link + headings[count]}
+                  src={images[count]}
                   className="img-card"
                 />
                 <p className="p-desc top-p">This is the Italian Word</p>
@@ -104,7 +104,7 @@ function Flashcard(props) {
                 <Card.Title className="card-head card-head-color">
                   {headings[count]}
                 </Card.Title>
-                <p className="p-desc">{descrp[count]}</p>
+                {/*<p className="p-desc">{descrp[count]}</p>*/}
                 <Button
                   variant="primary"
                   onClick={(e) => setFlip(false)}
