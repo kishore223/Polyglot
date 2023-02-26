@@ -347,7 +347,7 @@ docker_setup_db() {
 	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('jump', 'saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw');"
 	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('read', 'leggere','https://cs.ilgiardinodeilibri.it/data/spec/big/leggere-fa-bene-speciale.jpg?_=1647342546');"
 	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('write', 'scrivere','https://laricerca.loescher.it/images/stories/istruzione/WRW/mano.jpg');"
-	docker_process_sql --database=mysql <<<"GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO $MYSQL_USER@'%'"
+	docker_process_sql --database=mysql <<<"GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO $MYSQL_USER@'%' ;"
 }
 
 _mysql_passfile() {
