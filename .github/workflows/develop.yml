@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - "develop"
-      - "game-1-fulvius31"
+      - "fulvius31-game-1"
 
 jobs:
   build:
