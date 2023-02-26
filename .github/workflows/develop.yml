@@ -29,14 +29,6 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
-        name: Build and push mysql
-        uses: docker/build-push-action@v4
-        with:
-          context: ./docker/
-          file: ./docker/DockerfileMysql
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mysql-polyglot:testci
-      -
         name: Build jar
         run: cd ./Back-End/slu-polyglot/ && ./gradlew build
       -
