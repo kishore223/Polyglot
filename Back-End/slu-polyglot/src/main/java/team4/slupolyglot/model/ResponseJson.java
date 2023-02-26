@@ -8,11 +8,12 @@ public class ResponseJson
     private String errorCode;
     private String errorMessage;
     
-    public ResponseJson(String errorCode,String errorMessage) {
+    public ResponseJson(String errorCode,String errorMessage){
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
-    public ResponseJson(String errorCode,String errorMessage,String email, String name, String score) {
+    public ResponseJson(String errorCode,
+    String errorMessage,String email, String name, String score){
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.email = email;
