@@ -342,6 +342,11 @@ docker_setup_db() {
 	mysql_note "Creating tables player for Polyglot (team4 mod)"
 	docker_process_sql --database=mysql <<<"USE $MYSQL_DATABASE ;"
 	docker_process_sql --database=mysql <<<"CREATE TABLE player ( email varchar(255) NOT NULL, name varchar(255) NOT NULL, score int DEFAULT '0', password varchar(255) NOT NULL, PRIMARY KEY (email)) ;"
+	mysql_note "Creating table verbs for Polyglot (team4 mod)"
+	docker_process_sql --database=mysql <<<"CREATE TABLE verbs ( id INT AUTO_INCREMENT, english_verb VARCHAR(255), italian_verb VARCHAR(255), url_image VARCHAR(255), PRIMARY KEY (id));"
+	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('jump', 'saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw');"
+	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('read', 'leggere','https://cs.ilgiardinodeilibri.it/data/spec/big/leggere-fa-bene-speciale.jpg?_=1647342546');"
+	docker_process_sql --database=mysql <<<"INSERT INTO verbs (english_verb, italian_verb, url_image) VALUES ('write', 'scrivere','https://laricerca.loescher.it/images/stories/istruzione/WRW/mano.jpg');"
 	docker_process_sql --database=mysql <<<"GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO $MYSQL_USER@'%' IDENTIFIED BY $MYSQL_PASSWORD; "
 }
 
