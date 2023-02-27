@@ -49,6 +49,8 @@ public class Controller
     public static final String
     ASSIGN_PLAYER_SUCCESS_DESCRIPTION = "language Selected Successfully";
     public static final int DEFAULT_SCORE = 0;
+    public static final String REGISTERED_LANGUAGES = 
+    "RegisteredLanguages";
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
         put(SIGN_IN_SUCCESS_CODE, SIGN_IN_SUCCESS_DESCRIPTION);
         put(SIGN_IN_FAILURE_CODE, SIGN_IN_FAILURE_DESCRIPTION);
@@ -223,6 +225,48 @@ public class Controller
             new HashMap<String,Object>();
             responseMap.put(SIGN_UP_FAILURE_CODE,
             e.getMessage());
+            return responseMap;
+        }
+    }
+    
+    @PostMapping("/player/getRegisteredLanguages")
+    public Map<String, Object> 
+    getAssignedLanguages(@RequestBody PlayerLanguageRequestJson
+    playerLanguageRequestJson){
+        try{
+            Player player = playerRepository.
+            findByEmail(playerLanguageRequestJson.getEmail());
+            List<Scores> scoresList = scoresRepository.
+            findByPlayer(player);
+            Map<String, Object> responseMap = 
+            new HashMap<String,Object>();
+            List<Map<String, Object>> languagesJsonList
+             = new ArrayList<>();
+            for(Scores scoresElement: scoresList)
+            {    
+                Map<String, Object> languagesMap = 
+                new HashMap<String,Object>();  
+                Languages language = scoresElement.getLanguage();
+                languagesMap.put
+                ("languageCode",language.getId());
+                languagesMap.put
+                ("languageName",language.getName());
+                languagesJsonList.add(languagesMap);
+            } 
+            //removing duplicates by using set
+            Set<Map<String, Object>> set = 
+            new HashSet<>(languagesJsonList);
+            List<Map<String, Object>> uniqueLanguagesList
+             = new ArrayList<>(set);
+            responseMap.put(REGISTERED_LANGUAGES,uniqueLanguagesList);
+            return responseMap;
+        }catch(Exception e){
+            //returning empty response in case of error
+            Map<String, Object> responseMap = 
+            new HashMap<String,Object>();
+            List<Map<String, Object>> emptyList
+             = new ArrayList<>();
+            responseMap.put(REGISTERED_LANGUAGES,emptyList);
             return responseMap;
         }
     }
