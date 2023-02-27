@@ -9,4 +9,6 @@ CrudRepository<Scores, Integer> {
     (Player player, Languages language);
     Scores findByPlayerAndLanguageAndModule
     (Player player, Languages language, Module module);
+    List<Scores> findByPlayer
+    (Player player);
 }
