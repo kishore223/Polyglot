@@ -11,10 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.Languages;
 import team4.slupolyglot.model.LanguagesRepository;
+import team4.slupolyglot.model.ScoresRepository;
+import team4.slupolyglot.model.PlayerService;
 import team4.slupolyglot.model.SignUpRequestJson;
 import team4.slupolyglot.model.SignInRequestJson;
+import team4.slupolyglot.model.PlayerLanguageRequestJson;
 import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.ResponseJson;
+import team4.slupolyglot.model.Scores;
 import team4.slupolyglot.model.PlayerRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,6 +37,7 @@ public class Controller
     public static final String SIGN_UP_SUCCESS_CODE = "10201";
     public static final String SIGN_UP_FAILURE_CODE = "10409";
     public static final int BASE_LANGUAGE_CODE = 2000;
+    public static final String SCORE = "Score";
     public static final String 
     SIGN_IN_SUCCESS_DESCRIPTION = "Player sucessfully validated";
     public static final String 
@@ -41,6 +46,8 @@ public class Controller
     SIGN_UP_SUCCESS_DESCRIPTION = "User sucessfully Created";
     public static final String 
     SIGN_UP_FAILURE_DESCRIPTION = "User already exsists";
+    public static final String
+    ASSIGN_PLAYER_SUCCESS_DESCRIPTION = "language Selected Successfully";
     public static final int DEFAULT_SCORE = 0;
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
         put(SIGN_IN_SUCCESS_CODE, SIGN_IN_SUCCESS_DESCRIPTION);
@@ -50,16 +57,20 @@ public class Controller
     }};
 
     @Autowired
-    private PlayerRepository userRepo;
+    private PlayerRepository playerRepository;
     @Autowired
     private LanguagesRepository languagesRepository;
+    @Autowired
+    private PlayerService playerService;
+    @Autowired
+    private ScoresRepository scoresRepository;
     
     @PostMapping(path="/player/signIn")
     public @ResponseBody ResponseJson signInPlayer
     (@RequestBody SignInRequestJson signInRequestJson){
         try{
             Player player;
-            player = userRepo.findByEmail(signInRequestJson.getUserName());
+            player = playerRepository.findByEmail(signInRequestJson.getUserName());
             responseJson = new ResponseJson
             (SIGN_IN_FAILURE_CODE,
             responseValuesMap.get(SIGN_IN_FAILURE_CODE)); 
@@ -91,9 +102,9 @@ public class Controller
             ResponseJson responseJson = new ResponseJson
             (SIGN_UP_FAILURE_CODE,
             responseValuesMap.get(SIGN_UP_FAILURE_CODE));       
-            if(userRepo.findByEmail(signUpRequestJson.getEmail()) == null){
+            if(playerRepository.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
-                userRepo.save(new Player(signUpRequestJson.getEmail(),
+                playerRepository.save(new Player(signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),Integer.toString(DEFAULT_SCORE),
                 signUpRequestJson.getPassword()));
                 responseJson = new ResponseJson
@@ -115,33 +126,104 @@ public class Controller
     }
 
     @GetMapping(path="/getLanguages")
-    public Map<String,List<Map<String, String>>> getAllLanguages() {
+    public Map<String,List<Map<String,Object>>> getAllLanguages() {
         try {
             Iterable<Languages> languages = 
             languagesRepository.findAll();
-            Map<String, List<Map<String, String>>> output = 
-            new HashMap<String, List<Map<String, String>>>();
-            List<Map<String, String>> languageResponseList = 
+            Map<String, List<Map<String, Object>>> output = 
+            new HashMap<String, List<Map<String, Object>>>();
+            List<Map<String, Object>> languageResponseList = 
             new ArrayList<>();
             for (Languages language : languages) {
-                Map<String, String> languageResponse = 
-                new HashMap<String, String>();
+                Map<String, Object> languageResponse = 
+                new HashMap<String, Object>();
                 languageResponse.put
                 ("languageName",language.getName());
                 languageResponse.put("languageCode",
-                Integer.toString(BASE_LANGUAGE_CODE + Integer.parseInt(language.getId())));
+                language.getId());
                 languageResponseList.add(languageResponse);
             }
             output.put("languages", languageResponseList);
             return output;
             } catch (Exception e) {
             //returning empty response in case of error
-            Map<String, List<Map<String, String>>> output =
-            new HashMap<String, List<Map<String, String>>>();
-            List<Map<String, String>> languageResponseList = 
+            Map<String, List<Map<String, Object>>> output =
+            new HashMap<String, List<Map<String, Object>>>();
+            List<Map<String, Object>> languageResponseList = 
             new ArrayList<>();
             output.put("languages", languageResponseList);
             return output;
+        }
+    }
+
+    @PostMapping("/player/assignLanguage")
+    public @ResponseBody ResponseJson assignLanguageToPlayer
+    (@RequestBody  PlayerLanguageRequestJson playerLanguageRequestJson) {
+        try{
+            playerService.assignLanguageToPlayer
+            (playerLanguageRequestJson.getEmail(),
+            playerLanguageRequestJson.getLanguageId());
+            ResponseJson responseJson = new ResponseJson
+            (SIGN_UP_SUCCESS_CODE,ASSIGN_PLAYER_SUCCESS_DESCRIPTION);
+            return responseJson;
+        }catch(Exception e )
+        {
+            ResponseJson responseJson = new ResponseJson
+            (SIGN_UP_FAILURE_CODE,e.getMessage());
+            return responseJson;
+        }
+    }
+
+    @PostMapping("/player/getLanguageScores")
+    public Map<String, Object> 
+    getLanguageScores(@RequestBody PlayerLanguageRequestJson
+    playerLanguageRequestJson){
+        try{
+            Player player = playerRepository.
+            findByEmail(playerLanguageRequestJson.getEmail());
+            Languages language = languagesRepository.
+            findById(playerLanguageRequestJson.getLanguageId());
+            List<Scores> scoresList = scoresRepository.
+            findByPlayerAndLanguage(player,language);
+            Map<String, Object> responseMap = 
+            new HashMap<String,Object>();
+            for(Scores scoresElement: scoresList)
+            {  
+                Map<String, Object> scoreMap = 
+                new HashMap<String,Object>();
+                scoreMap.put
+                (SCORE,
+                String.valueOf(scoresElement.getScore()));
+                responseMap.
+                put(scoresElement.getModule().getName(), scoreMap);
+            } 
+            return responseMap;
+        }catch(Exception e){
+            //returning empty response in case of error
+            Map<String, Object> responseMap = 
+            new HashMap<String,Object>();
+            return responseMap;
+        }
+    }
+
+    @PostMapping("/player/updateModuleScore")
+    public Map<String, Object> 
+    updateModuleScore(@RequestBody PlayerLanguageRequestJson
+    playerLanguageRequestJson){
+        try{
+            playerService.updateScoreOfModule
+            (playerLanguageRequestJson.getEmail(),
+            playerLanguageRequestJson.getLanguageId(),
+            playerLanguageRequestJson.getModuleId(),
+            playerLanguageRequestJson.getNewScore()); 
+            return getLanguageScores(playerLanguageRequestJson);
+        }catch(Exception e){
+            //returning empty response in case of error
+            Map<String, Object> responseMap = 
+            new HashMap<String,Object>();
+            responseMap.put(SIGN_UP_FAILURE_CODE,
+            e.getMessage());
+            return responseMap;
         }
     }
 }
