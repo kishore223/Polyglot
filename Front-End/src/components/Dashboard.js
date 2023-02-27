@@ -6,15 +6,43 @@ import Navbar from "./NavBar.js";
 import Nav from "react-bootstrap/Nav";
 import BgLearning from "./Bg-Learning_1.svg";
 import Cookies from "universal-cookie";
+import { useSearchParams } from "react-router-dom";
 
 function Dashboard() {
-  const italianCode = "2001";
-  const frenchCode = "2002";
-  const spanishCode = "2003";
   const cookieslog = new Cookies();
   const email = cookieslog.get("user");
-  const [lang, setLang] = useState("Italian");
-  const [languageId, setLanguageId] = useState("2001");
+
+  const [langDashCode, setLangDashCode] = useState([]);
+  const em = { email };
+  const sa = [];
+  const [langCount, setLangCount] = useState(0);
+
+  const getLanguage = () => {
+    fetch("http://localhost:8080/polyglot/player/getRegisteredLanguages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(em),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setLangCount(Object.keys(responseJson.RegisteredLanguages).length);
+        for (var i = 0; i < langCount; i++) {
+          sa.push([
+            responseJson.RegisteredLanguages[i]["languageName"],
+            responseJson.RegisteredLanguages[i]["languageCode"],
+          ]);
+        }
+        setLangDashCode(sa);
+      });
+  };
+
+  getLanguage();
+
+  const [searchparams] = useSearchParams();
+  const [lang, setLang] = useState(searchparams.get("lang"));
+  const [languageId, setLanguageId] = useState(searchparams.get("languageId"));
   const [score1, setScore1] = useState(0);
   const [score2, setScore2] = useState(0);
   const [score3, setScore3] = useState(0);
@@ -42,8 +70,6 @@ function Dashboard() {
       });
   };
 
-  getScores();
-
   const myStyle = {
     backgroundImage: `url(${BgLearning})`,
     maxheight: "100vh",
@@ -52,34 +78,35 @@ function Dashboard() {
 
   const language = (e, langCode) => {
     e.preventDefault();
-    if (langCode === "2001") {
+    if (langCode === 2001) {
       setLang("Italian");
       setLanguageId("2001");
-    } else if (langCode === "2002") {
+    } else if (langCode === 2002) {
       setLang("French");
       setLanguageId("2002");
-    } else if (langCode === "2003") {
+    } else if (langCode === 2003) {
       setLang("Spanish");
       setLanguageId("2003");
     }
+
     getScores();
   };
+
+  getScores();
+
   return (
     <div>
       <div className="top-div"></div>
       <Navbar />
       <div className="row">
         <div className="col-lg-2 bg-color">
-          <Nav className="flex-column nav-sty" defaultActiveKey="ITALIAN">
-            <Lang
-              language="ITALIAN"
-              onClick={(e) => language(e, italianCode)}
-            />
-            <Lang language="FRENCH" onClick={(e) => language(e, frenchCode)} />
-            <Lang
-              language="SPANISH"
-              onClick={(e) => language(e, spanishCode)}
-            />
+          <Nav className="flex-column nav-sty">
+            {langDashCode.map((lan) => (
+              <Lang
+                language={lan[0].toUpperCase()}
+                onClick={(e) => language(e, lan[1])}
+              />
+            ))}
           </Nav>
         </div>
         <div className="col-lg-10">
