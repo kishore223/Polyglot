@@ -7,8 +7,9 @@ import Card from "react-bootstrap/Card";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { BsXCircleFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import BgLearning from "./Bg-Learning.svg";
+import Cookies from "universal-cookie";
 
 function Flashcard(props) {
   const [isFlipped, setFlip] = useState(false);
@@ -18,14 +19,18 @@ function Flashcard(props) {
   const score = props.score;
   const images = props.images;
   const cardNo = props.cardNo;
-  const [count, setCount] = useState(score / cardNo - 1);
+  const language = props.language;
+  const languageId = props.languageId;
+  const [count, setCount] = useState(score / (100 / cardNo) - 1);
   const navigate = useNavigate();
+  const cookieslog = new Cookies();
+  const email = cookieslog.get("user");
 
   const addCount = (e) => {
     e.preventDefault();
     setFlip(false);
     if (count === cardNo - 1) {
-      setCount(0);
+      direct(e);
     } else {
       setCount(count + 1);
     }
@@ -46,8 +51,27 @@ function Flashcard(props) {
     height: "800px",
   };
 
-  const direct = () => {
-    navigate("/Home");
+  const direct = (e) => {
+    const updScores = {
+      email,
+      languageId,
+      moduleId: 2,
+      newScore: (count + 1) * (100 / cardNo),
+    };
+    fetch("http://localhost:8080/polyglot/player/updateModuleScore", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updScores),
+    });
+    navigate({
+      pathname: "/Dashboard",
+      search: createSearchParams({
+        lang: language,
+        languageId: languageId,
+      }).toString(),
+    });
   };
 
   return (
@@ -55,7 +79,12 @@ function Flashcard(props) {
       <h1 className="head-h1">LEARNING I</h1>
       <div className="padding-main">
         <div className="button-contianer">
-          <BsXCircleFill className="btn-color" onClick={direct} />
+          <BsXCircleFill
+            className="btn-color"
+            onClick={(e) => {
+              direct(e);
+            }}
+          />
           <ProgressBar
             now={(count + 1) * (100 / cardNo)}
             label={`${(count + 1) * (100 / cardNo)}%`}
@@ -74,7 +103,7 @@ function Flashcard(props) {
                   src={images[count]}
                   className="img-card"
                 />
-                <p className="p-desc top-p">This is the Italian Word</p>
+                <p className="p-desc top-p">This is the {language} Word</p>
                 <Card.Title className="card-head">{trans[count]}</Card.Title>
                 <Button
                   variant="primary"
