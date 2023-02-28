@@ -4,6 +4,7 @@ import "./App.css";
 import LogSign from "./LogSign.js";
 import Dashboard from "./Dashboard.js";
 import Learning1 from "./Learning1.js";
+import Quiz from "./Quiz.js";
 import { Home } from "./Home.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/Signup" element={<LogSign active="second" />} />
           <Route path="/Login" element={<LogSign active="first" />} />
           <Route path="/Learning1" element={<Learning1 />} />
+          <Route path="/Quiz" element={<Quiz />} />
         </Routes>
       </BrowserRouter>
     </div>
