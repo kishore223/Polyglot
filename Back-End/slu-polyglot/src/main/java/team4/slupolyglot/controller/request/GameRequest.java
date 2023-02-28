@@ -10,6 +10,9 @@ public class GameRequest {
         this.moduleId = moduleId;
     }
 
+    public GameRequest(){
+
+    }
     public String getLanguageId() {
         return languageId;
     }
