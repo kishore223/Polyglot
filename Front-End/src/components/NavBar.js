@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import Cookies from "universal-cookie";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import {API_BASE_URL} from "../constants";
 
 function NavBar() {
   const cookieslog = new Cookies();
@@ -20,7 +21,7 @@ function NavBar() {
   const [langCount, setLangCount] = useState(0);
 
   const getLanguage = () => {
-    fetch("http://localhost:8080/polyglot/player/getRegisteredLanguages", {
+    fetch(API_BASE_URL+"polyglot/player/getRegisteredLanguages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

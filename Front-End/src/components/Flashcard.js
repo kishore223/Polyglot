@@ -10,6 +10,7 @@ import { BsXCircleFill } from "react-icons/bs";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import BgLearning from "./Bg-Learning.svg";
 import Cookies from "universal-cookie";
+import {API_BASE_URL} from "../constants";
 
 function Flashcard(props) {
   const [isFlipped, setFlip] = useState(false);
@@ -58,7 +59,7 @@ function Flashcard(props) {
       moduleId: 2,
       newScore: (count + 1) * (100 / cardNo),
     };
-    fetch("http://localhost:8080/polyglot/player/updateModuleScore", {
+    fetch(API_BASE_URL+"polyglot/player/updateModuleScore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import "./Flashcard.css";
 import Flashcard from "./Flashcard.js";
 import { useSearchParams } from "react-router-dom";
 import Cookies from "universal-cookie";
+import {API_BASE_URL} from "../constants";
 
 function Learning1() {
   const [searchparams] = useSearchParams();
@@ -20,7 +21,7 @@ function Learning1() {
       languageId,
       moduleId: 2,
     };
-    fetch("http://localhost:8080/polyglot/getGame", {
+    fetch(API_BASE_URL+"polyglot/getGame", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ function Learning1() {
       moduleId: 2,
       newScore: 100 / Object.keys(cards["game_first"]).length,
     };
-    fetch("http://localhost:8080/polyglot/player/updateModuleScore", {
+    fetch(API_BASE_URL+"polyglot/player/updateModuleScore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

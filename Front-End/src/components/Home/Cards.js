@@ -3,6 +3,7 @@ import "./Cards.css";
 import CardItem from "./CardItem";
 import Cookies from "universal-cookie";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import {API_BASE_URL} from "../../constants";
 
 function Cards() {
   const cookieslog = new Cookies();
@@ -17,7 +18,7 @@ function Cards() {
   const [langCount, setLangCount] = useState(0);
 
   const getLanguage = () => {
-    fetch("http://localhost:8080/polyglot/player/getRegisteredLanguages", {
+    fetch(API_BASE_URL+"polyglot/player/getRegisteredLanguages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ function Cards() {
 
   const cards = (e, languageId, language) => {
     const lang = { email, languageId };
-    fetch("http://localhost:8080/polyglot/player/assignLanguage", {
+    fetch(API_BASE_URL+"polyglot/player/assignLanguage", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

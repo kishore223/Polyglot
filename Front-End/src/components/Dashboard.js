@@ -7,6 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import BgLearning from "./Bg-Learning_1.svg";
 import Cookies from "universal-cookie";
 import { useSearchParams } from "react-router-dom";
+import {API_BASE_URL} from "../constants";
 
 function Dashboard() {
   const cookieslog = new Cookies();
@@ -18,7 +19,7 @@ function Dashboard() {
   const [langCount, setLangCount] = useState(0);
 
   const getLanguage = () => {
-    fetch("http://localhost:8080/polyglot/player/getRegisteredLanguages", {
+    fetch(API_BASE_URL+"polyglot/player/getRegisteredLanguages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ function Dashboard() {
   const scores = { email, languageId };
 
   const getScores = () => {
-    fetch("http://localhost:8080/polyglot/player/getLanguageScores", {
+    fetch(API_BASE_URL+"polyglot/player/getLanguageScores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
