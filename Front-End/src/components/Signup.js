@@ -52,7 +52,7 @@ function Signup() {
       messUsername === "Valid Username" &&
       messPassword === "Valid Password"
     ) {
-      fetch(API_BASE_URL+"/polyglot/player/signUp", {
+      fetch(API_BASE_URL+"polyglot/player/signUp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
