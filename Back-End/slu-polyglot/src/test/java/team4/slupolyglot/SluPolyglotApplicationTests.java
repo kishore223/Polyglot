@@ -22,10 +22,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.Player;
-import team4.slupolyglot.model.PlayerRepository;
+import team4.slupolyglot.repositories.PlayerRepository;
 
-import team4.slupolyglot.model.SignInRequestJson;
-import team4.slupolyglot.model.SignUpRequestJson;
+import team4.slupolyglot.controller.request.SignInRequestJson;
+import team4.slupolyglot.controller.request.SignUpRequestJson;
 import team4.slupolyglot.controller.Controller;
 
 @RunWith(SpringRunner.class)
@@ -37,7 +37,7 @@ public class SluPolyglotApplicationTests {
 
     @MockBean
     private PlayerRepository playerRepository;
-    
+
     @Mock
     private Authenticator authenticator;
 
@@ -51,7 +51,7 @@ public class SluPolyglotApplicationTests {
     private final String SIGN_UP_SUCCESS_DESCRIPTION = Controller.SIGN_UP_SUCCESS_DESCRIPTION;
     private final String SIGN_UP_FAILURE_CODE = Controller.SIGN_UP_FAILURE_CODE;
     private final String SIGN_UP_FAILURE_DESCRIPTION = Controller.SIGN_UP_FAILURE_DESCRIPTION;
-   
+
 
     @Test
     public void testSignInPlayerSuccess() throws Exception {
@@ -103,7 +103,7 @@ public class SluPolyglotApplicationTests {
         assertEquals(SIGN_IN_FAILURE_CODE, response.get("errorCode"));
         assertEquals(SIGN_IN_FAILURE_DESCRIPTION, response.get("errorMessage"));
     }
-    
+
     @Test
     public void testSignInPlayerFailureWrongEmailPassword() throws Exception {
         String email = "test@example.com";
@@ -200,9 +200,9 @@ public class SluPolyglotApplicationTests {
             throw new RuntimeException(e);
         }
     }
-    
 
-   
-    
-    
+
+
+
+
 }

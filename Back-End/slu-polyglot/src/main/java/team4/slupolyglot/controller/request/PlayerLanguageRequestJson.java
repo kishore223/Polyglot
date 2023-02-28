@@ -1,14 +1,14 @@
-package team4.slupolyglot.model;
+package team4.slupolyglot.controller.request;
 
 public class PlayerLanguageRequestJson {
     private String email;
-    private int languageId;    
+    private int languageId;
     private int moduleId;
     private int newScore;
-    
+
     public PlayerLanguageRequestJson() {
     }
-    
+
     public PlayerLanguageRequestJson(String email, int languageId) {
         this.email = email;
         this.languageId = languageId;

@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.Languages;
-import team4.slupolyglot.model.LanguagesRepository;
-import team4.slupolyglot.model.ScoresRepository;
-import team4.slupolyglot.model.PlayerService;
-import team4.slupolyglot.model.SignUpRequestJson;
-import team4.slupolyglot.model.SignInRequestJson;
-import team4.slupolyglot.model.PlayerLanguageRequestJson;
+import team4.slupolyglot.repositories.LanguagesRepository;
+import team4.slupolyglot.repositories.ScoresRepository;
+import team4.slupolyglot.services.PlayerService;
+import team4.slupolyglot.controller.request.SignUpRequestJson;
+import team4.slupolyglot.controller.request.SignInRequestJson;
+import team4.slupolyglot.controller.request.PlayerLanguageRequestJson;
 import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.ResponseJson;
 import team4.slupolyglot.model.Scores;
-import team4.slupolyglot.model.PlayerRepository; 
+import team4.slupolyglot.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -28,7 +28,7 @@ import java.util.*;
 @RestController
 @RequestMapping(path="/polyglot")
 
-public class Controller 
+public class Controller
 {
     //Defining all response attributes
     private ResponseJson responseJson;
@@ -38,18 +38,18 @@ public class Controller
     public static final String SIGN_UP_FAILURE_CODE = "10409";
     public static final int BASE_LANGUAGE_CODE = 2000;
     public static final String SCORE = "Score";
-    public static final String 
+    public static final String
     SIGN_IN_SUCCESS_DESCRIPTION = "Player sucessfully validated";
-    public static final String 
+    public static final String
     SIGN_IN_FAILURE_DESCRIPTION = "Please check the login credentials";
-    public static final String 
+    public static final String
     SIGN_UP_SUCCESS_DESCRIPTION = "User sucessfully Created";
-    public static final String 
+    public static final String
     SIGN_UP_FAILURE_DESCRIPTION = "User already exsists";
     public static final String
     ASSIGN_PLAYER_SUCCESS_DESCRIPTION = "language Selected Successfully";
     public static final int DEFAULT_SCORE = 0;
-    public static final String REGISTERED_LANGUAGES = 
+    public static final String REGISTERED_LANGUAGES =
     "RegisteredLanguages";
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
         put(SIGN_IN_SUCCESS_CODE, SIGN_IN_SUCCESS_DESCRIPTION);
@@ -66,7 +66,7 @@ public class Controller
     private PlayerService playerService;
     @Autowired
     private ScoresRepository scoresRepository;
-    
+
     @PostMapping(path="/player/signIn")
     public @ResponseBody ResponseJson signInPlayer
     (@RequestBody SignInRequestJson signInRequestJson){
@@ -75,11 +75,11 @@ public class Controller
             player = playerRepository.findByEmail(signInRequestJson.getUserName());
             responseJson = new ResponseJson
             (SIGN_IN_FAILURE_CODE,
-            responseValuesMap.get(SIGN_IN_FAILURE_CODE)); 
+            responseValuesMap.get(SIGN_IN_FAILURE_CODE));
             Authenticator authenticator = new Authenticator();
             // Validating user details in Authenticator class
             if(player != null && authenticator.playerDetailsValidator
-            (signInRequestJson,player)){               
+            (signInRequestJson,player)){
                 responseJson = new ResponseJson
                 (SIGN_IN_SUCCESS_CODE,
                 responseValuesMap.get(SIGN_IN_SUCCESS_CODE),
@@ -89,7 +89,7 @@ public class Controller
             }
             return responseJson;
         }
-        catch(Exception e){   
+        catch(Exception e){
             ResponseJson responseJson = new ResponseJson
             (responseValuesMap.get(SIGN_IN_FAILURE_CODE),
             e.getMessage());
@@ -100,10 +100,10 @@ public class Controller
     @PostMapping(path = "/player/signUp")
     public @ResponseBody ResponseJson createUser
     (@RequestBody SignUpRequestJson signUpRequestJson){
-        try{     
+        try{
             ResponseJson responseJson = new ResponseJson
             (SIGN_UP_FAILURE_CODE,
-            responseValuesMap.get(SIGN_UP_FAILURE_CODE));       
+            responseValuesMap.get(SIGN_UP_FAILURE_CODE));
             if(playerRepository.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
                 playerRepository.save(new Player(signUpRequestJson.getEmail(),
@@ -119,7 +119,7 @@ public class Controller
             }
             return responseJson;
         }
-        catch (Exception e ){   
+        catch (Exception e ){
             ResponseJson responseJson = new ResponseJson
             (responseValuesMap.get(SIGN_UP_FAILURE_CODE),
             e.getMessage());
@@ -130,14 +130,14 @@ public class Controller
     @GetMapping(path="/getLanguages")
     public Map<String,List<Map<String,Object>>> getAllLanguages() {
         try {
-            Iterable<Languages> languages = 
+            Iterable<Languages> languages =
             languagesRepository.findAll();
-            Map<String, List<Map<String, Object>>> output = 
+            Map<String, List<Map<String, Object>>> output =
             new HashMap<String, List<Map<String, Object>>>();
-            List<Map<String, Object>> languageResponseList = 
+            List<Map<String, Object>> languageResponseList =
             new ArrayList<>();
             for (Languages language : languages) {
-                Map<String, Object> languageResponse = 
+                Map<String, Object> languageResponse =
                 new HashMap<String, Object>();
                 languageResponse.put
                 ("languageName",language.getName());
@@ -151,7 +151,7 @@ public class Controller
             //returning empty response in case of error
             Map<String, List<Map<String, Object>>> output =
             new HashMap<String, List<Map<String, Object>>>();
-            List<Map<String, Object>> languageResponseList = 
+            List<Map<String, Object>> languageResponseList =
             new ArrayList<>();
             output.put("languages", languageResponseList);
             return output;
@@ -177,7 +177,7 @@ public class Controller
     }
 
     @PostMapping("/player/getLanguageScores")
-    public Map<String, Object> 
+    public Map<String, Object>
     getLanguageScores(@RequestBody PlayerLanguageRequestJson
     playerLanguageRequestJson){
         try{
@@ -187,29 +187,29 @@ public class Controller
             findById(playerLanguageRequestJson.getLanguageId());
             List<Scores> scoresList = scoresRepository.
             findByPlayerAndLanguage(player,language);
-            Map<String, Object> responseMap = 
+            Map<String, Object> responseMap =
             new HashMap<String,Object>();
             for(Scores scoresElement: scoresList)
-            {  
-                Map<String, Object> scoreMap = 
+            {
+                Map<String, Object> scoreMap =
                 new HashMap<String,Object>();
                 scoreMap.put
                 (SCORE,
                 String.valueOf(scoresElement.getScore()));
                 responseMap.
                 put(scoresElement.getModule().getName(), scoreMap);
-            } 
+            }
             return responseMap;
         }catch(Exception e){
             //returning empty response in case of error
-            Map<String, Object> responseMap = 
+            Map<String, Object> responseMap =
             new HashMap<String,Object>();
             return responseMap;
         }
     }
 
     @PostMapping("/player/updateModuleScore")
-    public Map<String, Object> 
+    public Map<String, Object>
     updateModuleScore(@RequestBody PlayerLanguageRequestJson
     playerLanguageRequestJson){
         try{
@@ -217,20 +217,20 @@ public class Controller
             (playerLanguageRequestJson.getEmail(),
             playerLanguageRequestJson.getLanguageId(),
             playerLanguageRequestJson.getModuleId(),
-            playerLanguageRequestJson.getNewScore()); 
+            playerLanguageRequestJson.getNewScore());
             return getLanguageScores(playerLanguageRequestJson);
         }catch(Exception e){
             //returning empty response in case of error
-            Map<String, Object> responseMap = 
+            Map<String, Object> responseMap =
             new HashMap<String,Object>();
             responseMap.put(SIGN_UP_FAILURE_CODE,
             e.getMessage());
             return responseMap;
         }
     }
-    
+
     @PostMapping("/player/getRegisteredLanguages")
-    public Map<String, Object> 
+    public Map<String, Object>
     getAssignedLanguages(@RequestBody PlayerLanguageRequestJson
     playerLanguageRequestJson){
         try{
@@ -238,23 +238,23 @@ public class Controller
             findByEmail(playerLanguageRequestJson.getEmail());
             List<Scores> scoresList = scoresRepository.
             findByPlayer(player);
-            Map<String, Object> responseMap = 
+            Map<String, Object> responseMap =
             new HashMap<String,Object>();
             List<Map<String, Object>> languagesJsonList
              = new ArrayList<>();
             for(Scores scoresElement: scoresList)
-            {    
-                Map<String, Object> languagesMap = 
-                new HashMap<String,Object>();  
+            {
+                Map<String, Object> languagesMap =
+                new HashMap<String,Object>();
                 Languages language = scoresElement.getLanguage();
                 languagesMap.put
                 ("languageCode",language.getId());
                 languagesMap.put
                 ("languageName",language.getName());
                 languagesJsonList.add(languagesMap);
-            } 
+            }
             //removing duplicates by using set
-            Set<Map<String, Object>> set = 
+            Set<Map<String, Object>> set =
             new HashSet<>(languagesJsonList);
             List<Map<String, Object>> uniqueLanguagesList
              = new ArrayList<>(set);
@@ -262,7 +262,7 @@ public class Controller
             return responseMap;
         }catch(Exception e){
             //returning empty response in case of error
-            Map<String, Object> responseMap = 
+            Map<String, Object> responseMap =
             new HashMap<String,Object>();
             List<Map<String, Object>> emptyList
              = new ArrayList<>();
