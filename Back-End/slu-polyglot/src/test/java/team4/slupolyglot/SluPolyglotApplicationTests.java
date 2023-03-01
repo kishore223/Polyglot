@@ -22,9 +22,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.Player;
-import team4.slupolyglot.model.PlayerRepository;
-import team4.slupolyglot.model.SignInRequestJson;
-import team4.slupolyglot.model.SignUpRequestJson;
+import team4.slupolyglot.repositories.PlayerRepository;
+
+import team4.slupolyglot.controller.request.SignInRequestJson;
+import team4.slupolyglot.controller.request.SignUpRequestJson;
 import team4.slupolyglot.controller.Controller;
 
 @RunWith(SpringRunner.class)
@@ -40,17 +41,17 @@ public class SluPolyglotApplicationTests {
     @Mock
     private Authenticator authenticator;
 
-    private final String signInEndPoint = "/polyglot/player/signIn";
-    private final String signUpEndPoint = "/polyglot/player/signUp";
-    private final String signInSuccessCode = Controller.signInSuccessCode;
-    private final String signInSuccessDescription = Controller.signInSuccessDescription;
-    private final String signInFailureCode = Controller.signInFailureCode;
-    private final String signInFailureDescription = Controller.signInFailureDescription;
-    private final String signUpSuccessCode = Controller.signUpSuccessCode;
-    private final String signUpSuccessDescription = Controller.signUpSuccessDescription;
-    private final String signUpFailureCode = Controller.signUpFailureCode;
-    private final String signUpFailureDescription = Controller.signUpFailureDescription;
-   
+    private final String SIGN_IN_END_POINT = "/polyglot/player/signIn";
+    private final String SIGN_UP_END_POINT = "/polyglot/player/signUp";
+    private final String SIGN_IN_SUCCESS_CODE = Controller.SIGN_IN_SUCCESS_CODE;
+    private final String SIGN_IN_SUCCESS_DESCRIPTION = Controller.SIGN_IN_SUCCESS_DESCRIPTION;
+    private final String SIGN_IN_FAILURE_CODE = Controller.SIGN_IN_FAILURE_CODE;
+    private final String SIGN_IN_FAILURE_DESCRIPTION = Controller.SIGN_IN_FAILURE_DESCRIPTION;
+    private final String SIGN_UP_SUCCESS_CODE = Controller.SIGN_UP_SUCCESS_CODE;
+    private final String SIGN_UP_SUCCESS_DESCRIPTION = Controller.SIGN_UP_SUCCESS_DESCRIPTION;
+    private final String SIGN_UP_FAILURE_CODE = Controller.SIGN_UP_FAILURE_CODE;
+    private final String SIGN_UP_FAILURE_DESCRIPTION = Controller.SIGN_UP_FAILURE_DESCRIPTION;
+
 
     @Test
     public void testSignInPlayerSuccess() throws Exception {
@@ -62,7 +63,7 @@ public class SluPolyglotApplicationTests {
         Mockito.when(playerRepository.findByEmail(email)).thenReturn(player);
         Mockito.when(authenticator.playerDetailsValidator(signInRequestJson, player)).thenReturn(true);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(signInEndPoint)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(SIGN_IN_END_POINT)
                 .content(asJsonString(signInRequestJson))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -73,8 +74,8 @@ public class SluPolyglotApplicationTests {
         Map<String, String> response = asResponseMap(content);
 
         assertEquals(200, statusCode);
-        assertEquals(signInSuccessCode, response.get("errorCode"));
-        assertEquals(signInSuccessDescription, response.get("errorMessage"));
+        assertEquals(SIGN_IN_SUCCESS_CODE, response.get("errorCode"));
+        assertEquals(SIGN_IN_SUCCESS_DESCRIPTION, response.get("errorMessage"));
         assertEquals(email, response.get("email"));
         assertEquals(player.getUserName(), response.get("name"));
         assertEquals(player.getScore(), response.get("score"));
@@ -88,7 +89,7 @@ public class SluPolyglotApplicationTests {
 
         Mockito.when(playerRepository.findByEmail(email)).thenReturn(null);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(signInEndPoint)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(SIGN_IN_END_POINT)
                 .content(asJsonString(signInRequestJson))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -99,9 +100,10 @@ public class SluPolyglotApplicationTests {
         Map<String, String> response = asResponseMap(content);
 
         assertEquals(200, statusCode);
-        assertEquals(signInFailureCode, response.get("errorCode"));
-        assertEquals(signInFailureDescription, response.get("errorMessage"));
+        assertEquals(SIGN_IN_FAILURE_CODE, response.get("errorCode"));
+        assertEquals(SIGN_IN_FAILURE_DESCRIPTION, response.get("errorMessage"));
     }
+
     @Test
     public void testSignInPlayerFailureWrongEmailPassword() throws Exception {
         String email = "test@example.com";
@@ -110,7 +112,7 @@ public class SluPolyglotApplicationTests {
 
         Mockito.when(playerRepository.findByEmail(email)).thenReturn(null);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(signInEndPoint)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(SIGN_IN_END_POINT)
                 .content(asJsonString(signInRequestJson))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -121,12 +123,9 @@ public class SluPolyglotApplicationTests {
         Map<String, String> response = asResponseMap(content);
 
         assertEquals(200, statusCode);
-        assertEquals(signInFailureCode, response.get("errorCode"));
-        assertEquals(signInFailureDescription, response.get("errorMessage"));
+        assertEquals(SIGN_IN_FAILURE_CODE, response.get("errorCode"));
+        assertEquals(SIGN_IN_FAILURE_DESCRIPTION, response.get("errorMessage"));
     }
-
-
-
 
     @Test
     public void testSignUpPlayerSuccess() throws Exception {
@@ -141,7 +140,7 @@ public class SluPolyglotApplicationTests {
 
         SignUpRequestJson signUpRequestJson = new SignUpRequestJson(email, password, name);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(signUpEndPoint)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(SIGN_UP_END_POINT)
                 .content(asJsonString(signUpRequestJson))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -152,8 +151,8 @@ public class SluPolyglotApplicationTests {
         Map<String, String> response = asResponseMap(content);
 
         assertEquals(200, statusCode);
-        assertEquals(signUpSuccessCode, response.get("errorCode"));
-        assertEquals(signUpSuccessDescription, response.get("errorMessage"));
+        assertEquals(SIGN_UP_SUCCESS_CODE, response.get("errorCode"));
+        assertEquals(SIGN_UP_SUCCESS_DESCRIPTION, response.get("errorMessage"));
         assertEquals(email, response.get("email"));
         assertEquals(name, response.get("name"));
         assertEquals(score, response.get("score"));
@@ -169,7 +168,7 @@ public class SluPolyglotApplicationTests {
 
         SignUpRequestJson signUpRequestJson = new SignUpRequestJson(email, password, name);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(signUpEndPoint)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(SIGN_UP_END_POINT)
                 .content(asJsonString(signUpRequestJson))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -180,8 +179,8 @@ public class SluPolyglotApplicationTests {
         Map<String, String> response = asResponseMap(content);
 
         assertEquals(200, statusCode);
-        assertEquals(signUpFailureCode, response.get("errorCode"));
-        assertEquals(signUpFailureDescription, response.get("errorMessage"));
+        assertEquals(SIGN_UP_FAILURE_CODE, response.get("errorCode"));
+        assertEquals(SIGN_UP_FAILURE_DESCRIPTION, response.get("errorMessage"));
     }
 
     private static String asJsonString(final Object obj) {
@@ -201,7 +200,9 @@ public class SluPolyglotApplicationTests {
             throw new RuntimeException(e);
         }
     }
-    
-    
-    
+
+
+
+
+
 }

@@ -55,7 +55,7 @@ function Login() {
             cookieslog.remove("login");
             console.log(cookies);
             empty();
-            window.location.href = "/Dashboard";
+            window.location.href = "/Home";
           } else if (responseJson.errorCode === "10404") {
             setMessageInvalid("Please check the Username/Password");
             empty();

@@ -1,22 +1,25 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import Navbar from "./NavBar.js";
 import LogSign from "./LogSign.js";
-import { Dashboard } from "./Dashboard.js";
+import Dashboard from "./Dashboard.js";
+import Learning1 from "./Learning1.js";
+import Quiz from "./Quiz.js";
+import { Home } from "./Home.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <div className="top-div"></div>
-        <Navbar />
-        <div></div>
         <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Signup" element={<LogSign active="second" />} />
           <Route path="/Login" element={<LogSign active="first" />} />
+          <Route path="/Learning1" element={<Learning1 />} />
+          <Route path="/Quiz" element={<Quiz />} />
         </Routes>
       </BrowserRouter>
     </div>

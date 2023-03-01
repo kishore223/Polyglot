@@ -20,7 +20,7 @@ services:
 
   db:
     <<: *common-settings-config
-    image: ${CUSTOM_IMAGE_MYSQL}
+    image: mysql:5.7.41-debian
     ports:
       - "3306:3306"
     environment:
@@ -32,7 +32,7 @@ services:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
-      - ./mysql/init:/docker-entrypoint-initdb.d/:ro
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
       - backend
 

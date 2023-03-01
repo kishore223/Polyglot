@@ -52,7 +52,7 @@ function Signup() {
       messUsername === "Valid Username" &&
       messPassword === "Valid Password"
     ) {
-      fetch(API_BASE_URL+"/polyglot/player/signUp", {
+      fetch(API_BASE_URL+"polyglot/player/signUp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,14 +62,14 @@ function Signup() {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log(responseJson);
-          if (responseJson.errorCode === "10200") {
+          if (responseJson.errorCode === "10201") {
             setMessageInvalid("Successful Credentials");
             setCookie("login", "Success", { path: "/" });
             console.log(cookies);
             empty();
             e.preventDefault();
             navigate("/Login");
-          } else if (responseJson.errorCode === "10404") {
+          } else if (responseJson.errorCode === "10409") {
             setMessageInvalid("User Already Exists. Please Signup Again");
             empty();
           }

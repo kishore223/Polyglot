@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SluPolyglotApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SluPolyglotApplication.class, args);
+		SpringApplication.run
+		(SluPolyglotApplication.class, args);
 	}
-
 }
