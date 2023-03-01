@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Flashcard.css";
 import Flashcard from "./Flashcard.js";
@@ -8,18 +8,24 @@ import {API_BASE_URL} from "../constants";
 
 function Learning1() {
   const [searchparams] = useSearchParams();
-  let score = searchparams.get("score");
+  let [score, getScore] = useState(searchparams.get("score"));
   const language = searchparams.get("lang");
   const languageId = searchparams.get("languageId");
   const btnState = searchparams.get("btnState");
   const cookieslog = new Cookies();
   const email = cookieslog.get("user");
-  let [cards, setCards] = useState();
+  const [headCards, setHeadCards] = useState([]);
+  const [transCards, setTransCards] = useState([]);
+  const [imagesCards, setImagesCards] = useState([]);
+  const [langCount, setLangCount] = useState(0);
+  const headings = [];
+  const trans = [];
+  const images = [];
 
   const getGame = () => {
     const game = {
       languageId,
-      moduleId: 2,
+      moduleId: 1,
     };
     fetch(API_BASE_URL+"polyglot/getGame", {
       method: "POST",
@@ -30,28 +36,24 @@ function Learning1() {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        setCards(responseJson);
+        setLangCount(Object.keys(responseJson["game_first"]).length);
+        for (var i = 0; i < langCount; i++) {
+          headings.push(responseJson["game_first"][i]["englishVerb"]);
+          trans.push(responseJson["game_first"][i]["translatedVerb"]);
+          images.push(responseJson["game_first"][i]["urlImage"]);
+        }
+        setHeadCards(headings);
+        setTransCards(trans);
+        setImagesCards(images);
       });
   };
 
-  getGame();
-  const headings = [];
-  const trans = [];
-  const images = [];
-
-  for (var i = 0; i < Object.keys(cards["game_first"]).length; i++) {
-    headings.push(cards["game_first"][i]["english_verb"]);
-    trans.push(cards["game_first"][i]["italian_verb"]);
-    images.push(cards["game_first"][i]["url_image"]);
-  }
-
-  if ((btnState === "Restart") | (btnState === "Start")) {
-    score = 100 / Object.keys(cards["game_first"]).length;
+  const getJson = () => {
     const updScores = {
       email,
       languageId: languageId,
       moduleId: 2,
-      newScore: 100 / Object.keys(cards["game_first"]).length,
+      newScore: 100 / langCount,
     };
     fetch(API_BASE_URL+"polyglot/player/updateModuleScore", {
       method: "POST",
@@ -60,18 +62,55 @@ function Learning1() {
       },
       body: JSON.stringify(updScores),
     });
-  }
+  };
+
+  useEffect(() => {
+    getGame();
+    getJson();
+  });
+
   return (
-    <Flashcard
-      headings={headings}
-      trans={trans}
-      images={images}
-      language={language}
-      languageId={languageId}
-      //descrp={["first"]}
-      cardNo={Object.keys(cards["game_first"]).length}
-      score={score}
-    ></Flashcard>
+    <div>
+      {btnState === "Restart" && (
+        <Flashcard
+          headings={headCards}
+          trans={transCards}
+          images={imagesCards}
+          language={language}
+          languageId={languageId}
+          //descrp={["first"]}
+          count={parseInt(score) / (100 / langCount)}
+          score={100 / langCount}
+          cardNo={langCount}
+        ></Flashcard>
+      )}
+      {btnState === "Start" && (
+        <Flashcard
+          headings={headCards}
+          trans={transCards}
+          images={imagesCards}
+          language={language}
+          languageId={languageId}
+          count={parseInt(score) / (100 / langCount)}
+          //descrp={["first"]}
+          score={100 / langCount}
+          cardNo={langCount}
+        ></Flashcard>
+      )}
+      {btnState === "Resume" && (
+        <Flashcard
+          headings={headCards}
+          trans={transCards}
+          images={imagesCards}
+          language={language}
+          languageId={languageId}
+          //descrp={["first"]}
+          score={score}
+          cardNo={langCount}
+          count={parseInt(score) / (100 / 5) - 1}
+        ></Flashcard>
+      )}
+    </div>
   );
 }
 export default Learning1;
