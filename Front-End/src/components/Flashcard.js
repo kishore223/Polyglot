@@ -17,12 +17,12 @@ function Flashcard(props) {
   const headings = props.headings;
   const trans = props.trans;
   //const descrp = props.descrp;
-  const score = props.score;
   const images = props.images;
-  const cardNo = props.cardNo;
   const language = props.language;
   const languageId = props.languageId;
-  const [count, setCount] = useState(score / (100 / cardNo) - 1);
+  const cardNo = props.cardNo;
+  const score = props.score;
+  const [count, setCount] = useState(props.count);
   const navigate = useNavigate();
   const cookieslog = new Cookies();
   const email = cookieslog.get("user");
@@ -53,6 +53,7 @@ function Flashcard(props) {
   };
 
   const direct = (e) => {
+    e.preventDefault();
     const updScores = {
       email,
       languageId,
@@ -113,7 +114,7 @@ function Flashcard(props) {
                 >
                   Flip the card for English Word
                 </Button>
-                <div class="button-contianer">
+                <div className="button-contianer">
                   <FaChevronCircleLeft
                     className="btn-left"
                     onClick={(e) => removeCount(e)}
@@ -142,7 +143,7 @@ function Flashcard(props) {
                 >
                   Flip the card for Italian Word
                 </Button>
-                <div class="button-contianer">
+                <div className="button-contianer">
                   <FaChevronCircleLeft
                     className="btn-left"
                     onClick={(e) => removeCount(e)}
