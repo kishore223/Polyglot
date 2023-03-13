@@ -10,6 +10,9 @@ import team4.slupolyglot.model.Verb;
 import team4.slupolyglot.repositories.VerbRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import static team4.slupolyglot.MyConstants.*;
 
 @Service
 public class GameService {
@@ -27,7 +30,7 @@ public class GameService {
         switch(languageId){
 
             case MyConstants.ITALIAN :
-                if (moduleId == MyConstants.MODULE_LEARNING_1){
+                if (moduleId == MyConstants.MODULE_LEARNING_1) {
                     for (Verb verb : verbs) {
                         GameDto gameDtoEntry = new GameDto(verb.getId(),verb.getEnglishVerb()
                                 ,verb.getItalianVerb(), verb.getUrlImage());
@@ -38,11 +41,14 @@ public class GameService {
                 } else if (moduleId == MyConstants.MODULE_LEARNING_2) {
 
                     for (Verb verb : verbs) {
-                        String features = MyConstants.GENERAL_PRONOUNS[0] + "+" + MyConstants.PRESENT; //todo function to randomly pick pronouns and tense
-                        String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(),features);
-                        GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
-                                ,translated,features,verb.getId());
-                        gameDtoFirst.add(gameDtoEntry);
+                        int numberCombinations = 20;
+                        for(int i = 0; i < numberCombinations; i++){
+                            String features = getRandomPronoun() + "+" + getRandomTense();
+                            String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(),features);
+                            GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                                    ,translated,features,verb.getId());
+                            gameDtoFirst.add(gameDtoEntry);
+                        }
                     }
 
                     return gameDtoFirst;
@@ -52,6 +58,18 @@ public class GameService {
                 break;
         }
         return gameDtoFirst;
+    }
+
+    private String getRandomTense() {
+        String[] tenses = {PRESENT, FUTURE};
+        Random random = new Random();
+        int index = random.nextInt(tenses.length);
+        return tenses[index];
+    }
+    private String getRandomPronoun() {
+        Random random = new Random();
+        int index = random.nextInt(MyConstants.GENERAL_PRONOUNS.length);
+        return MyConstants.GENERAL_PRONOUNS[index];
     }
 
 }
