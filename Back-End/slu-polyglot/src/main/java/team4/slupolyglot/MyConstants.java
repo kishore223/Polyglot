@@ -8,4 +8,12 @@ public final class MyConstants {
     public static final String SPANISH = "2002";
 
     public static final int MODULE_LEARNING_1 = 1;
+    public static final int MODULE_LEARNING_2 = 2;
+
+    public final static String[] GENERAL_PRONOUNS = {"1s","2s","3s","1p","2p","3p"};
+    public final static String PRESENT = "PRES";
+    public final static String PAST = "PAST";
+    public final static String FUTURE = "FUT";
+    public final static String PREFECT = "PERF";
+    public final static String IMPERATIVE = "IMP";
 }

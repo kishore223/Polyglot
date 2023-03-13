@@ -3,9 +3,11 @@ package team4.slupolyglot.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import team4.slupolyglot.MyConstants;
 import team4.slupolyglot.controller.request.GameRequest;
 import team4.slupolyglot.dto.GameDto;
 import team4.slupolyglot.services.GameService;
+import team4.slupolyglot.services.TranslatorService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,13 +22,24 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
+    @Autowired
+    private TranslatorService translatorService;
+
     @PostMapping("/getGame")
     public ResponseEntity<Object> getGame(@RequestBody GameRequest gameRequest) {
-
-        List<GameDto> gameDtoFirst = gameService.createGameOne(gameRequest);
-
+        List<GameDto> gameDto = null;
         Map<String, Object> response = new HashMap<>();
-        response.put("game_first", gameDtoFirst);
+
+        if(gameRequest.getModuleId() == MyConstants.MODULE_LEARNING_1) {
+            gameDto = gameService.createGameOne(gameRequest);
+            response.put("game_first", gameDto);
+        }
+        else {
+            gameDto = translatorService.createGameTwo(gameRequest);
+            response.put("game_second", gameDto);
+        }
+
+
 
         return ResponseEntity.ok(response);
     }
