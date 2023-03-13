@@ -148,9 +148,9 @@ public class EnglishItalianTranslation implements Translation {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
                     return(ITALIAN_PRONOUNS[0] + " " + futuro);
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + root + "erai");
+                    return(ITALIAN_PRONOUNS[1] + " " + root + "erai");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + root + "erà");
+                    return(ITALIAN_PRONOUNS[2] + " " + root + "erà");
             }
 
             case TERZA_CONIUGAZIONE -> {
@@ -158,9 +158,9 @@ public class EnglishItalianTranslation implements Translation {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
                     return(ITALIAN_PRONOUNS[0] + " " + futuro);
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + root + "irai");
+                    return(ITALIAN_PRONOUNS[1] + " " + root + "irai");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + root + "irà");
+                    return(ITALIAN_PRONOUNS[2] + " " + root + "irà");
             }
         }
 
