@@ -7,7 +7,6 @@ import team4.slupolyglot.MyConstants;
 import team4.slupolyglot.controller.request.GameRequest;
 import team4.slupolyglot.dto.GameDto;
 import team4.slupolyglot.services.GameService;
-import team4.slupolyglot.services.TranslatorService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,20 +21,16 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @Autowired
-    private TranslatorService translatorService;
-
     @PostMapping("/getGame")
     public ResponseEntity<Object> getGame(@RequestBody GameRequest gameRequest) {
-        List<GameDto> gameDto = null;
+        List<GameDto>  gameDto = gameService.createGameOne(gameRequest);
+        ;
         Map<String, Object> response = new HashMap<>();
 
         if(gameRequest.getModuleId() == MyConstants.MODULE_LEARNING_1) {
-            gameDto = gameService.createGameOne(gameRequest);
             response.put("game_first", gameDto);
         }
         else {
-            gameDto = translatorService.createGameTwo(gameRequest);
             response.put("game_second", gameDto);
         }
 
