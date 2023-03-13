@@ -17,7 +17,7 @@ public class GameService {
     @Autowired
     private VerbRepository verbRepository;
 
-    public List<GameDto> createGameOne(GameRequest gameRequest){
+    public List<GameDto> createGame(GameRequest gameRequest) {
 
         String languageId = gameRequest.getLanguageId();
         int moduleId = gameRequest.getModuleId();

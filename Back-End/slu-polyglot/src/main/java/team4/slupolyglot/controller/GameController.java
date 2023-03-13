@@ -23,7 +23,7 @@ public class GameController {
 
     @PostMapping("/getGame")
     public ResponseEntity<Object> getGame(@RequestBody GameRequest gameRequest) {
-        List<GameDto>  gameDto = gameService.createGameOne(gameRequest);
+        List<GameDto>  gameDto = gameService.createGame(gameRequest);
         ;
         Map<String, Object> response = new HashMap<>();
 

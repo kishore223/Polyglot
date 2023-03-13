@@ -5,8 +5,8 @@ import team4.slupolyglot.repositories.Translation;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import static team4.slupolyglot.MyConstants.GENERAL_PRONOUNS;
-import static team4.slupolyglot.MyConstants.PRESENT;
+
+import static team4.slupolyglot.MyConstants.*;
 
 public class EnglishItalianTranslation implements Translation {
 
@@ -136,7 +136,7 @@ public class EnglishItalianTranslation implements Translation {
         System.out.println("Essi/Esse " + avereEssere[5] + " " + passatoProssimo);
     }
 
-    private void futurosemplice(String root, String infinito){
+    private String futuroSemplice(String root, String infinito, String pronoun) {
         String futuro = null;
         switch (infinito) {
             case PRIMA_CONIUGAZIONE, SECONDA_CONIUGAZIONE -> {
@@ -145,22 +145,33 @@ public class EnglishItalianTranslation implements Translation {
                 else if(isCareGare)
                     root = root + "h";
                 futuro = root + "erò";
-                System.out.println("Io " + futuro);
-                System.out.println("Tu " + root + "erai");
-                System.out.println("Egli/Ella " + root + "erà");
+                if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
+                    return(ITALIAN_PRONOUNS[0] + " " + futuro);
+                else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
+                    return(ITALIAN_PRONOUNS[1] + root + "erai");
+                else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
+                    return(ITALIAN_PRONOUNS[2] + root + "erà");
             }
 
             case TERZA_CONIUGAZIONE -> {
                 futuro = root + "irò";
-                System.out.println("Io " + futuro);
-                System.out.println("Tu " + root + "irai");
-                System.out.println("Egli/Ella " + root + "irà");
+                if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
+                    return(ITALIAN_PRONOUNS[0] + " " + futuro);
+                else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
+                    return(ITALIAN_PRONOUNS[1] + root + "irai");
+                else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
+                    return(ITALIAN_PRONOUNS[2] + root + "irà");
             }
         }
 
-        System.out.println("Noi " + futuro.substring(0,futuro.length()-1) + "emo");
-        System.out.println("Voi " + futuro.substring(0,futuro.length()-1) + "ete");
-        System.out.println("Essi/Esse " + futuro.substring(0,futuro.length()-1) + "anno");
+        String subFuturo = futuro.substring(0,futuro.length()-1);
+
+        if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3]))
+            return(ITALIAN_PRONOUNS[3] + " " + subFuturo + "emo");
+        else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[4]))
+            return(ITALIAN_PRONOUNS[4] + " " + subFuturo + "ete");
+        else
+            return(ITALIAN_PRONOUNS[5] + " " + subFuturo + "anno");
     }
 
     private static String[] takeRootAndInfinito(String verb) {
@@ -216,6 +227,9 @@ public class EnglishItalianTranslation implements Translation {
         switch (tense){
             case PRESENT -> {
                 return present(root,infinito,pronoun);
+            }
+            case FUTURE -> {
+                return futuroSemplice(root,infinito,pronoun);
             }
 
         }
