@@ -24,9 +24,11 @@ public class EnglishItalianTranslation implements Translation {
     private boolean  isCereGere = false;
     private boolean isIrregular = false; // ire
 
-    private boolean isReflective = false; // passato prossimo
-
     private boolean isNegative = false;
+
+    private static final String IRE_PRESENTE_INDICATIVO = "IRE_PRESENTE_INDICATIVO";
+    private static final String ESSERE_PASSATO_PROSSIMO = "ESSERE_PASSATO_PROSSIMO";
+
 
     Map<String, String> pronouns = new HashMap(){{
         put(GENERAL_PRONOUNS[0],ITALIAN_PRONOUNS[0]);
@@ -52,7 +54,7 @@ public class EnglishItalianTranslation implements Translation {
 
     private String presenteIndicativo(String root, String infinito, String pronoun) throws IOException {
 
-        if(isIreIrregular(root+infinito))
+        if(findIrregularities(root+infinito,IRE_PRESENTE_INDICATIVO))
             root = root+"isc";
 
         switch (infinito) {
@@ -119,9 +121,14 @@ public class EnglishItalianTranslation implements Translation {
         }
     }
 
-    private boolean isIreIrregular(String verb) throws IOException {
+    private boolean findIrregularities(String verb, String kindOfIrregularity) throws IOException {
         File projectDir = new File(System.getProperty("user.dir"));
-        File file = new File(projectDir, "./irregular_ire.txt");
+        File file = null;
+        if(kindOfIrregularity.equals(IRE_PRESENTE_INDICATIVO))
+            file = new File(projectDir, "./irregular_ire.txt");
+        else if(kindOfIrregularity.equals(ESSERE_PASSATO_PROSSIMO))
+            file = new File(projectDir, "./verb_ausiliare_essere.txt");
+
 
         BufferedReader reader =
                 new BufferedReader(new FileReader(file));
@@ -134,11 +141,11 @@ public class EnglishItalianTranslation implements Translation {
 
         return false;
     }
-    private String passatoProssimo(String root, String infinito, String pronoun) {
+    private String passatoProssimo(String root, String infinito, String pronoun) throws IOException {
         String passatoProssimo = null;
         String[] essere = {"sono","sei","è","siamo", "siete","sono"};
         String[] avere = {"ho","hai","ha","abbiamo","avete","hanno"};
-        String[] avereEssere = isReflective ? essere : avere;
+        String[] avereEssere = findIrregularities(root+infinito,ESSERE_PASSATO_PROSSIMO) ? essere : avere;
 
         switch (infinito) {
             case PRIMA_CONIUGAZIONE ->
@@ -270,7 +277,11 @@ public class EnglishItalianTranslation implements Translation {
                 return futuroSemplice(root,infinito,pronoun);
             }
             case PREFECT -> {
-                return passatoProssimo(root,infinito,pronoun);
+                try {
+                    return passatoProssimo(root,infinito,pronoun);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             case PAST -> {
                 return imperfettoIndicativo(root,infinito,pronoun);
