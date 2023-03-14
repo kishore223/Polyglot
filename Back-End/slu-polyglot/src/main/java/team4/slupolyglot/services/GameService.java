@@ -39,7 +39,7 @@ public class GameService {
 
                     return gameDtoFirst;
                 } else if (moduleId == MyConstants.MODULE_LEARNING_2) {
-                    String[] tenses = {PRESENT, FUTURE, PREFECT}; // todo tecnical debt
+                    String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
                     for (Verb verb : verbs) {
                         for (String generalPronoun : GENERAL_PRONOUNS) {
                             for (String tens : tenses) {

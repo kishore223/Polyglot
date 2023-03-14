@@ -173,6 +173,17 @@ public class EnglishItalianTranslation implements Translation {
         else
             return(ITALIAN_PRONOUNS[5] + " " + subFuturo + "anno");
     }
+    public String imperfettoIndicativo(String root, String infinito, String pronoun) {
+        String root_desinenza = root+infinito.charAt(0);
+
+        String[] coniugazioni = {"vo", "vi", "va", "vamo", "vate", "vano"};
+
+        for(int i = 0; i < ITALIAN_PRONOUNS.length; i++) {
+            if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[i]))
+                return(ITALIAN_PRONOUNS[i] + " " + root_desinenza + coniugazioni[i]);
+        }
+        return null;
+    }
 
     private static String[] takeRootAndInfinito(String verb) {
         int strLen = verb.length();
@@ -233,6 +244,9 @@ public class EnglishItalianTranslation implements Translation {
             }
             case PREFECT -> {
                 return passatoProssimo(root,infinito,pronoun);
+            }
+            case PAST -> {
+                return imperfettoIndicativo(root,infinito,pronoun);
             }
         }
 
