@@ -2,6 +2,10 @@ package team4.slupolyglot.model;
 
 import team4.slupolyglot.repositories.Translation;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -46,7 +50,11 @@ public class EnglishItalianTranslation implements Translation {
             isCereGere = true;
     }
 
-    private String present(String root, String infinito, String pronoun) {
+    private String presenteIndicativo(String root, String infinito, String pronoun) throws IOException {
+
+        if(isIreIrregular(root+infinito))
+            root = root+"isc";
+
         switch (infinito) {
             case PRIMA_CONIUGAZIONE -> {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
@@ -111,6 +119,21 @@ public class EnglishItalianTranslation implements Translation {
         }
     }
 
+    private boolean isIreIrregular(String verb) throws IOException {
+        File projectDir = new File(System.getProperty("user.dir"));
+        File file = new File(projectDir, "./irregular_ire.txt");
+
+        BufferedReader reader =
+                new BufferedReader(new FileReader(file));
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            if(line.equals(verb))
+                return true;
+        }
+
+        return false;
+    }
     private String passatoProssimo(String root, String infinito, String pronoun) {
         String passatoProssimo = null;
         String[] essere = {"sono","sei","è","siamo", "siete","sono"};
@@ -237,7 +260,11 @@ public class EnglishItalianTranslation implements Translation {
 
         switch (tense){
             case PRESENT -> {
-                return present(root,infinito,pronoun);
+                try {
+                    return presenteIndicativo(root,infinito,pronoun);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
             case FUTURE -> {
                 return futuroSemplice(root,infinito,pronoun);
