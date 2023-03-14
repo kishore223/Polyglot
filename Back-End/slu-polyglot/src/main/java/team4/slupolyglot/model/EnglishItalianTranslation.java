@@ -111,13 +111,13 @@ public class EnglishItalianTranslation implements Translation {
         }
     }
 
-    private void passatoprossimo(String root, String infinito) {
+    private String passatoProssimo(String root, String infinito, String pronoun) {
         String passatoProssimo = null;
         String[] essere = {"sono","sei","è","siamo", "siete","sono"};
         String[] avere = {"ho","hai","ha","abbiamo","avete","hanno"};
         String[] avereEssere = isReflective ? essere : avere;
 
-        switch (infinito){
+        switch (infinito) {
             case PRIMA_CONIUGAZIONE ->
                     passatoProssimo = root + "ato";
 
@@ -128,12 +128,12 @@ public class EnglishItalianTranslation implements Translation {
                     passatoProssimo = root + "ito";
         }
 
-        System.out.println("Io " + avereEssere[0] + " " + passatoProssimo);
-        System.out.println("Tu " + avereEssere[1] + " " + passatoProssimo);
-        System.out.println("Egli/Ella " + avereEssere[2] + " " + passatoProssimo); // lui/lei
-        System.out.println("Noi abbiamo " + avereEssere[3] + " " + passatoProssimo);
-        System.out.println("Voi avete " + avereEssere[4] + " " + passatoProssimo);
-        System.out.println("Essi/Esse " + avereEssere[5] + " " + passatoProssimo);
+        for(int i = 0; i < ITALIAN_PRONOUNS.length; i++){
+            if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[i]))
+                return(ITALIAN_PRONOUNS[i] + " " + avereEssere[i] + " " + passatoProssimo);
+        }
+
+        return null;
     }
 
     private String futuroSemplice(String root, String infinito, String pronoun) {
@@ -231,7 +231,9 @@ public class EnglishItalianTranslation implements Translation {
             case FUTURE -> {
                 return futuroSemplice(root,infinito,pronoun);
             }
-
+            case PREFECT -> {
+                return passatoProssimo(root,infinito,pronoun);
+            }
         }
 
         return null;

@@ -61,7 +61,7 @@ public class GameService {
     }
 
     private String getRandomTense() {
-        String[] tenses = {PRESENT, FUTURE};
+        String[] tenses = {PRESENT, FUTURE, PREFECT};
         Random random = new Random();
         int index = random.nextInt(tenses.length);
         return tenses[index];
