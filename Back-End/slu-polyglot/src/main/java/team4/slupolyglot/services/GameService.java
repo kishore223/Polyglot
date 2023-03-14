@@ -39,15 +39,17 @@ public class GameService {
 
                     return gameDtoFirst;
                 } else if (moduleId == MyConstants.MODULE_LEARNING_2) {
-
+                    String[] tenses = {PRESENT, FUTURE, PREFECT}; // todo tecnical debt
                     for (Verb verb : verbs) {
-                        int numberCombinations = 20;
-                        for(int i = 0; i < numberCombinations; i++){
-                            String features = getRandomPronoun() + "+" + getRandomTense();
-                            String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(),features);
-                            GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
-                                    ,translated,features,verb.getId(), verb.getUrlImage());
-                            gameDtoFirst.add(gameDtoEntry);
+                        for (String generalPronoun : GENERAL_PRONOUNS) {
+                            for (String tens : tenses) {
+                                String features = generalPronoun + "+" + tens;
+                                String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                                GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                                        , translated, features, verb.getId(), verb.getUrlImage());
+                                gameDtoFirst.add(gameDtoEntry);
+                            }
+
                         }
                     }
 
@@ -60,7 +62,7 @@ public class GameService {
         return gameDtoFirst;
     }
 
-    private String getRandomTense() {
+/*    private String getRandomTense() {
         String[] tenses = {PRESENT, FUTURE, PREFECT};
         Random random = new Random();
         int index = random.nextInt(tenses.length);
@@ -68,8 +70,8 @@ public class GameService {
     }
     private String getRandomPronoun() {
         Random random = new Random();
-        int index = random.nextInt(MyConstants.GENERAL_PRONOUNS.length);
-        return MyConstants.GENERAL_PRONOUNS[index];
-    }
+        int index = random.nextInt(GENERAL_PRONOUNS.length);
+        return GENERAL_PRONOUNS[index];
+    }*/
 
 }
