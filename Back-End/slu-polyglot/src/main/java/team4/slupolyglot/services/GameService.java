@@ -46,7 +46,7 @@ public class GameService {
                             String features = getRandomPronoun() + "+" + getRandomTense();
                             String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(),features);
                             GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
-                                    ,translated,features,verb.getId());
+                                    ,translated,features,verb.getId(), verb.getUrlImage());
                             gameDtoFirst.add(gameDtoEntry);
                         }
                     }

@@ -20,11 +20,12 @@ public class GameDto {
         this.urlImage = urlImage;
     }
     public GameDto(String englishVerb,String translatedVerb,
-                   String features,int id) {
+                   String features,int id, String urlImage) {
         this.id = id;
         this.englishVerb = englishVerb;
         this.translatedVerb = translatedVerb;
         this.features = features;
+        this.urlImage = urlImage;
     }
     public int getId() {
         return id;
