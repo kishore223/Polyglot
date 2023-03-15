@@ -31,13 +31,13 @@ public class GameService {
         switch(languageId){
             case MyConstants.ITALIAN :
                 switch (moduleId) {
-                    case MODULE_LEARNING_1 -> {
+                    case MODULE_LEARNING_1,MODULE_LEARNING_2-> {
                         GameLearningOne(verbs, gameDto);
                     }
-                    case MODULE_LEARNING_2 -> {
+                    case MODULE_LEARNING_3 -> {
                         LearningTwo(verbs, gameDto);
                     }
-                    case MODULE_LEARNING_3 -> {
+                    case MODULE_LEARNING_4 -> {
                         GameTwo(verbs,gameDto);
                     }
                 }
