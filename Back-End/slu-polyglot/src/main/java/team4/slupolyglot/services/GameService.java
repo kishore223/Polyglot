@@ -6,6 +6,7 @@ import team4.slupolyglot.MyConstants;
 import team4.slupolyglot.controller.request.GameRequest;
 import team4.slupolyglot.dto.GameDto;
 import team4.slupolyglot.model.EnglishItalianTranslation;
+import team4.slupolyglot.model.EnglishVerbs;
 import team4.slupolyglot.model.Verb;
 import team4.slupolyglot.repositories.VerbRepository;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class GameService {
         int moduleId = gameRequest.getModuleId();
         List<GameDto> gameDtoFirst = new ArrayList<>();
         List<Verb> verbs = verbRepository.findAll();
+        String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
 
         switch(languageId){
 
@@ -38,8 +40,27 @@ public class GameService {
                     }
 
                     return gameDtoFirst;
-                } else if (moduleId == MyConstants.MODULE_LEARNING_2) {
-                    String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
+                }
+                else if (moduleId == MyConstants.MODULE_LEARNING_2) {
+                    for (Verb verb : verbs) {
+                        if(verb.getEnglishVerb().equals("jump") || verb.getEnglishVerb().equals("exist")
+                        || verb.getEnglishVerb().equals("open")) {
+                            for (String tens : tenses) {
+                                for (String generalPronoun : GENERAL_PRONOUNS) {
+                                    EnglishVerbs englishVerbs =
+                                            new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun);
+                                    String features = generalPronoun + "+" + tens;
+                                    String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                                    GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                                            , translated, features, verb.getId(), verb.getUrlImage(),
+                                            englishVerbs.getConjugatedVerb());
+                                    gameDtoFirst.add(gameDtoEntry);
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (moduleId == MyConstants.MODULE_LEARNING_3) {
                     for (Verb verb : verbs) {
                         for (String generalPronoun : GENERAL_PRONOUNS) {
                             for (String tens : tenses) {

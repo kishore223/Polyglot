@@ -77,6 +77,8 @@ VALUES
     ('dance', 'ballare', 'https://images.unsplash.com/photo-1528747045269-3904f8c821bc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRhbmNlJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
     ('move', 'muovere', 'https://images.unsplash.com/photo-1561014820-1dfe741c623e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bW92ZSUyMGluJTIwY29sbGVjdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
     ('wait', 'aspettare', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
+    ('exist', 'esistere', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
+    ('open', 'aprire', 'https://c8.alamy.com/compit/gextc5/mano-destra-aprire-la-porta-isolata-su-sfondo-bianco-con-percorso-di-clipping-gextc5.jpg'),
     ('fight', 'combattere', 'https://images.unsplash.com/photo-1552949506-aa5e5fdcaf7a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZmlnaHQlMjBhbmQlMjBjb21iYXR0ZXJzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80');
 
 CREATE TABLE polyglot.Scores (

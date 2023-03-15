@@ -7,8 +7,9 @@ public final class MyConstants {
     public static final String ITALIAN = "2001";
     public static final String SPANISH = "2002";
 
-    public static final int MODULE_LEARNING_1 = 1;
-    public static final int MODULE_LEARNING_2 = 2;
+    public static final int MODULE_LEARNING_1 = 1; //learning1 & activity1
+    public static final int MODULE_LEARNING_2 = 2; //learning2
+    public static final int MODULE_LEARNING_3 = 3; //activity2
 
     public final static String[] GENERAL_PRONOUNS = {"1s","2s","3s","1p","2p","3p"};
     public final static String PRESENT = "PRES";
