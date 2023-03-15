@@ -75,7 +75,8 @@ public class GameService {
                 }
             }
         }
-        return gameDtoSecond;
+
+        return gameDtoSecond.subList(0,gameDtoSecond.size()-4);
     }
     private List<GameDto> GameTwo(List<Verb> verbs, List<GameDto> gameDtoThird) {
         for (Verb verb : verbs) {
