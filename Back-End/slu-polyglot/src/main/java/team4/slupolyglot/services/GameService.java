@@ -20,68 +20,80 @@ public class GameService {
 
     @Autowired
     private VerbRepository verbRepository;
+    private String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
 
     public List<GameDto> createGame(GameRequest gameRequest) {
 
         String languageId = gameRequest.getLanguageId();
         int moduleId = gameRequest.getModuleId();
-        List<GameDto> gameDtoFirst = new ArrayList<>();
+        List<GameDto> gameDto = new ArrayList<>();
         List<Verb> verbs = verbRepository.findAll();
-        String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
 
         switch(languageId){
-
             case MyConstants.ITALIAN :
-                if (moduleId == MyConstants.MODULE_LEARNING_1) {
-                    for (Verb verb : verbs) {
-                        GameDto gameDtoEntry = new GameDto(verb.getId(),verb.getEnglishVerb()
-                                ,verb.getItalianVerb(), verb.getUrlImage());
-                        gameDtoFirst.add(gameDtoEntry);
+                switch (moduleId) {
+                    case MODULE_LEARNING_1 -> {
+                        GameLearningOne(verbs, gameDto);
                     }
-
-                    return gameDtoFirst;
-                }
-                else if (moduleId == MyConstants.MODULE_LEARNING_2) {
-                    for (Verb verb : verbs) {
-                        if(verb.getEnglishVerb().equals("jump") || verb.getEnglishVerb().equals("exist")
-                        || verb.getEnglishVerb().equals("open")) {
-                            for (String tens : tenses) {
-                                for (String generalPronoun : GENERAL_PRONOUNS) {
-                                    EnglishVerbs englishVerbs =
-                                            new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun);
-                                    String features = generalPronoun + "+" + tens;
-                                    String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
-                                    GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
-                                            , translated, features, verb.getId(), verb.getUrlImage(),
-                                            englishVerbs.getConjugatedVerb());
-                                    gameDtoFirst.add(gameDtoEntry);
-                                }
-                            }
-                        }
+                    case MODULE_LEARNING_2 -> {
+                        LearningTwo(verbs, gameDto);
                     }
-                }
-                else if (moduleId == MyConstants.MODULE_LEARNING_3) {
-                    for (Verb verb : verbs) {
-                        for (String generalPronoun : GENERAL_PRONOUNS) {
-                            for (String tens : tenses) {
-                                String features = generalPronoun + "+" + tens;
-                                String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
-                                GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
-                                        , translated, features, verb.getId(), verb.getUrlImage());
-                                gameDtoFirst.add(gameDtoEntry);
-                            }
-
-                        }
+                    case MODULE_LEARNING_3 -> {
+                        GameTwo(verbs,gameDto);
                     }
-
-                    return gameDtoFirst;
                 }
                 break;
             case MyConstants.SPANISH :
                 break;
         }
+        return gameDto;
+    }
+
+    private List<GameDto> GameLearningOne(List<Verb> verbs, List<GameDto> gameDtoFirst){
+        for (Verb verb : verbs) {
+            GameDto gameDtoEntry = new GameDto(verb.getId(),verb.getEnglishVerb()
+                    ,verb.getItalianVerb(), verb.getUrlImage());
+            gameDtoFirst.add(gameDtoEntry);
+        }
         return gameDtoFirst;
     }
+    private List<GameDto> LearningTwo(List<Verb> verbs, List<GameDto> gameDtoSecond) {
+        for (Verb verb : verbs) {
+            if(verb.getEnglishVerb().equals("jump")
+                    || verb.getEnglishVerb().equals("exist")
+                    || verb.getEnglishVerb().equals("open")) {
+                for (String tens : tenses) {
+                    for (String generalPronoun : GENERAL_PRONOUNS) {
+                        EnglishVerbs englishVerbs =
+                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun);
+                        String features = generalPronoun + "+" + tens;
+                        String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                        GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                                , translated, features, verb.getId(), verb.getUrlImage(),
+                                englishVerbs.getConjugatedVerb());
+                        gameDtoSecond.add(gameDtoEntry);
+                    }
+                }
+            }
+        }
+        return gameDtoSecond;
+    }
+    private List<GameDto> GameTwo(List<Verb> verbs, List<GameDto> gameDtoThird) {
+        for (Verb verb : verbs) {
+            for (String generalPronoun : GENERAL_PRONOUNS) {
+                for (String tens : tenses) {
+                    String features = generalPronoun + "+" + tens;
+                    String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                    GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                            , translated, features, verb.getId(), verb.getUrlImage());
+                    gameDtoThird.add(gameDtoEntry);
+                }
+
+            }
+        }
+        return gameDtoThird;
+    }
+
 
 /*    private String getRandomTense() {
         String[] tenses = {PRESENT, FUTURE, PREFECT};
