@@ -21,9 +21,6 @@ public class EnglishItalianTranslation implements Translation {
 
     private boolean isCareGare = false;
     private boolean  isCiareGiare = false;
-    private boolean  isCereGere = false;
-    private boolean isIrregular = false; // ire
-
     private boolean isNegative = false;
 
     private static final String IRE_PRESENTE_INDICATIVO = "IRE_PRESENTE_INDICATIVO";

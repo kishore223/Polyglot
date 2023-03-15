@@ -11,7 +11,6 @@ import team4.slupolyglot.model.Verb;
 import team4.slupolyglot.repositories.VerbRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static team4.slupolyglot.MyConstants.*;
 
@@ -20,7 +19,7 @@ public class GameService {
 
     @Autowired
     private VerbRepository verbRepository;
-    private String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
+    private final String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
 
     public List<GameDto> createGame(GameRequest gameRequest) {
 
