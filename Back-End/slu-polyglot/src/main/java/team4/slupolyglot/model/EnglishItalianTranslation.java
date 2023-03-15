@@ -44,9 +44,6 @@ public class EnglishItalianTranslation implements Translation {
         else if(verbLen > 4 && ( verb.substring(verbLen-4).equals("care") ||
                 verb.substring(verbLen-4).equals("gare")))
             isCareGare = true;
-        else if(verbLen > 4 && (verb.substring(verbLen-4).equals("cere") ||
-                verb.substring(verbLen-4).equals("gere")))
-            isCereGere = true;
     }
 
     private String presenteIndicativo(String root, String infinito, String pronoun) throws IOException {
