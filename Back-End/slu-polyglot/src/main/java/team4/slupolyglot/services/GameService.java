@@ -75,8 +75,9 @@ public class GameService {
                 }
             }
         }
+        int multipleOfTen = gameDtoSecond.size() / 10;
 
-        return gameDtoSecond.subList(0,gameDtoSecond.size()-4);
+        return gameDtoSecond.subList(0,multipleOfTen*10);
     }
     private List<GameDto> GameTwo(List<Verb> verbs, List<GameDto> gameDtoThird) {
         for (Verb verb : verbs) {
