@@ -1,5 +1,7 @@
 package team4.slupolyglot.dto;
 
+import team4.slupolyglot.repositories.Translation;
+
 public class GameDto {
 
     private int id;
@@ -8,6 +10,10 @@ public class GameDto {
 
     private String urlImage;
 
+    private String features;
+
+    private String conjugateEnglishVerb;
+
     public GameDto(int id, String englishVerb, String translatedVerb,
                    String urlImage) {
         this.id = id;
@@ -15,9 +21,30 @@ public class GameDto {
         this.translatedVerb = translatedVerb;
         this.urlImage = urlImage;
     }
+    public GameDto(String englishVerb,String translatedVerb,
+                   String features,int id, String urlImage, String conjugateEnglishVerb) {
+        this.id = id;
+        this.englishVerb = englishVerb;
+        this.translatedVerb = translatedVerb;
+        this.features = features;
+        this.urlImage = urlImage;
+        this.conjugateEnglishVerb = conjugateEnglishVerb;
+    }
 
+    public GameDto(String englishVerb,String translatedVerb,
+                   String features,int id, String urlImage) {
+        this.id = id;
+        this.englishVerb = englishVerb;
+        this.translatedVerb = translatedVerb;
+        this.features = features;
+        this.urlImage = urlImage;
+    }
     public int getId() {
         return id;
+    }
+
+    public String getFeatures() {
+        return features;
     }
 
     public String getEnglishVerb() {
@@ -29,5 +56,9 @@ public class GameDto {
     }
     public String getUrlImage(){
         return urlImage;
+    }
+
+    public String getConjugateEnglishVerb() {
+        return conjugateEnglishVerb;
     }
 }

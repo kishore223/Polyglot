@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static team4.slupolyglot.MyConstants.*;
+
 @RestController
 @RequestMapping(path="/polyglot")
 @CrossOrigin
@@ -22,11 +24,16 @@ public class GameController {
 
     @PostMapping("/getGame")
     public ResponseEntity<Object> getGame(@RequestBody GameRequest gameRequest) {
-
-        List<GameDto> gameDtoFirst = gameService.createGameOne(gameRequest);
+        List<GameDto>  gameDto = gameService.createGame(gameRequest);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("game_first", gameDtoFirst);
+
+        switch(gameRequest.getModuleId()) {
+            case MODULE_LEARNING_1, MODULE_LEARNING_2 ->
+                    response.put("game_first", gameDto);
+            case MODULE_LEARNING_3, MODULE_LEARNING_4 ->
+                    response.put("game_second", gameDto);
+        }
 
         return ResponseEntity.ok(response);
     }
