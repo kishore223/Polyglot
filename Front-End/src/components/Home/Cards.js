@@ -1,71 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "./Cards.css";
 import CardItem from "./CardItem";
-import Cookies from "universal-cookie";
-import { useNavigate, createSearchParams } from "react-router-dom";
-import {API_BASE_URL} from "../../constants";
+import { useNavigate } from "react-router-dom";
+import { email } from "../Functions/CommonScripts.js";
+import { getRegisterLanguages, assignLang } from "../Functions/APIFunctions.js";
 
 function Cards() {
-  const cookieslog = new Cookies();
-  const email = cookieslog.get("user");
   const navigate = useNavigate();
-
   const [langDashCode, setLangDashCode] = useState([]);
   const [langDash, setLangDash] = useState([]);
-  const em = { email };
-  const sa = [];
-  const s = [];
+  const languageNameCode = [];
+  const languageName = [];
   const [langCount, setLangCount] = useState(0);
 
   const getLanguage = () => {
-    fetch(API_BASE_URL+"polyglot/player/getRegisteredLanguages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(em),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setLangCount(Object.keys(responseJson.RegisteredLanguages).length);
-        for (var i = 0; i < langCount; i++) {
-          s.push(responseJson.RegisteredLanguages[i]["languageName"]);
-          sa.push([
-            responseJson.RegisteredLanguages[i]["languageName"],
-            responseJson.RegisteredLanguages[i]["languageCode"],
-          ]);
-        }
-        setLangDash(s);
-        setLangDashCode(sa);
-      });
+    getRegisterLanguages(
+      email,
+      setLangCount,
+      languageName,
+      languageNameCode,
+      langCount,
+      setLangDash,
+      setLangDashCode
+    );
+  };
+
+  const cardsCheck = (e, languageId, language) => {
+    assignLang(email, languageId, language, navigate);
   };
 
   useEffect(() => {
     getLanguage();
   });
-
-  const cards = (e, languageId, language) => {
-    const lang = { email, languageId };
-    fetch(API_BASE_URL+"polyglot/player/assignLanguage", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(lang),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (responseJson.errorCode === "10201") {
-          navigate({
-            pathname: "/Dashboard",
-            search: createSearchParams({
-              lang: language,
-              languageId: languageId,
-            }).toString(),
-          });
-        }
-      });
-  };
 
   return (
     <div>
@@ -84,25 +50,27 @@ function Cards() {
                   src="/images/learn-italian-language-online-education-concept.jpg"
                   text="Learn Italian"
                   onClick={(e) => {
-                    cards(e, "2001", "Italian");
+                    cardsCheck(e, "2001", "Italian");
                   }}
                 />
               )}
               {!langDash.includes("French") && (
                 <CardItem
+                  className="card-item"
                   src="/images/learn-french-language-online-education-concept.jpg"
                   text="Learn French"
                   onClick={(e) => {
-                    cards(e, "2002", "French");
+                    cardsCheck(e, "2002", "French");
                   }}
                 />
               )}
               {!langDash.includes("Spanish") && (
                 <CardItem
+                  className="card-item"
                   src="/images/learn-spanish-language-online-education-concept.jpg"
                   text="Learn Spanish"
                   onClick={(e) => {
-                    cards(e, "2003", "Spanish");
+                    cardsCheck(e, "2003", "Spanish");
                   }}
                 />
               )}

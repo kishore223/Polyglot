@@ -48,10 +48,6 @@ button:hover {
   background-color: white !important;
 }
 
-.link-add {
-  margin-left: 5% !important;
-}
-
 button a {
   text-decoration: none !important;
   color: unset !important;

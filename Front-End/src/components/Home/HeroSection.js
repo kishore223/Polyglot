@@ -6,7 +6,7 @@ import "./HeroSection.css";
 function HeroSection() {
   return (
     <div className="hero-container">
-      <img class="img-home" src="/images/cropped.jpg" alt="Home_Image" />
+      <img className="img-home" src="./images/Home.jpg" alt="Home_Image" />
       <h1 className="card-head ital-rem">Polyglot</h1>
       <p className="p-home">
         Learning a new language is like discovering a new world.
