@@ -1,10 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Signup.css";
-import icon from "./icon.png";
-import Signup from "../components/Signup.js";
-import Login from "../components/Login.js";
-import Navbar from "./NavBar.js";
+import Signup from "./Signup.js";
+import Login from "./Login.js";
+import Navbar from "../Navbar/NavBar.js";
 
 function LogSign(props) {
   return (
@@ -19,7 +18,7 @@ function LogSign(props) {
             PolyGlot is a platform for language learning. This application
             enabling english speakers to learn a different language.
           </p>
-          <img className="img-acc" src={icon} alt="icon"></img>
+          <img className="img-acc" src="./images/icon.png" alt="icon"></img>
         </div>
         <div className="second-div col-lg-6">
           {props.active === "first" && <Login />}
