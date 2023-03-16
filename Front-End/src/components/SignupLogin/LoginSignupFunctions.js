@@ -2,22 +2,29 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Signup.css";
 import { BsXCircleFill, BsCheckCircleFill } from "react-icons/bs";
+import {
+  validEmail,
+  validUsername,
+  validPassword,
+} from "../Functions/APIFunctions.js";
 
 export function checkEmail(setMessage, setMessageEmail, email) {
   const regExp = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/;
   setMessage((e) => {
     if (regExp.test(email)) {
-      setMessageEmail("Valid Email");
+      setMessageEmail(validEmail);
       return setMessage(
         <span className="span-acc-pass">
-          <BsCheckCircleFill className="icon-acc" /> Valid Email
+          <BsCheckCircleFill className="icon-acc" />
+          Valid Email
         </span>
       );
     } else if (!regExp.test(email) && email !== "") {
       setMessageEmail("");
       return setMessage(
         <span className="span-acc-error">
-          <BsXCircleFill className="icon-acc" /> Invalid Email
+          <BsXCircleFill className="icon-acc" />
+          Invalid Email
         </span>
       );
     } else {
@@ -34,14 +41,16 @@ export function checkPass(setMessage, setMessagePassword, password) {
       setMessagePassword("");
       return setMessage(
         <span className="span-acc-error">
-          <BsXCircleFill className="icon-acc" /> Enter atleast 8 Characters
+          <BsXCircleFill className="icon-acc" />
+          Enter atleast 8 Characters
         </span>
       );
     } else if (regExp.test(password)) {
-      setMessagePassword("Valid Password");
+      setMessagePassword(validPassword);
       return setMessage(
         <span className="span-acc-pass">
-          <BsCheckCircleFill className="icon-acc" /> Valid Password
+          <BsCheckCircleFill className="icon-acc" />
+          Valid Password
         </span>
       );
     } else {
@@ -58,14 +67,16 @@ export function checkUser(setMessage, setMessageUsername, username) {
       setMessageUsername("");
       return setMessage(
         <span className="span-acc-error">
-          <BsXCircleFill className="icon-acc" /> Enter atleast 8 Characters
+          <BsXCircleFill className="icon-acc" />
+          Enter atleast 8 Characters
         </span>
       );
     } else if (regExp.test(username)) {
-      setMessageUsername("Valid Username");
+      setMessageUsername(validUsername);
       return setMessage(
         <span className="span-acc-pass">
-          <BsCheckCircleFill className="icon-acc" /> Valid Username
+          <BsCheckCircleFill className="icon-acc" />
+          Valid Username
         </span>
       );
     } else {
