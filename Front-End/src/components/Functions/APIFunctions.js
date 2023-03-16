@@ -3,7 +3,9 @@ import { API_BASE_URL } from "../../constants";
 import {
   signIn,
   signUp,
+  assignLanguage,
 } from "./APIUrl.js";
+import { createSearchParams } from "react-router-dom";
 
 export const cookieslog = new Cookies();
 export const cook_log = cookieslog.get("login");
@@ -75,6 +77,32 @@ export function signUpForm(
       } else if (responseJson.errorCode === internalError_2) {
         setMessageInvalid(userExist);
         empty();
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+export function assignLang(email, languageId, language, navigate) {
+  const lang = { email, languageId };
+  fetch(API_BASE_URL + assignLanguage, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(lang),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.errorCode === "10201") {
+        navigate({
+          pathname: "/Dashboard",
+          search: createSearchParams({
+            lang: language,
+            languageId: languageId,
+          }).toString(),
+        });
       }
     })
     .catch((err) => {
