@@ -1,11 +1,14 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import LogSign from "./LogSign.js";
-import Dashboard from "./Dashboard.js";
-import Learning1 from "./Learning1.js";
-import Quiz from "./Quiz.js";
-import { Home } from "./Home.js";
+import LogSign from "./SignupLogin/LogSign.js";
+import Dashboard from "./Dashboard/Dashboard.js";
+import Learning1 from "./Learning/Learning1.js";
+import Learning2 from "./Learning/Learning2.js";
+import Learning3 from "./Learning/Learning3.js";
+import Game1 from "./Game1/Game1.js";
+import Game2 from "./Game2/Game2.js";
+import { Home } from "./Home/Home.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -16,10 +19,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/Signup" element={<LogSign active="second" />} />
           <Route path="/Login" element={<LogSign active="first" />} />
+          <Route path="/Signup" element={<LogSign active="second" />} />
           <Route path="/Learning1" element={<Learning1 />} />
-          <Route path="/Quiz" element={<Quiz />} />
+          <Route path="/Learning2" element={<Learning2 />} />
+          <Route path="/Learning3" element={<Learning3 />} />
+          <Route path="/Activity1" element={<Game1 />} />
+          <Route path="/Activity2" element={<Game2 />} />
         </Routes>
       </BrowserRouter>
     </div>
