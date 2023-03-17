@@ -94,7 +94,7 @@ public class GameService {
                         String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
                                 , translated, features, verb.getId(), verb.getUrlImage(),
-                                englishVerbs.getConjugatedVerb());
+                                englishVerbs.getConjugatedVerb(),verb.getItalianVerb());
                         gameDtoSecond.add(gameDtoEntry);
                     }
                 }
