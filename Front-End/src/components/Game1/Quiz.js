@@ -58,8 +58,8 @@ function Quiz(props) {
             }}
           />
           <ProgressBar
-            now={Math.ceil((count + 1) * (100 / cardNo))}
-            label={`${Math.ceil((count + 1) * (100 / cardNo))}%`}
+            now={parseInt((count + 1) * (100 / cardNo))}
+            label={`${parseInt((count + 1) * (100 / cardNo))}%`}
             className="prg-bar"
           />
         </div>
