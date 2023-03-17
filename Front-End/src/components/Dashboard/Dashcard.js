@@ -1,20 +1,16 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
-import Card from "react-bootstrap/Card";
+import { Card, ProgressBar, Badge, Button, Nav } from "react-bootstrap";
 import { BsCardHeading } from "react-icons/bs";
-import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
 import { FaLanguage } from "react-icons/fa";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { createSearchParams, useNavigate } from "react-router-dom";
 import {
   MdIncompleteCircle,
   MdLocalActivity,
   MdNotStarted,
 } from "react-icons/md";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 function Lang(props) {
   return (
@@ -106,33 +102,36 @@ function Dashcard(props) {
             <Card.Title>
               <div className="card-title-main">
                 {props.heading}{" "}
-                {props.score <= 100 && props.score >= 0 && (
-                  <Badge className="badge-card-begin">Beginner</Badge>
-                )}
-                {props.score <= 100 && props.score >= 34 && (
-                  <Badge className="badge-card-inter">Intermediate</Badge>
-                )}
-                {props.score <= 100 && props.score >= 67 && (
-                  <Badge className="badge-card-adv">Advanced</Badge>
-                )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 0 && (
+                    <Badge className="badge-card-begin">Beginner</Badge>
+                  )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 34 && (
+                    <Badge className="badge-card-inter">Intermediate</Badge>
+                  )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 67 && (
+                    <Badge className="badge-card-adv">Advanced</Badge>
+                  )}
               </div>
               <p className="p-desc">{props.desc}</p>
-              {props.score === "100" && (
+              {Math.ceil(props.score) === 100 && (
                 <span className="span-acc span-pass">
                   <BsCheckCircleFill className="icon-acc" /> Completed
                 </span>
               )}
-              {props.score < 100 && props.score > 0 && (
+              {Math.ceil(props.score) < 100 && Math.ceil(props.score) > 0 && (
                 <span className="span-acc span-fail">
                   <MdIncompleteCircle className="icon-acc" /> In Progress
                 </span>
               )}
-              {props.score === "0" && (
+              {Math.ceil(props.score) === 0 && (
                 <span className="span-acc span-sta">
                   <MdNotStarted className="icon-acc" /> Not Started
                 </span>
               )}
-              {props.score === "0" && (
+              {Math.ceil(props.score) === 0 && props.game === "learn" && (
                 <Button
                   className="btn-resume"
                   onClick={(e) => learn_game(e, "Start")}
@@ -140,15 +139,25 @@ function Dashcard(props) {
                   START
                 </Button>
               )}
-              {props.score < 100 && props.score > 0 && (
+              {Math.ceil(props.score) === 0 && props.game === "game" && (
                 <Button
                   className="btn-resume"
-                  onClick={(e) => learn_game(e, "Resume")}
+                  onClick={(e) => learn_game(e, "Start")}
                 >
-                  RESUME
+                  START
                 </Button>
               )}
-              {props.score === "100" && (
+              {Math.ceil(props.score) < 100 &&
+                Math.ceil(props.score) > 0 &&
+                props.game === "learn" && (
+                  <Button
+                    className="btn-resume"
+                    onClick={(e) => learn_game(e, "Resume")}
+                  >
+                    RESUME
+                  </Button>
+                )}
+              {Math.ceil(props.score) === 100 && props.game === "learn" && (
                 <Button
                   className="btn-resume"
                   onClick={(e) => learn_game(e, "Restart")}
@@ -156,11 +165,21 @@ function Dashcard(props) {
                   RESTART
                 </Button>
               )}
+              {Math.ceil(props.score) > 0 &&
+                Math.ceil(props.score) <= 100 &&
+                props.game === "game" && (
+                  <Button
+                    className="btn-resume"
+                    onClick={(e) => learn_game(e, "Restart")}
+                  >
+                    RESTART
+                  </Button>
+                )}
             </Card.Title>
             <Card.Text className="txt-card">
               <ProgressBar
-                now={props.score}
-                label={`${props.score}%`}
+                now={Math.ceil(props.score)}
+                label={`${Math.ceil(props.score)}%`}
                 className="prog-card"
               />
             </Card.Text>

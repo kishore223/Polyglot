@@ -39,7 +39,8 @@ function Cards() {
         {!(
           langDash.includes("Italian") &&
           langDash.includes("French") &&
-          langDash.includes("Spanish")
+          langDash.includes("Spanish") &&
+          langDash.includes("Swahili")
         ) && <h1 className="card-home">Select a Language</h1>}
         <div className="cards__container">
           <div className="cards__wrapper">
@@ -74,12 +75,27 @@ function Cards() {
                   }}
                 />
               )}
+              {!langDash.includes("Swahili") && (
+                <CardItem
+                  className="card-item"
+                  src="/images/learn-swahili-language-online-education-concept.png"
+                  text="Learn Swahili"
+                  onClick={(e) => {
+                    cardsCheck(e, "2004", "Swahili");
+                  }}
+                />
+              )}
             </ul>
           </div>
         </div>
       </div>
       <div className="cards">
-        <h1 className="card-home">Enrolled Languages</h1>
+        {langDash.includes("Italian") |
+          langDash.includes("French") |
+          langDash.includes("Spanish") |
+          langDash.includes("Swahili") && (
+          <h1 className="card-home">Enrolled Languages</h1>
+        )}
         <div className="cards__container">
           <div className="cards__wrapper">
             <ul className="cards__items">
@@ -87,9 +103,11 @@ function Cards() {
                 <CardItem
                   className="card-item"
                   src={
-                    "/images/learn-" +
-                    lan[0] +
-                    "-language-online-education-concept.jpg"
+                    lan[0] === "Swahili"
+                      ? "/images/learn-swahili-language-online-education-concept.png"
+                      : "/images/learn-" +
+                        lan[0] +
+                        "-language-online-education-concept.jpg"
                   }
                   text={"Learn " + lan[0]}
                   onClick={(e) => {
