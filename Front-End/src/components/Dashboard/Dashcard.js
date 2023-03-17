@@ -102,33 +102,36 @@ function Dashcard(props) {
             <Card.Title>
               <div className="card-title-main">
                 {props.heading}{" "}
-                {props.score <= 100 && props.score >= 0 && (
-                  <Badge className="badge-card-begin">Beginner</Badge>
-                )}
-                {props.score <= 100 && props.score >= 34 && (
-                  <Badge className="badge-card-inter">Intermediate</Badge>
-                )}
-                {props.score <= 100 && props.score >= 67 && (
-                  <Badge className="badge-card-adv">Advanced</Badge>
-                )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 0 && (
+                    <Badge className="badge-card-begin">Beginner</Badge>
+                  )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 34 && (
+                    <Badge className="badge-card-inter">Intermediate</Badge>
+                  )}
+                {Math.ceil(props.score) <= 100 &&
+                  Math.ceil(props.score) >= 67 && (
+                    <Badge className="badge-card-adv">Advanced</Badge>
+                  )}
               </div>
               <p className="p-desc">{props.desc}</p>
-              {props.score === 100 && (
+              {Math.ceil(props.score) === 100 && (
                 <span className="span-acc span-pass">
                   <BsCheckCircleFill className="icon-acc" /> Completed
                 </span>
               )}
-              {props.score < 100 && props.score > 0 && (
+              {Math.ceil(props.score) < 100 && Math.ceil(props.score) > 0 && (
                 <span className="span-acc span-fail">
                   <MdIncompleteCircle className="icon-acc" /> In Progress
                 </span>
               )}
-              {props.score === 0 && (
+              {Math.ceil(props.score) === 0 && (
                 <span className="span-acc span-sta">
                   <MdNotStarted className="icon-acc" /> Not Started
                 </span>
               )}
-              {props.score === 0 && props.game === "learn" && (
+              {Math.ceil(props.score) === 0 && props.game === "learn" && (
                 <Button
                   className="btn-resume"
                   onClick={(e) => learn_game(e, "Start")}
@@ -136,7 +139,7 @@ function Dashcard(props) {
                   START
                 </Button>
               )}
-              {props.score === 0 && props.game === "game" && (
+              {Math.ceil(props.score) === 0 && props.game === "game" && (
                 <Button
                   className="btn-resume"
                   onClick={(e) => learn_game(e, "Start")}
@@ -144,8 +147,8 @@ function Dashcard(props) {
                   START
                 </Button>
               )}
-              {props.score < 100 &&
-                props.score > 0 &&
+              {Math.ceil(props.score) < 100 &&
+                Math.ceil(props.score) > 0 &&
                 props.game === "learn" && (
                   <Button
                     className="btn-resume"
@@ -154,7 +157,7 @@ function Dashcard(props) {
                     RESUME
                   </Button>
                 )}
-              {props.score === 100 && props.game === "learn" && (
+              {Math.ceil(props.score) === 100 && props.game === "learn" && (
                 <Button
                   className="btn-resume"
                   onClick={(e) => learn_game(e, "Restart")}
@@ -162,8 +165,8 @@ function Dashcard(props) {
                   RESTART
                 </Button>
               )}
-              {props.score > 0 &&
-                props.score <= 100 &&
+              {Math.ceil(props.score) > 0 &&
+                Math.ceil(props.score) <= 100 &&
                 props.game === "game" && (
                   <Button
                     className="btn-resume"
@@ -175,8 +178,8 @@ function Dashcard(props) {
             </Card.Title>
             <Card.Text className="txt-card">
               <ProgressBar
-                now={props.score}
-                label={`${props.score}%`}
+                now={Math.ceil(props.score)}
+                label={`${Math.ceil(props.score)}%`}
                 className="prog-card"
               />
             </Card.Text>
