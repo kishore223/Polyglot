@@ -1,5 +1,7 @@
 package team4.slupolyglot.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -12,7 +14,7 @@ public class Player {
   private String email;
 
   public Player(String email, String userName,
-  String score,String password) {
+  BigDecimal score,String password) {
     this.email = email;
     this.name = userName;
     this.password = password;
@@ -20,10 +22,10 @@ public class Player {
   }
 
   private String name;
-  private String score;
+  private BigDecimal score;
   private String password;
 
-  public String getScore() {
+  public BigDecimal getScore() {
     return score;
   }
 

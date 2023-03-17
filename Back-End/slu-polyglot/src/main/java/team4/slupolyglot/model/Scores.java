@@ -1,5 +1,7 @@
 package team4.slupolyglot.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,7 +23,7 @@ public class Scores {
     @JoinColumn(name = "Module", referencedColumnName = "id")
     private Module module;
 
-    private int score;
+    private BigDecimal score;
 
     public int getId() {
         return id;
@@ -55,11 +57,11 @@ public class Scores {
         this.module = module;
     }
 
-    public int getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 }

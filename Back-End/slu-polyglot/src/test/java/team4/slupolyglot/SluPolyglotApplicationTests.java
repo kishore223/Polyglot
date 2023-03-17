@@ -16,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +58,7 @@ public class SluPolyglotApplicationTests {
     public void testSignInPlayerSuccess() throws Exception {
         String email = "test@example.com";
         String password = "password";
-        Player player = new Player(email, "Test User", "100", password);
+        Player player = new Player(email, "Test User", new BigDecimal("100.00"), password);
         SignInRequestJson signInRequestJson = new SignInRequestJson(email, password);
 
         Mockito.when(playerRepository.findByEmail(email)).thenReturn(player);
@@ -132,7 +133,7 @@ public class SluPolyglotApplicationTests {
         String email = "test@example.com";
         String password = "password";
         String name = "Test User";
-        String score = "0";
+        BigDecimal score = new BigDecimal("0.00");
         Player player = new Player(email, name, score, password);
 
         Mockito.when(playerRepository.findByEmail(email)).thenReturn(null);
