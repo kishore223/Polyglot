@@ -147,3 +147,33 @@
   margin-bottom: 0;
   text-align: center;
 }
+
+.p-center {
+  text-align: center;
+  padding: 0;
+  font-size: 45px !important;
+  font-weight: 500;
+  color: #ff414d;
+  font-family: "Lilita One", cursive;
+  font-style: italic;
+}
+
+.font-card {
+  font-size: 2rem;
+  color: #ff414d;
+  font-family: "Jost", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.p-color {
+  color: #002d40;
+  font-size: 20px !important;
+  font-family: "Jost", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.head-color {
+  color: #ff414d;
+}

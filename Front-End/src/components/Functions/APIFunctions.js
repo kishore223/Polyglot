@@ -238,6 +238,122 @@ export function assignLang(email, languageId, language, navigate) {
     });
 }
 
+export function updateScore(
+  email,
+  languageId,
+  moduleId,
+  cardCount,
+  language,
+  navigate
+) {
+  const updScores = {
+    email,
+    languageId,
+    moduleId,
+    newScore: cardCount,
+  };
+  fetch(API_BASE_URL + updateModuleScore, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updScores),
+  });
+  navigate({
+    pathname: "/Dashboard",
+    search: createSearchParams({
+      lang: language,
+      languageId: languageId,
+    }).toString(),
+  });
+}
+
+export function getGameL1(
+  languageId,
+  setLangCount,
+  headings,
+  trans,
+  images,
+  setHeadCards,
+  setTransCards,
+  setImagesCards
+) {
+  const game = {
+    languageId,
+    moduleId: 1,
+  };
+  fetch(API_BASE_URL + getGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson["game_first"]).length);
+      for (var i = 0; i < Object.keys(responseJson["game_first"]).length; i++) {
+        headings.push(responseJson["game_first"][i]["englishVerb"]);
+        trans.push(responseJson["game_first"][i]["translatedVerb"]);
+        images.push(responseJson["game_first"][i]["urlImage"]);
+      }
+      setHeadCards(headings);
+      setTransCards(trans);
+      setImagesCards(images);
+    });
+}
+
+export function getGameL2(
+  languageId,
+  setLangCount,
+  headings,
+  trans,
+  images,
+  features,
+  conjugate,
+  italian,
+  setHeadCards,
+  setTransCards,
+  setImagesCards,
+  setFeaturesCards,
+  setConjugateCards,
+  setItalianCards
+) {
+  const game = {
+    languageId,
+    moduleId: 3,
+  };
+  fetch(API_BASE_URL + getGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson["game_second"]).length);
+      for (
+        var i = 0;
+        i < Object.keys(responseJson["game_second"]).length;
+        i++
+      ) {
+        headings.push(responseJson["game_second"][i]["englishVerb"]);
+        images.push(responseJson["game_second"][i]["urlImage"]);
+        trans.push(responseJson["game_second"][i]["translatedVerb"]);
+        features.push(responseJson["game_second"][i]["features"]);
+        conjugate.push(responseJson["game_second"][i]["conjugateEnglishVerb"]);
+        italian.push(responseJson["game_second"][i]["italianVerb"]);
+      }
+      setHeadCards(headings);
+      setTransCards(trans);
+      setImagesCards(images);
+      setFeaturesCards(features);
+      setConjugateCards(conjugate);
+      setItalianCards(italian);
+    });
+}
+
 export function getGameG1(
   languageId,
   setLangCount,
@@ -285,5 +401,39 @@ export function getGameG1(
       setOptionD(optD);
       setAnswers(ans);
       setImages(image);
+    });
+}
+
+export function getGameG2(
+  languageId,
+  setLangCount,
+  langCount,
+  trans,
+  images,
+  setTransCards,
+  setImagesCards
+) {
+  const game = {
+    languageId,
+    moduleId: 4,
+  };
+  fetch(API_BASE_URL + "polyglot/getGame", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson["game_second"]).length);
+      for (var i = 0; i < langCount; i++) {
+        trans.push(responseJson["game_second"][i]["translatedVerb"]);
+        if (i % 3 === 0) {
+          images.push(responseJson["game_second"][i]["urlImage"]);
+        }
+      }
+      setTransCards(trans);
+      setImagesCards(images);
     });
 }
