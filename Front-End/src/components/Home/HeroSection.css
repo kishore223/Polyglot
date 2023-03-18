@@ -70,7 +70,7 @@
 
 .btn-acc-home {
   color: #002d40;
-  padding: 1% 25%;
+  border: unset;
   font-weight: 700;
   font-size: 1.3rem;
   background-color: #fff;
