@@ -6,6 +6,8 @@ import {
   getRegisteredLanguages,
   getLanguageScores,
   assignLanguage,
+  updateModuleScore,
+  getGame,
 } from "./APIUrl.js";
 import { createSearchParams } from "react-router-dom";
 
@@ -163,12 +165,12 @@ export function getScores(
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      setScore1(Math.ceil(responseJson.learning_1.Score));
-      setScore2(Math.ceil(responseJson.learning_2.Score));
-      setScore3(Math.ceil(responseJson.learning_3.Score));
-      setScore4(Math.ceil(responseJson.activity_1.Score));
-      setScore5(Math.ceil(responseJson.activity_2.Score));
-      setScore6(Math.ceil(responseJson.activity_3.Score));
+      setScore1(responseJson.learning_1.Score);
+      setScore2(responseJson.learning_2.Score);
+      setScore3(responseJson.learning_3.Score);
+      setScore4(responseJson.activity_1.Score);
+      setScore5(responseJson.activity_2.Score);
+      setScore6(responseJson.activity_3.Score);
     })
     .catch((err) => {
       console.log(err);
@@ -233,5 +235,55 @@ export function assignLang(email, languageId, language, navigate) {
     })
     .catch((err) => {
       console.log(err);
+    });
+}
+
+export function getGameG1(
+  languageId,
+  setLangCount,
+  ques,
+  optA,
+  optB,
+  optC,
+  optD,
+  ans,
+  image,
+  setQuestions,
+  setOptionA,
+  setOptionB,
+  setOptionC,
+  setOptionD,
+  setAnswers,
+  setImages
+) {
+  fetch(API_BASE_URL + getGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      languageId,
+      moduleId: 2,
+    }),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson.game_first).length);
+      for (var i = 0; i < Object.keys(responseJson.game_first).length; i++) {
+        ques.push(responseJson.game_first[i]["question"]);
+        optA.push(responseJson.game_first[i]["optionA"].toUpperCase());
+        optB.push(responseJson.game_first[i]["optionB"].toUpperCase());
+        optC.push(responseJson.game_first[i]["optionC"].toUpperCase());
+        optD.push(responseJson.game_first[i]["optionD"].toUpperCase());
+        ans.push(responseJson.game_first[i]["answer"]);
+        image.push(responseJson.game_first[i]["urlImage"]);
+      }
+      setQuestions(ques);
+      setOptionA(optA);
+      setOptionB(optB);
+      setOptionC(optC);
+      setOptionD(optD);
+      setAnswers(ans);
+      setImages(image);
     });
 }
