@@ -417,7 +417,7 @@ export function getGameG2(
     languageId,
     moduleId: 4,
   };
-  fetch(API_BASE_URL + "polyglot/getGame", {
+  fetch(API_BASE_URL + getGame, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
