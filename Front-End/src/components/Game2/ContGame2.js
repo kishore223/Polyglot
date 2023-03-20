@@ -20,7 +20,6 @@ function ContGame2(props) {
   const cardAll = props.cardAll;
   const images = props.images;
   const [count, setCount] = useState(0);
-  const [cardCount, setCardCount] = useState(0);
   let [score, setScore] = useState(0);
   const numbers = [0, 1, 2];
   let nums_set = new Set();
@@ -81,16 +80,15 @@ function ContGame2(props) {
       direct(e);
     } else {
       setCount(count + 1);
-      setCardCount(cardCount + 3);
     }
     setShuffledCards(shuffleArray(numbers));
   };
 
   const check = (e) => {
     if (
-      dragCardTarget1 === trans[cardCount + nums[count]] &&
-      dragCardTarget2 === trans[cardCount + nums[count] + 2] &&
-      dragCardTarget3 === trans[cardCount + nums[count] + 1]
+      dragCardTarget1 === trans[nums[count]] &&
+      dragCardTarget2 === trans[nums[count] + 2] &&
+      dragCardTarget3 === trans[nums[count] + 1]
     ) {
       setScore(score + 100 / cardNo);
       if (count + 1 === cardNo) {
@@ -154,35 +152,26 @@ function ContGame2(props) {
             <Container className="mt-3">
               <Row>
                 <CardGame2
-                  cardNo={trans[shuffledCards[0] + cardCount + nums[count]]}
-                  cardTitle={trans[shuffledCards[0] + cardCount + nums[count]]}
+                  cardNo={trans[shuffledCards[0] + nums[count]]}
+                  cardTitle={trans[shuffledCards[0] + nums[count]]}
                   onDragStart={(e) =>
-                    handleDragStart(
-                      e,
-                      trans[shuffledCards[0] + cardCount + nums[count]]
-                    )
+                    handleDragStart(e, trans[shuffledCards[0] + nums[count]])
                   }
                   cardText="Drag this Verb."
                 />
                 <CardGame2
-                  cardNo={trans[shuffledCards[1] + cardCount + nums[count]]}
-                  cardTitle={trans[shuffledCards[1] + cardCount + nums[count]]}
+                  cardNo={trans[shuffledCards[1] + nums[count]]}
+                  cardTitle={trans[shuffledCards[1] + nums[count]]}
                   onDragStart={(e) =>
-                    handleDragStart(
-                      e,
-                      trans[shuffledCards[1] + cardCount + nums[count]]
-                    )
+                    handleDragStart(e, trans[shuffledCards[1] + nums[count]])
                   }
                   cardText="Drag this Verb."
                 />
                 <CardGame2
-                  cardNo={trans[shuffledCards[2] + cardCount + nums[count]]}
-                  cardTitle={trans[shuffledCards[2] + cardCount + nums[count]]}
+                  cardNo={trans[shuffledCards[2] + nums[count]]}
+                  cardTitle={trans[shuffledCards[2] + nums[count]]}
                   onDragStart={(e) =>
-                    handleDragStart(
-                      e,
-                      trans[shuffledCards[2] + cardCount + nums[count]]
-                    )
+                    handleDragStart(e, trans[shuffledCards[2] + nums[count]])
                   }
                   cardText="Drag this Verb."
                 />
@@ -196,7 +185,7 @@ function ContGame2(props) {
                   targetTitle="PRESENT TENSE"
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, "target1")}
-                  images={images[count]}
+                  images={images[nums[count]]}
                 />
                 <ContainerGame2
                   targetTextBefore="Drop the verb here."
@@ -206,7 +195,7 @@ function ContGame2(props) {
                   targetTitle="PAST TENSE"
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, "target2")}
-                  images={images[count]}
+                  images={images[nums[count]]}
                 />
                 <ContainerGame2
                   targetTextBefore="Drop the verb here."
@@ -216,7 +205,7 @@ function ContGame2(props) {
                   targetTitle="FUTURE TENSE"
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, "target3")}
-                  images={images[count]}
+                  images={images[nums[count]]}
                 />
               </Row>
             </Container>
