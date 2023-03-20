@@ -1,10 +1,12 @@
 package team4.slupolyglot.controller.request;
 
+import java.math.BigDecimal;
+
 public class PlayerLanguageRequestJson {
     private String email;
     private int languageId;
     private int moduleId;
-    private int newScore;
+    private BigDecimal newScore;
 
     public PlayerLanguageRequestJson() {
     }
@@ -15,7 +17,7 @@ public class PlayerLanguageRequestJson {
     }
 
     public PlayerLanguageRequestJson
-    (String email, int languageId,int moduleId,int newScore) {
+    (String email, int languageId,int moduleId,BigDecimal newScore) {
         this.email = email;
         this.languageId = languageId;
         this.moduleId = moduleId;
@@ -46,11 +48,11 @@ public class PlayerLanguageRequestJson {
         this.moduleId = moduleId;
     }
 
-    public int getNewScore() {
+    public BigDecimal getNewScore() {
         return newScore;
     }
 
-    public void setNewScore(int newScore) {
+    public void setNewScore(BigDecimal newScore) {
         this.newScore = newScore;
     }
 }

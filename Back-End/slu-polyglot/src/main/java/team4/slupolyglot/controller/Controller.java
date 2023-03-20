@@ -22,6 +22,7 @@ import team4.slupolyglot.model.Scores;
 import team4.slupolyglot.repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @CrossOrigin
@@ -48,7 +49,7 @@ public class Controller
     SIGN_UP_FAILURE_DESCRIPTION = "User already exsists";
     public static final String
     ASSIGN_PLAYER_SUCCESS_DESCRIPTION = "language Selected Successfully";
-    public static final int DEFAULT_SCORE = 0;
+    public static final BigDecimal DEFAULT_SCORE = new BigDecimal("0.00");
     public static final String REGISTERED_LANGUAGES =
     "RegisteredLanguages";
     private Map<String, String> responseValuesMap = new HashMap<String, String>(){{
@@ -107,14 +108,14 @@ public class Controller
             if(playerRepository.findByEmail(signUpRequestJson.getEmail()) == null){
                 //Creating a new user if the user details not available
                 playerRepository.save(new Player(signUpRequestJson.getEmail(),
-                signUpRequestJson.getName(),Integer.toString(DEFAULT_SCORE),
+                signUpRequestJson.getName(),DEFAULT_SCORE,
                 signUpRequestJson.getPassword()));
                 responseJson = new ResponseJson
                 (SIGN_UP_SUCCESS_CODE,
                 responseValuesMap.get(SIGN_UP_SUCCESS_CODE),
                 signUpRequestJson.getEmail(),
                 signUpRequestJson.getName(),
-                Integer.toString(DEFAULT_SCORE)
+                DEFAULT_SCORE
                 );
             }
             return responseJson;

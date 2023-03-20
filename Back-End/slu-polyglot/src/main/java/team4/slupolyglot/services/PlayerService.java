@@ -1,4 +1,6 @@
 package team4.slupolyglot.services;
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team4.slupolyglot.model.Languages;
@@ -51,13 +53,13 @@ public class PlayerService {
             score.setPlayer(player);
             score.setLanguage(language);
             score.setModule(module);
-            score.setScore(0);
+            score.setScore(new BigDecimal("0.00"));
             scoresRepository.save(score);
         }
     }
 
     public void updateScoreOfModule
-    (String email,int languageId,int moduleId,int newScore) {
+    (String email,int languageId,int moduleId,BigDecimal newScore) {
         Player player =
         playerRepository.findByEmail(email);
         Languages language =
