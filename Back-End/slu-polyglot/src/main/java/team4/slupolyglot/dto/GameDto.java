@@ -15,13 +15,11 @@ public class GameDto {
     private String conjugateEnglishVerb;
 //module two
     private String question;
-   
     private String optionA;
     private String optionB;
     private String optionC;
     private String optionD;
     private Character answer;
-
 
     public GameDto(int id, String englishVerb, String translatedVerb,
                    String urlImage) {
@@ -40,7 +38,6 @@ public class GameDto {
         this.conjugateEnglishVerb = conjugateEnglishVerb;
         this.italianVerb = italianVerb;
     }
-
     public GameDto(String englishVerb,String translatedVerb,
                    String features,int id, String urlImage) {
         this.id = id;
@@ -49,7 +46,6 @@ public class GameDto {
         this.features = features;
         this.urlImage = urlImage;
     }
-
     public GameDto(int id, String question, String optionA,
     String optionB,String optionC, String optionD,Character answer,String urlImage) {
         this.id = id;
