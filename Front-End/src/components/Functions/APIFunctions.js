@@ -429,9 +429,7 @@ export function getGameG2(
       setLangCount(Object.keys(responseJson["game_second"]).length);
       for (var i = 0; i < langCount; i++) {
         trans.push(responseJson["game_second"][i]["translatedVerb"]);
-        if (i % 3 === 0) {
-          images.push(responseJson["game_second"][i]["urlImage"]);
-        }
+        images.push(responseJson["game_second"][i]["urlImage"]);
       }
       setTransCards(trans);
       setImagesCards(images);

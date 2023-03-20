@@ -10,7 +10,7 @@ export function CommonScripts() {
 
 export function genRand(nums_set) {
   while (nums_set.size < 15) {
-    let num = Math.floor(Math.random() * 71) * 3;
+    let num = Math.floor(Math.random() * 69) * 3;
     nums_set.add(num);
   }
   nums_set = Array.from(nums_set).sort((a, b) => a - b);
