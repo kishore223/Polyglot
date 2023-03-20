@@ -24,6 +24,7 @@ public class GameService {
     private final String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
     public static char[] optionsArray = {'A', 'B', 'C', 'D'};
     public static int numberOfLearningActivities = 3;
+    public int numberOfOptions = 3;
     public List<GameDto> createGame(GameRequest gameRequest) {
 
         String languageId = gameRequest.getLanguageId();
@@ -122,7 +123,7 @@ public class GameService {
     public List<String> randomOptions(List<Verb> verbs,String answer){
         List<String> responseList = new ArrayList<String>();    
         Random rand = new Random();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < this.numberOfOptions; i++) {
             int index = rand.nextInt(verbs.size());
             String verbItalian = verbs.get(index).getItalianVerb();
             if (!verbItalian.equals(answer) && !responseList.contains(verbItalian)) {
