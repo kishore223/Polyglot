@@ -73,8 +73,8 @@ function SignupForm(props) {
               <Form.Control
                 type="text"
                 className="form-control input-acc"
-                id="inputName4"
-                placeHolder=" Enter a Username"
+                placeholder=" Enter a Username"
+                autoComplete="current-username"
                 value={name}
                 onKeyUp={(e) =>
                   checkUser(setMessUserSignUp, setMessageUsername, name)
@@ -101,6 +101,7 @@ function SignupForm(props) {
                 type="text"
                 className="form-control input-acc"
                 placeholder="Enter an Email"
+                autoComplete="current-email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={(e) =>
@@ -127,6 +128,7 @@ function SignupForm(props) {
                 type="password"
                 className="form-control input-acc"
                 placeholder="Enter a Password"
+                autoComplete="current-password"
                 value={password}
                 onKeyUp={(e) =>
                   checkPass(setMessPassSignUp, setMessagePassword, password)

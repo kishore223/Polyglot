@@ -15,7 +15,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 function Lang(props) {
   return (
     <Button className="btn-sty" onClick={props.onClick}>
-      <Nav.Link eventKey={props.language} className="nav-link-sty ">
+      <Nav.Link eventKey={props.language} className="nav-link-sty">
         <FaLanguage className="icon-sty" />
         <p className="span-sty">{props.language}</p>
       </Nav.Link>
@@ -176,13 +176,11 @@ function Dashcard(props) {
                   </Button>
                 )}
             </Card.Title>
-            <Card.Text className="txt-card">
-              <ProgressBar
-                now={Math.ceil(props.score)}
-                label={`${Math.ceil(props.score)}%`}
-                className="prog-card"
-              />
-            </Card.Text>
+            <ProgressBar
+              now={Math.ceil(props.score)}
+              label={`${Math.ceil(props.score)}%`}
+              className="prog-card"
+            />
           </div>
         </div>
       </Card.Body>

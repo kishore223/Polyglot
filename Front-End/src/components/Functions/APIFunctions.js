@@ -52,9 +52,7 @@ export function loginForm(
         empty();
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function signUpForm(
@@ -83,9 +81,7 @@ export function signUpForm(
         empty();
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function getLanguage(
@@ -111,9 +107,7 @@ export function getLanguage(
         setLangDashCode(responseJson.RegisteredLanguages[i]["languageCode"]);
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function getLanguageDashboard(
@@ -142,9 +136,7 @@ export function getLanguageDashboard(
       }
       setLangDashCode(sa);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function getScores(
@@ -172,9 +164,7 @@ export function getScores(
       setScore5(responseJson.activity_2.Score);
       setScore6(responseJson.activity_3.Score);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function getRegisterLanguages(
@@ -207,9 +197,7 @@ export function getRegisterLanguages(
       setLangDash(languageName);
       setLangDashCode(languageNameCode);
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function assignLang(email, languageId, language, navigate) {
@@ -233,9 +221,7 @@ export function assignLang(email, languageId, language, navigate) {
         });
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch();
 }
 
 export function updateScore(
@@ -300,7 +286,8 @@ export function getGameL1(
       setHeadCards(headings);
       setTransCards(trans);
       setImagesCards(images);
-    });
+    })
+    .catch();
 }
 
 export function getGameL2(
@@ -351,7 +338,8 @@ export function getGameL2(
       setFeaturesCards(features);
       setConjugateCards(conjugate);
       setItalianCards(italian);
-    });
+    })
+    .catch();
 }
 
 export function getGameG1(
@@ -401,7 +389,8 @@ export function getGameG1(
       setOptionD(optD);
       setAnswers(ans);
       setImages(image);
-    });
+    })
+    .catch();
 }
 
 export function getGameG2(
@@ -433,5 +422,6 @@ export function getGameG2(
       }
       setTransCards(trans);
       setImagesCards(images);
-    });
+    })
+    .catch();
 }

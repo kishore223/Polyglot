@@ -88,7 +88,6 @@ function Quiz(props) {
                     key={1}
                     className="btn-game1"
                     onClick={(e) => checkAnswer(e, "A")}
-                    block
                   >
                     {optionA[count]}
                   </Button>
@@ -98,7 +97,6 @@ function Quiz(props) {
                     key={2}
                     className="btn-game1 btn-game1-blue "
                     onClick={(e) => checkAnswer(e, "B")}
-                    block
                   >
                     {optionB[count]}
                   </Button>
@@ -110,7 +108,6 @@ function Quiz(props) {
                     key={3}
                     className="btn-game1 btn-game1-blue "
                     onClick={(e) => checkAnswer(e, "C")}
-                    block
                   >
                     {optionC[count]}
                   </Button>
@@ -120,7 +117,6 @@ function Quiz(props) {
                     key={4}
                     className="btn-game1"
                     onClick={(e) => checkAnswer(e, "D")}
-                    block
                   >
                     {optionD[count]}
                   </Button>

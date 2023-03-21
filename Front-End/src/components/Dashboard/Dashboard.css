@@ -19,7 +19,7 @@
 .span-sty {
   font-size: 1rem;
   display: inline;
-  margin: 10%;
+  margin: 10px;
   font-weight: 700;
 }
 
@@ -73,6 +73,7 @@
 }
 
 .prog-card {
+  margin-top: 5%;
   border-radius: 20px;
   background-color: rgba(255, 65, 77, 0.4);
   --bs-progress-bar-bg: rgb(0, 45, 64);
