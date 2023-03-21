@@ -90,10 +90,10 @@ function Cards() {
         </div>
       </div>
       <div className="cards">
-        {langDash.includes("Italian") |
-          langDash.includes("French") |
-          langDash.includes("Spanish") |
-          langDash.includes("Swahili") && (
+        {(langDash.includes("Italian") ||
+          langDash.includes("French") ||
+          langDash.includes("Spanish") ||
+          langDash.includes("Swahili")) && (
           <h1 className="card-home">Enrolled Languages</h1>
         )}
         <div className="cards__container">
@@ -101,6 +101,7 @@ function Cards() {
             <ul className="cards__items">
               {langDashCode.map((lan) => (
                 <CardItem
+                  key={lan[0]}
                   className="card-item"
                   src={
                     lan[0] === "Swahili"

@@ -77,6 +77,7 @@ function Dashboard() {
           <Nav className="flex-column nav-sty">
             {langDashCode.map((lan) => (
               <Lang
+                key={lan[0].toUpperCase()}
                 language={lan[0].toUpperCase()}
                 onClick={(e) => language(e, lan[1])}
               />

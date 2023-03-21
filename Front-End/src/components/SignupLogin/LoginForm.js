@@ -57,6 +57,7 @@ function LoginForm(props) {
                 type="text"
                 className="form-control input-acc"
                 placeholder="Email"
+                autoComplete="current-email"
                 value={userName}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={(e) =>
@@ -83,6 +84,7 @@ function LoginForm(props) {
                 type="password"
                 className="form-control input-acc"
                 placeholder="Password"
+                autoComplete="current-password"
                 value={password}
                 onKeyUp={(e) =>
                   checkPass(setMessPassLogin, setMessagePassword, password)

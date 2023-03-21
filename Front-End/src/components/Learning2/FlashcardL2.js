@@ -126,10 +126,10 @@ function FlashcardL2(props) {
               {/*<p className="p-desc">{descrp[count]}</p>*/}
               <div>
                 <p className="p-desc top-p">Conjugate English Verb</p>
-                <div class="table-responsive">
-                  <table class="table">
+                <div className="table-responsive">
+                  <table className="table">
                     <thead>
-                      <tr class="table-info">
+                      <tr className="table-info">
                         <th scope="col">No.</th>
                         <th scope="col">Conjugation</th>
                         <th scope="col">Italian Tense</th>
@@ -137,7 +137,7 @@ function FlashcardL2(props) {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="table-danger">
+                      <tr className="table-danger">
                         <th scope="row">1</th>
                         <td>
                           {features[parseInt((cardCount / 100) * cardNo) - 2]}
@@ -149,7 +149,7 @@ function FlashcardL2(props) {
                           {conjugate[parseInt((cardCount / 100) * cardNo) - 2]}
                         </td>
                       </tr>
-                      <tr class="table-danger">
+                      <tr className="table-danger">
                         <th scope="row">2</th>
                         <td>
                           {features[parseInt((cardCount / 100) * cardNo) - 1]}
@@ -161,7 +161,7 @@ function FlashcardL2(props) {
                           {conjugate[parseInt((cardCount / 100) * cardNo) - 1]}
                         </td>
                       </tr>
-                      <tr class="table-danger">
+                      <tr className="table-danger">
                         <th scope="row">3</th>
                         <td>
                           {features[parseInt((cardCount / 100) * cardNo)]}

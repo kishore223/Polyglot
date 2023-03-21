@@ -38,14 +38,13 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
             <Button className="btn-nav link">
-              <NavLink exact to="/Home" activeClassName="active">
+              <NavLink to="/Home" className="active">
                 HOME
               </NavLink>
             </Button>
             {checkDash() !== 0 && (
               <Button className="btn-nav link">
                 <NavLink
-                  exact
                   to={
                     email === undefined
                       ? "/Login"
@@ -54,7 +53,7 @@ function NavBar() {
                         "&languageId=" +
                         langDashCode
                   }
-                  activeClassName="active"
+                  className="active"
                 >
                   DASHBOARD
                 </NavLink>
@@ -64,7 +63,7 @@ function NavBar() {
             <Button className="btn-nav link">CONTACT</Button>
             {email === undefined && (
               <Button className="btn-nav link-sign">
-                <NavLink exact to="/Login" activeClassName="active">
+                <NavLink to="/Login" className="active">
                   LOGIN/SIGNUP
                 </NavLink>
               </Button>
@@ -75,11 +74,7 @@ function NavBar() {
                 className="btn-nav link-sign-two"
                 title={email.split("@")[0].toUpperCase()}
               >
-                <NavLink
-                  exact
-                  to="/Dashboard"
-                  activeClassName="active"
-                ></NavLink>
+                <NavLink to="/Dashboard" className="active"></NavLink>
                 <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
               </DropdownButton>
             )}
