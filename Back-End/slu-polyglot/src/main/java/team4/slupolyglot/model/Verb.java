@@ -1,6 +1,8 @@
 package team4.slupolyglot.model;
 
 import jakarta.persistence.*;
+import team4.slupolyglot.MyConstants;
+import team4.slupolyglot.repositories.Translation;
 
 @Entity
 @Table(name = "verbs")
@@ -46,6 +48,10 @@ public class Verb {
 
     public String getUrlImage() {
         return urlImage;
+    }
+
+    public String getTranslatedVerb(Translation translation, String features) {
+        return translation.translate(this,features);
     }
 
     public void setUrlImage(String urlImage) {

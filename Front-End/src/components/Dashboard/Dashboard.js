@@ -2,44 +2,18 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
 import { Lang, Dashcard } from "./Dashcard.js";
-import Navbar from "./NavBar.js";
+import Navbar from "../Navbar/NavBar.js";
 import Nav from "react-bootstrap/Nav";
-import BgLearning from "./Bg-Learning_1.svg";
-import Cookies from "universal-cookie";
+import BgLearning from "../Bg-Learning_1.svg";
 import { useSearchParams } from "react-router-dom";
-import {API_BASE_URL} from "../constants";
+import { getLanguageDashboard, getScores } from "../Functions/APIFunctions.js";
+import { email } from "../Functions/CommonScripts.js";
 
 function Dashboard() {
-  const cookieslog = new Cookies();
-  const email = cookieslog.get("user");
-
   const [langDashCode, setLangDashCode] = useState([]);
-  const em = { email };
-  const sa = [];
   const [langCount, setLangCount] = useState(0);
 
-  const getLanguage = () => {
-    fetch(API_BASE_URL+"polyglot/player/getRegisteredLanguages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(em),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setLangCount(Object.keys(responseJson.RegisteredLanguages).length);
-        for (var i = 0; i < langCount; i++) {
-          sa.push([
-            responseJson.RegisteredLanguages[i]["languageName"],
-            responseJson.RegisteredLanguages[i]["languageCode"],
-          ]);
-        }
-        setLangDashCode(sa);
-      });
-  };
-
-  getLanguage();
+  getLanguageDashboard(email, setLangCount, langCount, setLangDashCode);
 
   const [searchparams] = useSearchParams();
   const [lang, setLang] = useState(searchparams.get("lang"));
@@ -51,25 +25,6 @@ function Dashboard() {
   const [score5, setScore5] = useState(0);
   const [score6, setScore6] = useState(0);
   const scores = { email, languageId };
-
-  const getScores = () => {
-    fetch(API_BASE_URL+"polyglot/player/getLanguageScores", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(scores),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setScore1(responseJson.learning_1.Score);
-        setScore2(responseJson.learning_2.Score);
-        setScore3(responseJson.learning_3.Score);
-        setScore4(responseJson.activity_1.Score);
-        setScore5(responseJson.activity_2.Score);
-        setScore6(responseJson.activity_3.Score);
-      });
-  };
 
   const myStyle = {
     backgroundImage: `url(${BgLearning})`,
@@ -88,12 +43,30 @@ function Dashboard() {
     } else if (langCode === 2003) {
       setLang("Spanish");
       setLanguageId("2003");
+    } else if (langCode === 2004) {
+      setLang("Swahili");
+      setLanguageId("2004");
     }
-
-    getScores();
+    getScores(
+      scores,
+      setScore1,
+      setScore2,
+      setScore3,
+      setScore4,
+      setScore5,
+      setScore6
+    );
   };
 
-  getScores();
+  getScores(
+    scores,
+    setScore1,
+    setScore2,
+    setScore3,
+    setScore4,
+    setScore5,
+    setScore6
+  );
 
   return (
     <div>
@@ -104,6 +77,7 @@ function Dashboard() {
           <Nav className="flex-column nav-sty">
             {langDashCode.map((lan) => (
               <Lang
+                key={lan[0].toUpperCase()}
                 language={lan[0].toUpperCase()}
                 onClick={(e) => language(e, lan[1])}
               />
