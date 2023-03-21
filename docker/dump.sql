@@ -1,94 +1,167 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for macos13.0 (x86_64)
+--
+-- Host: localhost    Database: polyglot
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `languages`
+--
 grant all on polyglot.* to 'springuser'@'%';
 
-CREATE TABLE polyglot.player (
-  email varchar(255) NOT NULL,
-  name varchar(255) NOT NULL,
-  score int DEFAULT '0',
-  password varchar(255) NOT NULL,
-  PRIMARY KEY (email)
-);
+DROP TABLE IF EXISTS `languages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `languages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2005 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE polyglot.Languages (
-  id INT PRIMARY KEY auto_increment,
-  name VARCHAR(255) NOT NULL UNIQUE
-);
-ALTER TABLE polyglot.Languages AUTO_INCREMENT = 2001;
+--
+-- Dumping data for table `languages`
+--
 
-INSERT INTO polyglot.Languages (name) VALUES ('Italian');
-INSERT INTO polyglot.Languages (name) VALUES ('Spanish');
+LOCK TABLES `languages` WRITE;
+/*!40000 ALTER TABLE `languages` DISABLE KEYS */;
+INSERT INTO `languages` VALUES (2002,'French'),(2001,'Italian'),(2003,'Spanish'),(2004,'Swahili');
+/*!40000 ALTER TABLE `languages` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE polyglot.Modules (
-     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255)
-);
+--
+-- Table structure for table `modules`
+--
 
-INSERT INTO polyglot.Modules (name)
-VALUES
-('activity_1'),
-('learning_1'),
-('activity_2'),
-('learning_2'),
-('activity_3'),
-('learning_3');
+DROP TABLE IF EXISTS `modules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `modules` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE verbs (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  english_verb VARCHAR(255),
-  italian_verb VARCHAR(255),
-  url_image VARCHAR(255)
-);
+--
+-- Dumping data for table `modules`
+--
 
-INSERT INTO verbs (english_verb, italian_verb, url_image)
-VALUES ('jump', 'saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw');
+LOCK TABLES `modules` WRITE;
+/*!40000 ALTER TABLE `modules` DISABLE KEYS */;
+INSERT INTO `modules` VALUES (1,'activity_1'),(2,'learning_1'),(3,'activity_2'),(4,'learning_2'),(5,'activity_3'),(6,'learning_3');
+/*!40000 ALTER TABLE `modules` ENABLE KEYS */;
+UNLOCK TABLES;
 
-INSERT INTO verbs (english_verb, italian_verb, url_image)
-VALUES ('read', 'leggere','https://cs.ilgiardinodeilibri.it/data/spec/big/leggere-fa-bene-speciale.jpg?_=1647342546');
+--
+-- Table structure for table `player`
+--
 
-INSERT INTO verbs (english_verb, italian_verb, url_image)
-VALUES ('write', 'scrivere','https://laricerca.loescher.it/images/stories/istruzione/WRW/mano.jpg');
-INSERT INTO polyglot.verbs (english_verb, italian_verb, url_image) 
-VALUES 
-    ('swim', 'nuotare', 'https://images.unsplash.com/photo-1560518883-86fe089f6d48?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c3dpbSUyMGF0JTIwdGhlJTIwc3VwcG9ydHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('fly', 'volare', 'https://images.unsplash.com/photo-1605088121816-d3f9c9ab6354?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGZseSUyMGZseW5pbmclMjBjb3ZlcmluZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('study', 'studiare', 'https://images.unsplash.com/photo-1549911586-44f469eee0a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c3R1ZGllcyUyMGluJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('work', 'lavorare', 'https://images.unsplash.com/photo-1579887436613-39a92a1d2c4d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya3MlMjBjb21wYW55fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('run', 'correre', 'https://images.unsplash.com/photo-1574455777171-9c6f52e6b1c6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHJ1bnMlMjBjb3ZlcmluZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('talk', 'parlare', 'https://images.unsplash.com/photo-1612901191247-01cc12f37a67?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGFsa3MlMjBjb21wYW55fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('sing', 'cantare', 'https://images.unsplash.com/photo-1597570915632-05d8a26fc74d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHNpbmclMjBjb3ZlcmluZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('cook', 'cucinare', 'https://images.unsplash.com/photo-1542094774-5f46ad1b048e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29vayUyMGNvbXBhbnl8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('clean', 'pulire', 'https://images.unsplash.com/photo-1533226300569-94b7e81f6ab5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2xlYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('draw', 'disegnare', 'https://images.unsplash.com/photo-1544209628-36e8e1aafc88?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGRyYXdzJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('paint', 'dipingere', 'https://images.unsplash.com/photo-1557126364-89f0e4e4b20e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHBhaW50JTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('laugh', 'ridere', 'https://images.unsplash.com/photo-1542716203-7a6e25e8f7a2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGF1Z2glMjBjb21wYW55fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('cry', 'piangere', 'https://images.unsplash.com/photo-1614738313196-9fc6d7df2334?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y3J5cHRvJTIwd2FsbGV0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('speak', 'parlare', 'https://images.unsplash.com/photo-1528925080181-d35aa1d666fe?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyc29uJTIwd2l0aCUyMGxpdmVzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('watch', 'guardare', 'https://images.unsplash.com/photo-1553674909-7e748ce3bda5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2F0Y2glMjBjb21wYW55fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('eat', 'mangiare', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZWF0JTIwd29tZW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('drink', 'bere', 'https://images.unsplash.com/photo-1595867199376-eb9c9dfa5662?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZHJpbmtzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('sleep', 'dormire', 'https://images.unsplash.com/photo-1620970339041-79d01b15a8a6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHNsZWVwJTIwd2l0aCUyMGxpdmVzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-('wake', 'svegliare', 'https://images.unsplash.com/photo-1534050354057-a1bb2d3cb3be?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHdhc2tlciUyMGxhcHRvcHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('go', 'andare', 'https://images.unsplash.com/photo-1593720210263-9ac44737b421?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Z29vZ2xlJTIwY29tcGFueXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('think', 'pensare', 'https://images.unsplash.com/photo-1517524005126-1c7c9c9d5158?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGhpbmtlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('listen', 'ascoltare', 'https://www.impresadigitale.it/wp-content/uploads/2020/08/ascoltare.jpg'),
-    ('read', 'leggere', 'https://images.unsplash.com/photo-1569144671420-53929d15e3a3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHJlYWRzJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('write', 'scrivere', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2NyaXZlcmV8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('play', 'giocare', 'https://images.unsplash.com/photo-1609708648119-9e8191fc3e3e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8cGxheSUyMGZyb250JTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('drive', 'guidare', 'https://images.unsplash.com/photo-1598986966807-93806df1b6f5?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fGRyaXZlJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('dance', 'ballare', 'https://images.unsplash.com/photo-1528747045269-3904f8c821bc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGRhbmNlJTIwY29udHJvbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('move', 'muovere', 'https://images.unsplash.com/photo-1561014820-1dfe741c623e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bW92ZSUyMGluJTIwY29sbGVjdGlvbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('wait', 'aspettare', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('exist', 'esistere', 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80'),
-    ('open', 'aprire', 'https://c8.alamy.com/compit/gextc5/mano-destra-aprire-la-porta-isolata-su-sfondo-bianco-con-percorso-di-clipping-gextc5.jpg'),
-    ('fight', 'combattere', 'https://images.unsplash.com/photo-1552949506-aa5e5fdcaf7a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8ZmlnaHQlMjBhbmQlMjBjb21iYXR0ZXJzfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80');
+DROP TABLE IF EXISTS `player`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `player` (
+  `email` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `score` decimal(10,3) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE polyglot.Scores (
-    id INT NOT NULL AUTO_INCREMENT,
-    email varchar(255),
-    Language INT,
-    Module INT,
-    Score INT,
-    PRIMARY KEY (id),
-    FOREIGN KEY (email) REFERENCES player(email),
-    FOREIGN KEY (Language) REFERENCES Languages(id),
-    FOREIGN KEY (Module) REFERENCES Modules(id)
-);
+--
+-- Dumping data for table `player`
+--
+
+LOCK TABLES `player` WRITE;
+/*!40000 ALTER TABLE `player` DISABLE KEYS */;
+INSERT INTO `player` VALUES ('asd@asd.it','asdasdasd',0.000,'asdasdasd'),('kscannee@gmail.com','kscannee',0.000,'kscannnee'),('kscanneee@gmail.com','kscanneee',0.000,'kscanneee'),('priyal@gmail.co','PriyalPatel',0.000,'pripripri'),('priyal@sgmail.co','dsdasdas',0.000,'pripripri'),('priyal1@gmail.co','PriyalPatel',0.000,'pripripri'),('sandy@gmail.com','sandysandy',0.000,'sandysandy');
+/*!40000 ALTER TABLE `player` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `scores`
+--
+
+DROP TABLE IF EXISTS `scores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `scores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `Email` varchar(255) DEFAULT NULL,
+  `Language` int DEFAULT NULL,
+  `Module` int DEFAULT NULL,
+  `Score` decimal(10,3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKf38dnajrehdyjpilxhaid5lta` (`Language`),
+  KEY `FKrnkcbb23n0mviw1olrpy3j45d` (`Module`),
+  KEY `FK7fr4unvsv1bsph22dd0trwqsn` (`Email`),
+  CONSTRAINT `FK7fr4unvsv1bsph22dd0trwqsn` FOREIGN KEY (`Email`) REFERENCES `player` (`email`),
+  CONSTRAINT `FKf38dnajrehdyjpilxhaid5lta` FOREIGN KEY (`Language`) REFERENCES `languages` (`id`),
+  CONSTRAINT `FKrnkcbb23n0mviw1olrpy3j45d` FOREIGN KEY (`Module`) REFERENCES `modules` (`id`),
+  CONSTRAINT `scores_ibfk_1` FOREIGN KEY (`Email`) REFERENCES `player` (`email`),
+  CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`Language`) REFERENCES `languages` (`id`),
+  CONSTRAINT `scores_ibfk_3` FOREIGN KEY (`Module`) REFERENCES `modules` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `scores`
+--
+
+LOCK TABLES `scores` WRITE;
+/*!40000 ALTER TABLE `scores` DISABLE KEYS */;
+INSERT INTO `scores` VALUES (85,'priyal@gmail.co',2001,1,0.000),(86,'priyal@gmail.co',2001,2,0.000),(87,'priyal@gmail.co',2001,3,0.000),(88,'priyal@gmail.co',2001,4,0.000),(89,'priyal@gmail.co',2001,5,0.000),(90,'priyal@gmail.co',2001,6,0.000);
+/*!40000 ALTER TABLE `scores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `verbs`
+--
+
+DROP TABLE IF EXISTS `verbs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `verbs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `english_verb` varchar(255) DEFAULT NULL,
+  `italian_verb` varchar(255) DEFAULT NULL,
+  `url_image` varchar(255) DEFAULT NULL,
+  `translated_verb` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `verbs`
+--
+
+LOCK TABLES `verbs` WRITE;
+/*!40000 ALTER TABLE `verbs` DISABLE KEYS */;
+INSERT INTO `verbs` VALUES (1,'swim','nuotare','https://i.pinimg.com/564x/e4/cf/f8/e4cff885de1bea8c2a8f4e8d9022c16f.jpg',NULL),(2,'fly','volare','https://i.pinimg.com/564x/bb/2c/64/bb2c64a126f3eef15e013ec295387495.jpg',NULL),(3,'study','studiare','https://i.pinimg.com/564x/7b/bb/d2/7bbbd2e312172a811eee1a467e90c41a.jpg',NULL),(4,'work','lavorare','https://i.pinimg.com/564x/1b/f8/1e/1bf81e4bf10490ddb396fa2b9ea2a799.jpg',NULL),(5,'run','correre','https://i.pinimg.com/564x/d9/3e/ad/d93eadf81d1017d7a1291fbb43987e60.jpg',NULL),(6,'talk','parlare','https://i.pinimg.com/564x/73/4f/4e/734f4e32b659003e02da4b7401885d02.jpg',NULL),(7,'sing','cantare','https://i.pinimg.com/564x/d9/76/34/d97634a3930f0b44d7371fe8dc3a3ec3.jpg',NULL),(8,'cook','cucinare','https://i.pinimg.com/564x/af/85/e7/af85e749d95240594036c33594e83fb9.jpg',NULL),(9,'clean','pulire','https://i.pinimg.com/564x/1f/30/c0/1f30c0838364738df2efd0ea10dec830.jpg',NULL),(10,'draw','disegnare','https://i.pinimg.com/564x/b3/a0/ec/b3a0ecf4a61737fb7237a828ec3ca34f.jpg',NULL),(11,'paint','dipingere','https://i.pinimg.com/564x/c5/c7/96/c5c79612f19e98b2c7dbce0f0daff552.jpg',NULL),(12,'laugh','ridere','https://i.pinimg.com/564x/46/5c/9c/465c9c33ae0d6e9348b436fe4edddcf3.jpg',NULL),(13,'cry','piangere','https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',NULL),(14,'speak','parlare','https://i.pinimg.com/564x/41/d9/2d/41d92d07cc3a7c9903bab266a59dfe5c.jpg',NULL),(15,'watch','guardare','https://i.pinimg.com/564x/0d/79/4e/0d794e8ef41cb7e9cb8323eca335def5.jpg',NULL),(16,'eat','mangiare','https://i.pinimg.com/564x/b4/55/e5/b455e585d8dac4f99fcf22ca9e2829f8.jpg',NULL),(17,'drink','bere','https://i.pinimg.com/564x/c3/17/fe/c317fe013fedba61fe970109207b691c.jpg',NULL),(18,'sleep','dormire','https://i.pinimg.com/564x/d4/e2/4d/d4e24d3a5df06ed5e8c1a89d823e5fe8.jpg',NULL),(19,'wake','svegliare','https://i.pinimg.com/564x/0a/98/b2/0a98b2c1c9b18a03167ec3575453330f.jpg',NULL),(20,'go','andare','https://i.pinimg.com/564x/65/95/46/659546693c3a1cd6f441a57f10be6507.jpg',NULL),(21,'think','pensare','https://i.pinimg.com/564x/a2/21/40/a2214003491d4cf70d500a7f49e04826.jpg',NULL),(22,'listen','ascoltare','https://i.pinimg.com/564x/6d/78/7d/6d787dfcd5a76f412b9ae9c31a11b267.jpg',NULL),(23,'read','leggere','https://i.pinimg.com/564x/f7/8f/ec/f78fec21ecf4e824ea0a16d4b3e82f29.jpg',NULL),(24,'write','scrivere','https://i.pinimg.com/564x/ba/36/ae/ba36ae0fa1f4b288ca609661a0386716.jpg',NULL),(25,'play','giocare','https://i.pinimg.com/564x/8f/17/b6/8f17b6705b1b86be17cf784b1dbb0cd5.jpg',NULL),(26,'drive','guidare','https://i.pinimg.com/564x/38/a1/0b/38a10ba1d6b9245c1a885b08ffa5a421.jpg',NULL),(27,'dance','ballare','https://i.pinimg.com/564x/f2/be/49/f2be49f16e7e7bc9acb6487d19040b05.jpg',NULL),(28,'move','muovere','https://i.pinimg.com/564x/d1/1a/1d/d11a1d6b931ac8ef32c4cc39bb685bb7.jpg',NULL),(29,'wait','aspettare','https://i.pinimg.com/564x/d6/8c/74/d68c7428c8656b9eb29aea504efb2780.jpg',NULL),(30,'fight','combattere','https://i.pinimg.com/564x/49/f5/a0/49f5a0d5b36d87ae3a0459676857778d.jpg',NULL),(31,'jump','saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw',NULL),(32,'travel','viaggiare','https://media.istockphoto.com/id/1285301614/photo/young-man-arms-outstretched-by-the-sea-at-sunrise-enjoying-freedom-and-life-people-travel.jpg?s=612x612&w=0&k=20&c=0QW6GnkuFNYcPZhy26XVHuTc2avJTK8u6l_1iT0SlZk=',NULL),(33,'exist','esistere','https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',NULL),(34,'open','aprire','https://c8.alamy.com/compit/gextc5/mano-destra-aprire-la-porta-isolata-su-sfondo-bianco-con-percorso-di-clipping-gextc5.jpg',NULL);
+/*!40000 ALTER TABLE `verbs` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-03-21 11:25:08
+
