@@ -1,11 +1,11 @@
 package team4.slupolyglot.model;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.ClassPathResource;
 import team4.slupolyglot.repositories.Translation;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -115,17 +115,18 @@ public class EnglishItalianTranslation implements Translation {
         }
     }
 
+    @PostConstruct
     private boolean findIrregularities(String verb, String kindOfIrregularity) throws IOException {
-        File projectDir = new File(System.getProperty("user.dir"));
-        File file = null;
+        ClassPathResource resource = null;
+
         if(kindOfIrregularity.equals(IRE_PRESENTE_INDICATIVO))
-            file = new File(projectDir, "./irregular_ire.txt");
+            resource = new ClassPathResource("irregular_ire.txt");
         else if(kindOfIrregularity.equals(ESSERE_PASSATO_PROSSIMO))
-            file = new File(projectDir, "./verb_ausiliare_essere.txt");
+            resource = new ClassPathResource("verb_ausiliare_essere.txt");
 
 
         BufferedReader reader =
-                new BufferedReader(new FileReader(file));
+                new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
         String line;
 
         while ((line = reader.readLine()) != null) {
