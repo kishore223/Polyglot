@@ -27,7 +27,7 @@ function Learning3() {
       languageId,
       moduleId: 5,
     };
-    fetch(API_BASE_URL + "polyglot/getGame", {
+    fetch(API_BASE_URL + "/polyglot/getGame", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ function Learning3() {
       moduleId: 6,
       newScore: 100 / langCount,
     };
-    fetch(API_BASE_URL + "polyglot/player/updateModuleScore", {
+    fetch(API_BASE_URL + "/polyglot/player/updateModuleScore", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
