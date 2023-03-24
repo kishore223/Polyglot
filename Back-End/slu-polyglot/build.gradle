@@ -26,3 +26,4 @@ tasks.named('test') {
 	useJUnitPlatform()
 	finalizedBy jacocoTestReport
 }
+tasks.withType(Jar).all { duplicatesStrategy 'exclude' }

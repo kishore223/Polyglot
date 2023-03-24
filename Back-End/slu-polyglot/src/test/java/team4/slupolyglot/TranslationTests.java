@@ -1,22 +1,19 @@
 package team4.slupolyglot;
 
 import org.junit.Test;
-import team4.slupolyglot.model.EnglishItalianTranslation;
-
+import org.springframework.core.io.ClassPathResource;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertEquals;
 public class TranslationTests {
 
     @Test
     public void testTranslationItalianPresenteIndicativo() throws Exception {
-        File projectDir = new File(System.getProperty("user.dir"));
-        File file = new File(projectDir, "./test_presenteIndicativo.tsv");
+        ClassPathResource resource = new ClassPathResource("test_presenteIndicativo.tsv");
 
         BufferedReader reader =
-                new BufferedReader(new FileReader(file));
+                new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] values = line.split("\t");

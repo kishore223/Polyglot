@@ -8,7 +8,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # Arguments
 ARG REACT_APP_API_BASE_URL
-ENV REACT_APP_API_BASE_URL=http://be:8080/
+ENV REACT_APP_API_BASE_URL=https://apipolyglot.alessandrosangiorgi.net/
 
 # install app dependencies
 COPY package.json ./
