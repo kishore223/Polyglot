@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavBar.css";
 import {
@@ -20,13 +20,16 @@ function NavBar() {
 
   const checkDash = () => {
     getLanguage(email, setLangCount, setLangDash, setLangDashCode, langCount);
-    return langCount;
   };
 
   const logout = () => {
     cookieslog.remove("user");
     window.location.href = "/Login";
   };
+
+  useEffect(() => {
+    checkDash();
+  }, [langCount]);
 
   return (
     <Navbar bg="light" expand="lg" className="navbar-main">
@@ -42,7 +45,7 @@ function NavBar() {
                 HOME
               </NavLink>
             </Button>
-            {checkDash() !== 0 && (
+            {langCount !== 0 && (
               <Button className="btn-nav link">
                 <NavLink
                   to={
@@ -59,7 +62,11 @@ function NavBar() {
                 </NavLink>
               </Button>
             )}
-            <Button className="btn-nav link">LANGUAGES</Button>
+            <Button className="btn-nav link">
+              <NavLink to="/Language" className="active">
+                LANGUAGES
+              </NavLink>
+            </Button>
             <Button className="btn-nav link">CONTACT</Button>
             {email === undefined && (
               <Button className="btn-nav link-sign">

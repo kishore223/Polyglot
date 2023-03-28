@@ -102,7 +102,11 @@ export function getLanguage(
     .then((response) => response.json())
     .then((responseJson) => {
       setLangCount(Object.keys(responseJson.RegisteredLanguages).length);
-      for (var i = 0; i < langCount; i++) {
+      for (
+        var i = 0;
+        i < Object.keys(responseJson.RegisteredLanguages).length;
+        i++
+      ) {
         setLangDash(responseJson.RegisteredLanguages[i]["languageName"]);
         setLangDashCode(responseJson.RegisteredLanguages[i]["languageCode"]);
       }
@@ -187,7 +191,11 @@ export function getRegisterLanguages(
     .then((response) => response.json())
     .then((responseJson) => {
       setLangCount(Object.keys(responseJson.RegisteredLanguages).length);
-      for (var i = 0; i < langCount; i++) {
+      for (
+        var i = 0;
+        i < Object.keys(responseJson.RegisteredLanguages).length;
+        i++
+      ) {
         languageName.push(responseJson.RegisteredLanguages[i]["languageName"]);
         languageNameCode.push([
           responseJson.RegisteredLanguages[i]["languageName"],
@@ -416,7 +424,11 @@ export function getGameG2(
     .then((response) => response.json())
     .then((responseJson) => {
       setLangCount(Object.keys(responseJson["game_second"]).length);
-      for (var i = 0; i < langCount; i++) {
+      for (
+        var i = 0;
+        i < Object.keys(responseJson["game_second"]).length;
+        i++
+      ) {
         trans.push(responseJson["game_second"][i]["translatedVerb"]);
         images.push(responseJson["game_second"][i]["urlImage"]);
       }

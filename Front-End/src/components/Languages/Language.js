@@ -1,13 +1,14 @@
 import React from "react";
-import HeroSection from "./HeroSection.js";
+import Cards from "./Cards.js";
 import Navbar from "../Navbar/NavBar.js";
 
-export const Home = () => {
+function Language() {
   return (
     <div>
       <div className="top-div"></div>
       <Navbar />
-      <HeroSection />
+      <Cards />
     </div>
   );
-};
+}
+export default Language;

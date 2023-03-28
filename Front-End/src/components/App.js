@@ -8,6 +8,7 @@ import Learning2 from "./Learning2/Learning2.js";
 import Learning3 from "./Learning3/Learning3.js";
 import Game1 from "./Game1/Game1.js";
 import Game2 from "./Game2/Game2.js";
+import Language from "./Languages/Language.js";
 import { Home } from "./Home/Home.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
+          <Route path="/Language" element={<Language />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Login" element={<LogSign active="first" />} />
           <Route path="/Signup" element={<LogSign active="second" />} />

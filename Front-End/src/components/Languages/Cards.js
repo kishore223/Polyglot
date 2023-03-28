@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Cards.css";
-import CardItem from "./CardItem";
+import CardItem from "./CardItem.js";
 import { useNavigate } from "react-router-dom";
 import { email } from "../Functions/CommonScripts.js";
 import { getRegisterLanguages, assignLang } from "../Functions/APIFunctions.js";
@@ -13,7 +13,11 @@ function Cards() {
   const languageName = [];
   const [langCount, setLangCount] = useState(0);
 
-  const getLanguage = () => {
+  const cardsCheck = (e, languageId, language) => {
+    assignLang(email, languageId, language, navigate);
+  };
+
+  useEffect(() => {
     getRegisterLanguages(
       email,
       setLangCount,
@@ -23,15 +27,7 @@ function Cards() {
       setLangDash,
       setLangDashCode
     );
-  };
-
-  const cardsCheck = (e, languageId, language) => {
-    assignLang(email, languageId, language, navigate);
-  };
-
-  useEffect(() => {
-    getLanguage();
-  });
+  }, [langCount]);
 
   return (
     <div>
@@ -99,9 +95,9 @@ function Cards() {
         <div className="cards__container">
           <div className="cards__wrapper">
             <ul className="cards__items">
-              {langDashCode.map((lan) => (
+              {Array.from(new Set(langDashCode)).map((lan, i) => (
                 <CardItem
-                  key={lan[0]}
+                  key={lan[0] + "enroll" + i}
                   className="card-item"
                   src={
                     lan[0] === "Swahili"
