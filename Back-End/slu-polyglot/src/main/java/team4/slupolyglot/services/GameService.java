@@ -76,11 +76,11 @@ public class GameService {
             Collections.shuffle(responseList);
             int answerIndex = responseList.indexOf(answerString);
             GameDto gameDtoEntry=  new GameDto(verb.getId(),question,responseList.get(0),responseList.get(1),
-            responseList.get(2),responseList.get(3),optionsArray[answerIndex],verb.getUrlImage());                           
+            responseList.get(2),responseList.get(3),optionsArray[answerIndex],verb.getUrlImage());
             gameDtoFirst.add(gameDtoEntry);
         }
-    return gameDtoFirst; 
-    } 
+    return gameDtoFirst;
+    }
 
     private List<GameDto> learningTwo(List<Verb> verbs, List<GameDto> gameDtoSecond) {
         for (Verb verb : verbs) {
@@ -90,7 +90,7 @@ public class GameService {
                 for (String tens : tenses) {
                     for (String generalPronoun : GENERAL_PRONOUNS) {
                         EnglishVerbs englishVerbs =
-                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun);
+                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun,false);
                         String features = generalPronoun + "+" + tens;
                         String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
@@ -119,9 +119,9 @@ public class GameService {
         }
         return gameDtoThird;
     }
-    
+
     public List<String> randomOptions(List<Verb> verbs,String answer){
-        List<String> responseList = new ArrayList<String>();    
+        List<String> responseList = new ArrayList<String>();
         Random rand = new Random();
         for (int i = 0; i < this.numberOfOptions; i++) {
             int index = rand.nextInt(verbs.size());

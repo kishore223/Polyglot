@@ -51,63 +51,65 @@ public class EnglishItalianTranslation implements Translation {
         if(findIrregularities(root+infinito,IRE_PRESENTE_INDICATIVO))
             root = root+"isc";
 
+        String negazione = isNegative ? " non " : "";
+
         switch (infinito) {
             case PRIMA_CONIUGAZIONE -> {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
-                    return(ITALIAN_PRONOUNS[0] + " " + root + "o");
+                    return(ITALIAN_PRONOUNS[0] + negazione + " " + root + "o");
 
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1])){
                     if(!isCiareGiare && !isCareGare)
-                        return(ITALIAN_PRONOUNS[1] + " " + root + "i");
+                        return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "i");
                     else if(isCiareGiare)
-                        return(ITALIAN_PRONOUNS[1] + " " + root);
+                        return(ITALIAN_PRONOUNS[1] + negazione + " " + root);
                     else
-                        return(ITALIAN_PRONOUNS[1] + " " + root + "hi");
+                        return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "hi");
                 }
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2])) {
-                    return(ITALIAN_PRONOUNS[2] + " " + root + "a");
+                    return(ITALIAN_PRONOUNS[2] + negazione + " " + root + "a");
                 }
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3])) {
                     if(!isCiareGiare && !isCareGare)
-                        return(ITALIAN_PRONOUNS[3] + " " + root + "iamo");
+                        return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "iamo");
                     else if(isCiareGiare)
-                        return(ITALIAN_PRONOUNS[3] + " " + root + "amo");
+                        return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "amo");
                     else
-                        return(ITALIAN_PRONOUNS[3] + " " + root + "hiamo");
+                        return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "hiamo");
                 }
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[4])) {
-                    return(ITALIAN_PRONOUNS[4] + " " + root + "ate");
+                    return(ITALIAN_PRONOUNS[4] + negazione + " " + root + "ate");
                 }
                 else
-                    return(ITALIAN_PRONOUNS[5] + " " + root + "ano");
+                    return(ITALIAN_PRONOUNS[5] + negazione + " " + root + "ano");
             }
             case SECONDA_CONIUGAZIONE -> {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
-                    return(ITALIAN_PRONOUNS[0] + " " + root + "o");
+                    return(ITALIAN_PRONOUNS[0] + negazione + " " + root + "o");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + " " + root + "i");
+                    return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "i");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + " " + root + "e");
+                    return(ITALIAN_PRONOUNS[2] + negazione + " " + root + "e");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3]))
-                    return(ITALIAN_PRONOUNS[3] + " " + root + "iamo");
+                    return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "iamo");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[4]))
-                    return(ITALIAN_PRONOUNS[4] + " " + root + "ete");
+                    return(ITALIAN_PRONOUNS[4] + negazione + " " + root + "ete");
                 else
-                    return(ITALIAN_PRONOUNS[5] + " " + root + "ono");
+                    return(ITALIAN_PRONOUNS[5] + negazione + " " + root + "ono");
             }
             case TERZA_CONIUGAZIONE -> {
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
-                    return(ITALIAN_PRONOUNS[0] + " " + root + "o");
+                    return(ITALIAN_PRONOUNS[0] + negazione + " " + root + "o");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + " " + root + "i");
+                    return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "i");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + " " + root + "e");
+                    return(ITALIAN_PRONOUNS[2] + negazione + " " + root + "e");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3]))
-                    return(ITALIAN_PRONOUNS[3] + " " + root + "iamo");
+                    return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "iamo");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[4]))
-                    return(ITALIAN_PRONOUNS[4] + " " + root + "ite");
+                    return(ITALIAN_PRONOUNS[4] + negazione + " " + root + "ite");
                 else
-                    return(ITALIAN_PRONOUNS[5] + " " + root + "ono");
+                    return(ITALIAN_PRONOUNS[5] + negazione + " " + root + "ono");
             }
             default -> {
                 return null;
@@ -141,6 +143,7 @@ public class EnglishItalianTranslation implements Translation {
         String[] essere = {"sono","sei","è","siamo", "siete","sono"};
         String[] avere = {"ho","hai","ha","abbiamo","avete","hanno"};
         String[] avereEssere = findIrregularities(root+infinito,ESSERE_PASSATO_PROSSIMO) ? essere : avere;
+        String negazione = isNegative ? " non " : "";
 
         switch (infinito) {
             case PRIMA_CONIUGAZIONE ->
@@ -155,7 +158,7 @@ public class EnglishItalianTranslation implements Translation {
 
         for(int i = 0; i < ITALIAN_PRONOUNS.length; i++){
             if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[i]))
-                return(ITALIAN_PRONOUNS[i] + " " + avereEssere[i] + " " + passatoProssimo);
+                return(ITALIAN_PRONOUNS[i] + negazione + " " + avereEssere[i] + " " + passatoProssimo);
         }
 
         return null;
@@ -163,6 +166,8 @@ public class EnglishItalianTranslation implements Translation {
 
     private String futuroSemplice(String root, String infinito, String pronoun) {
         String futuro = null;
+        String negazione = isNegative ? " non " : "";
+
         switch (infinito) {
             case PRIMA_CONIUGAZIONE, SECONDA_CONIUGAZIONE -> {
                 if(isCiareGiare)
@@ -171,41 +176,42 @@ public class EnglishItalianTranslation implements Translation {
                     root = root + "h";
                 futuro = root + "erò";
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
-                    return(ITALIAN_PRONOUNS[0] + " " + futuro);
+                    return(ITALIAN_PRONOUNS[0] + negazione + " " + futuro);
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + " " + root + "erai");
+                    return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "erai");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + " " + root + "erà");
+                    return(ITALIAN_PRONOUNS[2] + negazione + " " + root + "erà");
             }
 
             case TERZA_CONIUGAZIONE -> {
                 futuro = root + "irò";
                 if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[0]))
-                    return(ITALIAN_PRONOUNS[0] + " " + futuro);
+                    return(ITALIAN_PRONOUNS[0] + negazione + " " + futuro);
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
-                    return(ITALIAN_PRONOUNS[1] + " " + root + "irai");
+                    return(ITALIAN_PRONOUNS[1] + negazione + " " + root + "irai");
                 else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[2]))
-                    return(ITALIAN_PRONOUNS[2] + " " + root + "irà");
+                    return(ITALIAN_PRONOUNS[2] + negazione + " " + root + "irà");
             }
         }
 
         String subFuturo = futuro.substring(0,futuro.length()-1);
 
         if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3]))
-            return(ITALIAN_PRONOUNS[3] + " " + subFuturo + "emo");
+            return(ITALIAN_PRONOUNS[3] + negazione + " " + subFuturo + "emo");
         else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[4]))
-            return(ITALIAN_PRONOUNS[4] + " " + subFuturo + "ete");
+            return(ITALIAN_PRONOUNS[4] + negazione + " " + subFuturo + "ete");
         else
-            return(ITALIAN_PRONOUNS[5] + " " + subFuturo + "anno");
+            return(ITALIAN_PRONOUNS[5] + negazione + " " + subFuturo + "anno");
     }
     public String imperfettoIndicativo(String root, String infinito, String pronoun) {
         String root_desinenza = root+infinito.charAt(0);
 
         String[] coniugazioni = {"vo", "vi", "va", "vamo", "vate", "vano"};
+        String negazione = isNegative ? " non " : "";
 
         for(int i = 0; i < ITALIAN_PRONOUNS.length; i++) {
             if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[i]))
-                return(ITALIAN_PRONOUNS[i] + " " + root_desinenza + coniugazioni[i]);
+                return(ITALIAN_PRONOUNS[i] + negazione + " " + root_desinenza + coniugazioni[i]);
         }
         return null;
     }

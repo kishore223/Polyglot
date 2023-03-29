@@ -12,6 +12,7 @@ public class EnglishVerbs {
     private String pronoun;
 
     private String tense;
+    private boolean isNegative = false;
     public final static String[] ENGLISH_PRONOUNS = {"I","You","(s)he","We","You","They"};
     Map<String, String> pronouns = new HashMap(){{
         put(GENERAL_PRONOUNS[0],ENGLISH_PRONOUNS[0]);
@@ -22,10 +23,11 @@ public class EnglishVerbs {
         put(GENERAL_PRONOUNS[5],ENGLISH_PRONOUNS[5]);
     }};
 
-    public EnglishVerbs(String verb, String tense, String pronoun) {
+    public EnglishVerbs(String verb, String tense, String pronoun, boolean isNegative) {
         this.verb = verb;
         this.tense = tense;
         this.pronoun = pronoun;
+        this.isNegative = isNegative;
         this.conjugatedVerb = setConjugatedVerbTense();
     }
 
@@ -45,27 +47,34 @@ public class EnglishVerbs {
     }
 
     private String present() {
+        String negation = isNegative ? " do not " : "";
+
         if (pronouns.get(pronoun).equals(ENGLISH_PRONOUNS[2]))
-            return (ENGLISH_PRONOUNS[2] + " " + this.verb+"s");
+            return (ENGLISH_PRONOUNS[2] + negation + " " + this.verb+"s");
 
         for (String englishPronoun : ENGLISH_PRONOUNS) {
             if (pronouns.get(pronoun).equals(englishPronoun))
-                return (englishPronoun + " " + this.verb);
+                return (englishPronoun + negation + " " + this.verb);
         }
 
         return null;
     }
     private String past(){
+        String negation = isNegative ? " did not " : "";
+        String pastEd = isNegative ? "" : "ed";
+
         for (String englishPronoun : ENGLISH_PRONOUNS) {
             if (pronouns.get(pronoun).equals(englishPronoun))
-                return (englishPronoun + " " + this.verb+"ed");
+                return (englishPronoun  + negation + " " + this.verb+pastEd);
         }
         return null;
     }
     private String future(){
+        String negation = isNegative ? " not " : "";
+
         for (String englishPronoun : ENGLISH_PRONOUNS) {
             if (pronouns.get(pronoun).equals(englishPronoun))
-                return (englishPronoun + " will "+ this.verb);
+                return (englishPronoun  + " will "+ negation + this.verb);
         }
         return null;
     }
