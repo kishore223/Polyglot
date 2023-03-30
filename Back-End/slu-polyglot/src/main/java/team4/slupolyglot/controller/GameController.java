@@ -33,6 +33,8 @@ public class GameController {
                     response.put("game_first", gameDto);
             case MODULE_LEARNING_3, MODULE_LEARNING_4 ->
                     response.put("game_second", gameDto);
+            case MODULE_LEARNING_5 ->
+                    response.put("game_third", gameDto);
         }
 
         return ResponseEntity.ok(response);

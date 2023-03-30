@@ -18,6 +18,6 @@ public final class MyConstants {
     public final static String PRESENT = "PRES";
     public final static String PAST = "PAST";
     public final static String FUTURE = "FUT";
-    public final static String PREFECT = "PERF";
+    public final static String PERFECT = "PERF";
     public final static String IMPERATIVE = "IMP";
 }

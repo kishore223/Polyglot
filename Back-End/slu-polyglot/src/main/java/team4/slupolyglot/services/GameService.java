@@ -9,10 +9,8 @@ import team4.slupolyglot.model.EnglishItalianTranslation;
 import team4.slupolyglot.model.EnglishVerbs;
 import team4.slupolyglot.model.Verb;
 import team4.slupolyglot.repositories.VerbRepository;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 import static team4.slupolyglot.MyConstants.*;
 
@@ -21,7 +19,7 @@ public class GameService {
 
     @Autowired
     private VerbRepository verbRepository;
-    private final String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
+    private String[] tenses = {PRESENT, FUTURE, PAST}; // todo tecnical debt
     public static char[] optionsArray = {'A', 'B', 'C', 'D'};
     public static int numberOfLearningActivities = 3;
     public int numberOfOptions = 3;
@@ -46,10 +44,13 @@ public class GameService {
                         gameOne(learningActivityOneList, gameDto);
                     }
                     case MODULE_LEARNING_3 -> {
-                        learningTwo(verbs, gameDto);
+                        learningTenses(verbs, gameDto, false, MODULE_LEARNING_3);
                     }
                     case MODULE_LEARNING_4 -> {
                         gameTwo(verbs,gameDto);
+                    }
+                    case MODULE_LEARNING_5 -> {
+                        learningTenses(verbs, gameDto, true, MODULE_LEARNING_5);
                     }
                 }
                 break;
@@ -82,7 +83,12 @@ public class GameService {
     return gameDtoFirst;
     }
 
-    private List<GameDto> learningTwo(List<Verb> verbs, List<GameDto> gameDtoSecond) {
+    private List<GameDto> learningTenses(List<Verb> verbs, List<GameDto> gameDtoSecond, boolean isNegative,
+                                         int moduleId) {
+        if (moduleId == MODULE_LEARNING_5) {
+            tenses = new String[]{PERFECT};
+        }
+
         for (Verb verb : verbs) {
             if(verb.getEnglishVerb().equals("jump")
                     || verb.getEnglishVerb().equals("exist")
@@ -90,8 +96,21 @@ public class GameService {
                 for (String tens : tenses) {
                     for (String generalPronoun : GENERAL_PRONOUNS) {
                         EnglishVerbs englishVerbs =
-                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun,false);
+                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun,isNegative);
                         String features = generalPronoun + "+" + tens;
+                        String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                        GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                                , translated, features, verb.getId(), verb.getUrlImage(),
+                                englishVerbs.getConjugatedVerb(),verb.getItalianVerb());
+                        gameDtoSecond.add(gameDtoEntry);
+                    }
+                }
+                if (moduleId == MODULE_LEARNING_5) {
+                    String[] IMPERATIVE_PRONOUNS =  {"2s","1p","2p"};
+                    for (String imperativePronoun : IMPERATIVE_PRONOUNS) {
+                        EnglishVerbs englishVerbs =
+                                new EnglishVerbs(verb.getEnglishVerb(), IMPERATIVE, imperativePronoun,false);
+                        String features = imperativePronoun + "+" + IMPERATIVE;
                         String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
                                 , translated, features, verb.getId(), verb.getUrlImage(),
@@ -101,8 +120,8 @@ public class GameService {
                 }
             }
         }
-        int multipleOfTen = gameDtoSecond.size() / 10;
-        return gameDtoSecond.subList(0,multipleOfTen*10);
+
+        return gameDtoSecond;
     }
     private List<GameDto> gameTwo(List<Verb> verbs, List<GameDto> gameDtoThird) {
         for (Verb verb : verbs) {

@@ -215,7 +215,29 @@ public class EnglishItalianTranslation implements Translation {
         }
         return null;
     }
+    public String imperativo(String root, String infinito, String pronoun) { //todo incomplete
+        String negazione = isNegative ? " non " : "";
 
+        String imperative = "";
+        switch (infinito) {
+            case PRIMA_CONIUGAZIONE -> {
+                if(isCareGare)
+                    root = root + "h";
+                imperative = root + "a";
+            }
+
+            case TERZA_CONIUGAZIONE, SECONDA_CONIUGAZIONE -> {
+                imperative = root + "i";
+            }
+        }
+
+        if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[1]))
+            return(ITALIAN_PRONOUNS[3] + negazione + " " + imperative);
+        else if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3]))
+            return(ITALIAN_PRONOUNS[4] + negazione + " " + imperative + "amo");
+        else
+            return(ITALIAN_PRONOUNS[4] + negazione + " " + imperative + "te");
+    }
     private static String[] takeRootAndInfinito(String verb) {
         int strLen = verb.length();
         String root = verb.toLowerCase().substring(0, strLen - 3);
@@ -277,7 +299,7 @@ public class EnglishItalianTranslation implements Translation {
             case FUTURE -> {
                 return futuroSemplice(root,infinito,pronoun);
             }
-            case PREFECT -> {
+            case PERFECT -> {
                 try {
                     return passatoProssimo(root,infinito,pronoun);
                 } catch (IOException e) {
@@ -286,6 +308,9 @@ public class EnglishItalianTranslation implements Translation {
             }
             case PAST -> {
                 return imperfettoIndicativo(root,infinito,pronoun);
+            }
+            case IMPERATIVE -> {
+                return imperativo(root,infinito,pronoun);
             }
         }
 
