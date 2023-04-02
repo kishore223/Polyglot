@@ -1,0 +1,23 @@
+.btn-game1 {
+  width: 100%;
+  margin: 1%;
+  background-color: rgba(255, 65, 77, 0.4);
+  border: 2px solid #002d40;
+  padding: 2%;
+  color: #002d40;
+  font-family: "Jost", sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.btn-game1-blue {
+  background-color: rgba(26, 166, 183, 0.5);
+}
+
+.col-game1 {
+  margin: 2%;
+}
+
+.img-game1 {
+  width: 25%;
+}

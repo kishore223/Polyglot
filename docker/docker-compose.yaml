@@ -1,0 +1,56 @@
+version: '3.7'
+
+x-xxx-common-services-config: &common-settings-config
+  restart: always
+
+services:
+  be:
+    <<: *common-settings-config
+    image: ${CUSTOM_IMAGE_SPRINGBOOT}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - fe
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/polyglot?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    networks:
+      - backend
+      - frontend
+
+  db:
+    <<: *common-settings-config
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER : ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    networks:
+      - backend
+
+  fe:
+    <<: *common-settings-config
+    image: ${CUSTOM_IMAGE_REACT}
+    networks:
+      - frontend
+    volumes:
+      - ../Front-End/:/app
+      - '/app/node_modules'
+    ports: 
+      - 3000:3000
+
+# Volumes
+volumes:
+  my-db:
+
+networks:
+  backend:
+  frontend:

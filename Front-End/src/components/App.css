@@ -1,0 +1,16 @@
+.top-div {
+  background-color: #002d40 !important;
+  height: 1.2rem;
+}
+
+html {
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+html body {
+  padding: 0;
+  margin: 0;
+  overflow-y: inherit;
+  overflow-x: inherit;
+}

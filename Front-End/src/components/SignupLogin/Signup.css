@@ -1,0 +1,232 @@
+.first-div {
+  background-color: #002d40;
+  height: 984px;
+  text-align: center;
+  padding-top: 2%;
+}
+
+.h2-acc {
+  color: white;
+  font-weight: 900;
+  font-size: 3.5rem;
+  text-align: left;
+  margin-left: 15%;
+}
+
+.p-acc {
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: left;
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: justify;
+  padding-top: 2%;
+}
+
+.img-acc {
+  width: 70%;
+  padding-top: 5%;
+}
+
+.second-div {
+  background-color: rgba(26, 166, 183, 0.1);
+  height: 984px;
+}
+
+.sign-div {
+  display: block;
+  padding: 10% 20%;
+}
+
+@media (max-width: 1000px) {
+  .sign-div {
+    display: block;
+    margin-top: 15%;
+    padding: 10% 15%;
+  }
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+li button.active {
+  background-color: #002d40 !important;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+li button:hover {
+  background-color: #002d40 !important;
+  color: white !important;
+  border-radius: 10px !important;
+}
+
+li button {
+  border: none !important;
+  border-color: white !important;
+}
+
+.contact .title-beauty {
+  text-align: center;
+}
+
+.title-beauty {
+  font-weight: bolder;
+  background-color: #002d40;
+  color: white;
+  font-size: 1.5rem;
+  width: 25rem;
+  border-color: #002d40;
+  text-underline-offset: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.title-beauty:hover {
+  border-color: #002d40;
+}
+
+.big-icon {
+  font-size: 10rem;
+  color: #f56a79;
+}
+
+.icon-div {
+  text-align: center;
+}
+
+.about-p {
+  margin-top: 6%;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  text-align: center;
+  color: #1aa6b7;
+}
+
+.input-acc {
+  border-width: 0.1rem;
+  border-radius: 30px;
+  border-color: rgba(0, 45, 64, 0.5);
+  text-align: left;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  color: #002d40;
+  font-weight: 500;
+  padding: 0.6rem 0 0.6rem 1rem;
+}
+
+.input-btn-acc:hover {
+  border-width: 0.1rem;
+  border-radius: 30px;
+  border-color: rgba(0, 45, 64, 0.5);
+  margin-bottom: 2%;
+  margin-top: 2%;
+  color: #002d40;
+  font-weight: 500;
+  background-color: rgba(26, 166, 183, 0.3) !important;
+}
+
+.btn-color:hover {
+  color: #002d40;
+  font-size: 1.5rem;
+}
+
+.input-btn-acc {
+  border-width: 0.1rem;
+  border-radius: 30px;
+  border-color: rgba(0, 45, 64, 0.5);
+  margin-bottom: 2%;
+  margin-top: 2%;
+  color: #002d40;
+  font-weight: 500;
+  background-color: rgba(255, 65, 77, 0.5) !important;
+}
+
+.btn-color {
+  color: #ff414d;
+  font-size: 1.5rem;
+}
+
+.input-acc:placeholder {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 45, 64, 0.6);
+}
+
+.input-acc:hover {
+  background-color: rgba(26, 166, 183, 0.3);
+  border-color: #1aa6b7;
+  color: #002d40;
+  font-weight: 500;
+}
+
+.btn-acc {
+  background-color: #002d40;
+  padding: 1% 20%;
+  font-weight: 700;
+  font-size: 1.3rem;
+  border-radius: 30px;
+}
+
+.btn-div {
+  margin-top: 4%;
+  text-align: center;
+}
+
+.acc-div-a {
+  text-align: center;
+  padding-top: 5%;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.a-acc {
+  text-decoration: none;
+  color: #1aa6b7;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.a-acc:hover {
+  color: #002d40;
+}
+
+.span-acc-error {
+  color: #ff414d;
+  font-weight: 500;
+  margin-top: 0;
+  margin-left: 5%;
+}
+
+.span-acc-pass {
+  color: #1aa6b7;
+  font-weight: 500;
+  margin-top: 0;
+  margin-left: 5%;
+}
+
+.icon-acc {
+  margin-right: 2%;
+}
+
+.alert {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.3rem !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.alert-p {
+  display: inline;
+  font-weight: 600;
+}
+
+.alert-close {
+  float: right;
+  color: #ff414d !important;
+}
+
+div.alert {
+  text-align: center;
+}
