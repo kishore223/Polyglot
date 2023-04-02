@@ -14,13 +14,13 @@ public class EnglishVerbs {
     private String tense;
     private boolean isNegative = false;
     public final static String[] ENGLISH_PRONOUNS = {"I","You","(s)he","We","You","They"};
-    Map<String, String> pronouns = new HashMap(){{
-        put(GENERAL_PRONOUNS[0],ENGLISH_PRONOUNS[0]);
-        put(GENERAL_PRONOUNS[1],ENGLISH_PRONOUNS[1]);
-        put(GENERAL_PRONOUNS[2],ENGLISH_PRONOUNS[2]);
-        put(GENERAL_PRONOUNS[3],ENGLISH_PRONOUNS[3]);
-        put(GENERAL_PRONOUNS[4],ENGLISH_PRONOUNS[4]);
-        put(GENERAL_PRONOUNS[5],ENGLISH_PRONOUNS[5]);
+    HashMap<String, String> pronouns = new HashMap<>() {{
+        put(GENERAL_PRONOUNS[0], ENGLISH_PRONOUNS[0]);
+        put(GENERAL_PRONOUNS[1], ENGLISH_PRONOUNS[1]);
+        put(GENERAL_PRONOUNS[2], ENGLISH_PRONOUNS[2]);
+        put(GENERAL_PRONOUNS[3], ENGLISH_PRONOUNS[3]);
+        put(GENERAL_PRONOUNS[4], ENGLISH_PRONOUNS[4]);
+        put(GENERAL_PRONOUNS[5], ENGLISH_PRONOUNS[5]);
     }};
 
     public EnglishVerbs(String verb, String tense, String pronoun, boolean isNegative) {
@@ -41,6 +41,9 @@ public class EnglishVerbs {
             }
             case FUTURE -> {
                 return future();
+            }
+            case IMPERATIVE -> {
+                return imperative();
             }
         }
         return null;
@@ -77,6 +80,17 @@ public class EnglishVerbs {
                 return (englishPronoun  + " will "+ negation + this.verb);
         }
         return null;
+    }
+    private String imperative() { //todo complete
+        String negation = isNegative ? " do not " : "";
+        if(pronouns.get(pronoun).equals(ENGLISH_PRONOUNS[2]))
+            throw new IllegalArgumentException("Invalid pronoun, cannot be 3s");
+
+        for (String englishPronoun : ENGLISH_PRONOUNS) {
+            if (pronouns.get(pronoun).equals(englishPronoun))
+                return (englishPronoun + negation + " " + this.verb);
+        }
+        throw new IllegalArgumentException("Invalid pronoun");
     }
 
     public String getConjugatedVerb() {
