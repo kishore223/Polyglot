@@ -29,7 +29,7 @@ function Game2() {
 
   useEffect(() => {
     getGame();
-  });
+  }, [langCount]);
 
   return (
     <div>

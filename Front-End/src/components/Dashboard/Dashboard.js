@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
 import { Lang, Dashcard } from "./Dashcard.js";
@@ -12,8 +12,6 @@ import { email } from "../Functions/CommonScripts.js";
 function Dashboard() {
   const [langDashCode, setLangDashCode] = useState([]);
   const [langCount, setLangCount] = useState(0);
-
-  getLanguageDashboard(email, setLangCount, langCount, setLangDashCode);
 
   const [searchparams] = useSearchParams();
   const [lang, setLang] = useState(searchparams.get("lang"));
@@ -58,15 +56,18 @@ function Dashboard() {
     );
   };
 
-  getScores(
-    scores,
-    setScore1,
-    setScore2,
-    setScore3,
-    setScore4,
-    setScore5,
-    setScore6
-  );
+  useEffect(() => {
+    getLanguageDashboard(email, setLangCount, langCount, setLangDashCode);
+    getScores(
+      scores,
+      setScore1,
+      setScore2,
+      setScore3,
+      setScore4,
+      setScore5,
+      setScore6
+    );
+  }, [langCount]);
 
   return (
     <div>

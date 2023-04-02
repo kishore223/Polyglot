@@ -48,7 +48,7 @@ function Game1() {
 
   useEffect(() => {
     getGame();
-  }, []);
+  }, [langCount]);
 
   return (
     <div>

@@ -46,7 +46,7 @@ function Learning2() {
 
   useEffect(() => {
     getGame();
-  });
+  }, [langCount]);
 
   return (
     <div>
