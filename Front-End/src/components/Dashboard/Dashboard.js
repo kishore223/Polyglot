@@ -99,7 +99,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="learn1"
                 score={score1}
-                desc="Here will be the Description."
+                desc={"Learning " + lang + " Verbs using Flashcards."}
               />
               <Dashcard
                 heading="Learning II"
@@ -108,7 +108,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="learn2"
                 score={score2}
-                desc="Here will be the Description."
+                desc="Understanding the Tenses for each Person type."
               />
               <Dashcard
                 heading="Learning III"
@@ -129,7 +129,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="game1"
                 score={score4}
-                desc="Here will be the Description."
+                desc="Choose to Win..."
               />
               <Dashcard
                 heading="Activity II"
@@ -138,7 +138,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="game2"
                 score={score5}
-                desc="Here will be the Description."
+                desc="Just Drag it..."
               />
               <Dashcard
                 heading="Activity III"
