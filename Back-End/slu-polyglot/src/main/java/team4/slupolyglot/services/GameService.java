@@ -97,7 +97,7 @@ public class GameService {
                     for (String generalPronoun : GENERAL_PRONOUNS) {
                         EnglishVerbs englishVerbs =
                                 new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun,isNegative);
-                        String features = generalPronoun + "+" + tens;
+                        String features = getFeatures(isNegative, generalPronoun, tens);
                         String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
                                 , translated, features, verb.getId(), verb.getUrlImage(),
@@ -110,7 +110,7 @@ public class GameService {
                     for (String imperativePronoun : IMPERATIVE_PRONOUNS) {
                         EnglishVerbs englishVerbs =
                                 new EnglishVerbs(verb.getEnglishVerb(), IMPERATIVE, imperativePronoun,false);
-                        String features = imperativePronoun + "+" + IMPERATIVE;
+                        String features = getFeatures(false, imperativePronoun, IMPERATIVE);
                         String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
                                 , translated, features, verb.getId(), verb.getUrlImage(),
@@ -127,7 +127,7 @@ public class GameService {
         for (Verb verb : verbs) {
             for (String generalPronoun : GENERAL_PRONOUNS) {
                 for (String tens : tenses) {
-                    String features = generalPronoun + "+" + tens;
+                    String features = getFeatures(false, generalPronoun, tens);
                     String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
                     GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
                             , translated, features, verb.getId(), verb.getUrlImage());
@@ -154,6 +154,10 @@ public class GameService {
         return responseList;
     }
 
+    String getFeatures(boolean isNegative, String pronoun, String tense){
+        return isNegative ? "NEG"+ "+" + pronoun + "+" + tense :
+                pronoun + "+" + tense;
+    }
 /*    private String getRandomTense() {
         String[] tenses = {PRESENT, FUTURE, PREFECT};
         Random random = new Random();
