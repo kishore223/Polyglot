@@ -1,7 +1,6 @@
 package team4.slupolyglot.model;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static team4.slupolyglot.MyConstants.*;
 
@@ -45,8 +44,13 @@ public class EnglishVerbs {
             case IMPERATIVE -> {
                 return imperative();
             }
+            case PERFECT -> {
+                return perfect();
+            }
+            default -> {
+                throw new IllegalArgumentException("Invalid tense");
+            }
         }
-        return null;
     }
 
     private String present() {
@@ -59,8 +63,7 @@ public class EnglishVerbs {
             if (pronouns.get(pronoun).equals(englishPronoun))
                 return (englishPronoun + negation + " " + this.verb);
         }
-
-        return null;
+        throw new IllegalArgumentException("Invalid pronoun");
     }
     private String past(){
         String negation = isNegative ? " did not " : "";
@@ -70,7 +73,7 @@ public class EnglishVerbs {
             if (pronouns.get(pronoun).equals(englishPronoun))
                 return (englishPronoun  + negation + " " + this.verb+pastEd);
         }
-        return null;
+        throw new IllegalArgumentException("Invalid pronoun");
     }
     private String future(){
         String negation = isNegative ? " not " : "";
@@ -79,7 +82,7 @@ public class EnglishVerbs {
             if (pronouns.get(pronoun).equals(englishPronoun))
                 return (englishPronoun  + " will "+ negation + this.verb);
         }
-        return null;
+        throw new IllegalArgumentException("Invalid pronoun");
     }
     private String imperative() { //todo complete
         String negation = isNegative ? " do not " : "";
@@ -89,6 +92,18 @@ public class EnglishVerbs {
         for (String englishPronoun : ENGLISH_PRONOUNS) {
             if (pronouns.get(pronoun).equals(englishPronoun))
                 return (englishPronoun + negation + " " + this.verb);
+        }
+        throw new IllegalArgumentException("Invalid pronoun");
+    }
+    private String perfect() {
+        boolean is3s = pronouns.get(pronoun).equals(ENGLISH_PRONOUNS[2]);
+        String haveHas = is3s ? " has " : " have ";
+        String negation = isNegative ? " not " : "";
+        String pastEd = "ed";
+
+        for (String englishPronoun : ENGLISH_PRONOUNS) {
+            if (pronouns.get(pronoun).equals(englishPronoun))
+                return (englishPronoun  + haveHas + negation + " " + this.verb+pastEd);
         }
         throw new IllegalArgumentException("Invalid pronoun");
     }
