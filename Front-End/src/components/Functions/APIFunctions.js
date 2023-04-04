@@ -404,18 +404,23 @@ export function getGameL3(
 
 const checkPerson = (feature) => {
   let conStr = "";
+  if (feature[0] === "NEG") {
+    conStr += "Negative ";
+    feature[0] = feature[1];
+    feature[1] = feature[2];
+  }
   if (feature[0] === "1s") {
-    conStr = "First Person Singular";
+    conStr += "First Person Singular";
   } else if (feature[0] === "1p") {
-    conStr = "First Person Plural";
+    conStr += "First Person Plural";
   } else if (feature[0] === "2s") {
-    conStr = "Second Person Singular";
+    conStr += "Second Person Singular";
   } else if (feature[0] === "2p") {
-    conStr = "Second Person Plural";
+    conStr += "Second Person Plural";
   } else if (feature[0] === "3s") {
-    conStr = "Third Person Singular";
+    conStr += "Third Person Singular";
   } else if (feature[0] === "3p") {
-    conStr = "Third Person Plural";
+    conStr += "Third Person Plural";
   }
   if (feature[1] === "PRES") {
     conStr += " (Present Tense)";
