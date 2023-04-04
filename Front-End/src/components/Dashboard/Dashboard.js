@@ -117,7 +117,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="learn3"
                 score={score3}
-                desc="Understanding Negatives and Imperatives."
+                desc="Here will be the Description."
               />
             </div>
             <div className="col-lg-6 img-div" style={myStyle}>
