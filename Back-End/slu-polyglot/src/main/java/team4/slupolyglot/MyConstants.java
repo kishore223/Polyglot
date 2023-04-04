@@ -6,7 +6,9 @@ public final class MyConstants {
 
     public static final String ITALIAN = "2001";
     public static final String SPANISH = "2002";
-
+    public static final String FRENCH = "2003";
+    public static final String SWAHILI = "2004";
+    
     public static final int MODULE_LEARNING_1 = 1; //learning1
     public static final int MODULE_LEARNING_2 = 2; //activity1
 

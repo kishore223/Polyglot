@@ -17,9 +17,20 @@ public class Verb {
 
     @Column(name = "italian_verb")
     private String italianVerb;
+    
+    @Column(name = "swahili_verb")
+    private String swahiliVerb;
 
     @Column(name = "url_image")
     private String urlImage;
+
+    public String getSwahiliVerb() {
+        return swahiliVerb;
+    }
+
+    public void setSwahiliVerb(String swahiliVerb) {
+        this.swahiliVerb = swahiliVerb;
+    }
 
     public int getId() {
         return id;
