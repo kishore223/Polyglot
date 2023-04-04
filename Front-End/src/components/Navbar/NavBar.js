@@ -19,7 +19,9 @@ function NavBar() {
   const [langCount, setLangCount] = useState(0);
 
   const checkDash = () => {
-    getLanguage(email, setLangCount, setLangDash, setLangDashCode, langCount);
+    if (email !== undefined) {
+      getLanguage(email, setLangCount, setLangDash, setLangDashCode, langCount);
+    }
   };
 
   const logout = () => {
@@ -62,12 +64,13 @@ function NavBar() {
                 </NavLink>
               </Button>
             )}
-            <Button className="btn-nav link">
-              <NavLink to="/Language" className="active">
-                LANGUAGES
-              </NavLink>
-            </Button>
-            <Button className="btn-nav link">CONTACT</Button>
+            {email !== undefined && (
+              <Button className="btn-nav link">
+                <NavLink to="/Language" className="active">
+                  LANGUAGES
+                </NavLink>
+              </Button>
+            )}
             {email === undefined && (
               <Button className="btn-nav link-sign">
                 <NavLink to="/Login" className="active">

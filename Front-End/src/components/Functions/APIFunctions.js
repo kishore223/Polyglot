@@ -336,7 +336,9 @@ export function getGameL2(
         headings.push(responseJson["game_second"][i]["englishVerb"]);
         images.push(responseJson["game_second"][i]["urlImage"]);
         trans.push(responseJson["game_second"][i]["translatedVerb"]);
-        features.push(responseJson["game_second"][i]["features"]);
+        features.push(
+          checkPerson(responseJson["game_second"][i]["features"].split("+"))
+        );
         conjugate.push(responseJson["game_second"][i]["conjugateEnglishVerb"]);
         italian.push(responseJson["game_second"][i]["italianVerb"]);
       }
@@ -349,6 +351,85 @@ export function getGameL2(
     })
     .catch();
 }
+
+export function getGameL3(
+  languageId,
+  setLangCount,
+  headings,
+  trans,
+  images,
+  features,
+  conjugate,
+  italian,
+  setHeadCards,
+  setTransCards,
+  setImagesCards,
+  setFeaturesCards,
+  setConjugateCards,
+  setItalianCards
+) {
+  const game = {
+    languageId,
+    moduleId: 5,
+  };
+  fetch(API_BASE_URL + getGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson["game_third"]).length);
+      for (var i = 0; i < Object.keys(responseJson["game_third"]).length; i++) {
+        headings.push(responseJson["game_third"][i]["englishVerb"]);
+        images.push(responseJson["game_third"][i]["urlImage"]);
+        trans.push(responseJson["game_third"][i]["translatedVerb"]);
+        features.push(
+          checkPerson(responseJson["game_third"][i]["features"].split("+"))
+        );
+        conjugate.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
+        italian.push(responseJson["game_third"][i]["italianVerb"]);
+      }
+      setHeadCards(headings);
+      setTransCards(trans);
+      setImagesCards(images);
+      setFeaturesCards(features);
+      setConjugateCards(conjugate);
+      setItalianCards(italian);
+    })
+    .catch();
+}
+
+const checkPerson = (feature) => {
+  let conStr = "";
+  if (feature[0] === "1s") {
+    conStr = "First Person Singular";
+  } else if (feature[0] === "1p") {
+    conStr = "First Person Plural";
+  } else if (feature[0] === "2s") {
+    conStr = "Second Person Singular";
+  } else if (feature[0] === "2p") {
+    conStr = "Second Person Plural";
+  } else if (feature[0] === "3s") {
+    conStr = "Third Person Singular";
+  } else if (feature[0] === "3p") {
+    conStr = "Third Person Plural";
+  }
+  if (feature[1] === "PRES") {
+    conStr += " (Present Tense)";
+  } else if (feature[1] === "FUT") {
+    conStr += " (Future Tense)";
+  } else if (feature[1] === "PAST") {
+    conStr += " (Past Tense)";
+  } else if (feature[1] === "PERF") {
+    conStr += " (Perfect Tense)";
+  } else if (feature[1] === "IMP") {
+    conStr += " (Imperative Tense)";
+  }
+  return conStr;
+};
 
 export function getGameG1(
   languageId,
