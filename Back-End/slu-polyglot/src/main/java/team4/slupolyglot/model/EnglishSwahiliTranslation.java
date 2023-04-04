@@ -4,12 +4,16 @@ import team4.slupolyglot.repositories.Translation;
 
 import java.util.HashMap;
 import java.util.Locale;
+
 import static team4.slupolyglot.MyConstants.*;
 
 public class EnglishSwahiliTranslation implements Translation {
 
-    private final String[] SWAHILI_PRONOUNS = 
-    {"Mimi", "Wewe", "Yeye", "Sisi", "Nyinyi", "Wao"};
+    private final String[] SWAHILI_PRONOUNS = {"ni", "u", "a", "tu", "m", "wa"};
+    private final static String PRESENT_TENSE_JOINER = "na";
+    private final static String FUTURE_TENSE_JOINER = "ta";
+    private final static String PAST_TENSE_JOINER = "li";
+
     public HashMap<String, String> getPronouns() {
         return pronouns;
     }
@@ -66,8 +70,7 @@ public class EnglishSwahiliTranslation implements Translation {
     }
     public String computeTenses(String person, String verb, String tense) {
         String root = verb;
-        if(!this.checkDiSyllables(verb))
-        {
+        if(!this.checkDiSyllables(verb)){
             root = verb.substring(2);
         }
         String teneString = this.tenseJoiner(root, tense);
@@ -75,31 +78,29 @@ public class EnglishSwahiliTranslation implements Translation {
         return personString;
     }
 
-    public String tenseJoiner(String root,String tense){
-        if (tense.equals("PRES")) {
-            root = "na" + root;
-        } else if (tense.equals("FUT")) {
-            root = "ta" + root;
-        } else if (tense.equals("PAST")) {
-            root = "li" + root;
+    public String tenseJoiner(String root, String tense) {
+        switch(tense) {
+            case PRESENT:
+                root = PRESENT_TENSE_JOINER + root;
+                break;
+            case FUTURE:
+                root = FUTURE_TENSE_JOINER + root;
+                break;
+            case PAST:
+                root = PAST_TENSE_JOINER + root;
+                break;
         }
         return root;
     }
-
-    public String personJoiner(String tensRoot,String person){
-        if (person.equals("1s")) {
-            tensRoot = "ni" + tensRoot;
-        } else if (person.equals("2s")) {
-            tensRoot = "u" + tensRoot;
-        } else if (person.equals("3s")) {
-            tensRoot = "a" + tensRoot;
-        } else if (person.equals("1p")) {
-            tensRoot = "tu" + tensRoot;
-        } else if (person.equals("2p")) {
-            tensRoot = "m" + tensRoot;
-        } else if (person.equals("3p")) {
-            tensRoot = "wa" + tensRoot;
+    
+    public String personJoiner(String tensRoot, String person) {
+        for (int i = 0; i < GENERAL_PRONOUNS.length; i++) {
+            if (person.equals(GENERAL_PRONOUNS[i])) {
+                tensRoot = SWAHILI_PRONOUNS[i] + tensRoot;
+                break;
+            }
         }
         return tensRoot;
     }
+    
 }
