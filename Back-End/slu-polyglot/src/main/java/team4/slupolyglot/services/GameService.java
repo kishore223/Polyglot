@@ -32,7 +32,7 @@ public class GameService {
         List<Verb> verbs = verbRepository.findAll();
         Collections.shuffle(verbs);
 
-        List<Verb> learningActivityOneList = verbs.subList(0, 10);
+        List<Verb> learningActivityOneList = verbs.subList(0, verbs.size()-1);
     
         switch(languageId){
             case MyConstants.ITALIAN :
@@ -156,8 +156,9 @@ public class GameService {
 
         }
         else if(languageId.equals(MyConstants.SWAHILI)){
+            tenses = new String[]{PRESENT, FUTURE, PAST,PERFECT};
             for (Verb verb : verbs) {
-                if(verb.getEnglishVerb().equals("read")
+                if(verb.getEnglishVerb().equals("give")
                         || verb.getEnglishVerb().equals("eat")
                         || verb.getEnglishVerb().equals("speak")) {
                     for (String tens : tenses) {
@@ -179,7 +180,9 @@ public class GameService {
                             gameDtoSecond.add(gameDtoEntry);
                         }
                     }
+
                 }
+  
             }
         }
 
@@ -207,6 +210,7 @@ public class GameService {
                 }
             }
         } else if (languageId.equals(MyConstants.SWAHILI)) {
+            tenses = new String[]{PRESENT, FUTURE, PAST,PERFECT};
             for (Verb verb : verbs) {
                 for (String generalPronoun : GENERAL_PRONOUNS) {
                     for (String tens : tenses) {
@@ -220,7 +224,6 @@ public class GameService {
                         verb.getUrlImage());
                         gameDtoThird.add(gameDtoEntry);
                     }
-    
                 }
             }
         }

@@ -216,7 +216,6 @@ public class EnglishItalianTranslation implements Translation {
     }
     public String imperativo(String root, String infinito, String pronoun) throws IOException {
         String negazione = isNegative ? " non " : "";
-
         if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[3])) {
             if(!isCiareGiare && !isCareGare)
                 return(ITALIAN_PRONOUNS[3] + negazione + " " + root + "iamo");
