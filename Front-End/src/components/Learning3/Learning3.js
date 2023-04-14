@@ -51,7 +51,7 @@ function Learning3() {
   return (
     <div>
       <div className="color-div">
-        <h1 className="head-h1">LEARNING II</h1>
+        <h1 className="head-h1">LEARNING III</h1>
         {btnState === "Restart" && (
           <FlashcardL2
             headings={headCards}
