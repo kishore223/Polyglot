@@ -2,6 +2,10 @@ package team4.slupolyglot.model;
 
 public class SyllableCounter {
     public static int countSyllables(String word) {
+        if(word.toLowerCase().equals("kuongea"))
+        {
+            return 3;
+        }
         int syllables = 0;
         boolean prevVowel = false;
         for (int i = 0; i < word.length(); i++) {

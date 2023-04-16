@@ -15,10 +15,13 @@ public class EnglishSwahiliTranslation implements Translation {
     private final static String FUTURE_TENSE_JOINER = "ta";
     private final static String PAST_TENSE_JOINER = "li";
     private final static String PERFECT_TENSE_JOINER = "me";
-    //private final static String IMPERATIVE_TENSE_JOINER = "e";
+    private final static String NEGATIVE_PERFECT_TENSE_JOINER = "ja";
+    private final static String IMPERATIVE_TENSE_JOINER = "";
+    private final String[] SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES = {"ni","eni"};
+    private final String[] SWAHILI_EXCEPTIONAL_STRINGS = {"leta","ja","enda","ji"};
+    private final String[] SWAHILI_EXCEPTIONAL_JOINERS = {"e", "oo", "na-mn","e"};
     private boolean isNegative = false;
     
-
     public HashMap<String, String> getPronouns() {
         return pronouns;
     }
@@ -33,7 +36,6 @@ public class EnglishSwahiliTranslation implements Translation {
         put(GENERAL_PRONOUNS[4], SWAHILI_PRONOUNS[4]);
         put(GENERAL_PRONOUNS[5], SWAHILI_PRONOUNS[5]);
     }};
-
     private HashMap<String, String> negativePronouns = new HashMap<>() {{
         put(GENERAL_PRONOUNS[0], SWAHILI_NEGATIVE_PRONOUNS_PREFIXES[0]);
         put(GENERAL_PRONOUNS[1], SWAHILI_NEGATIVE_PRONOUNS_PREFIXES[1]);
@@ -42,7 +44,12 @@ public class EnglishSwahiliTranslation implements Translation {
         put(GENERAL_PRONOUNS[4], SWAHILI_NEGATIVE_PRONOUNS_PREFIXES[4]);
         put(GENERAL_PRONOUNS[5], SWAHILI_NEGATIVE_PRONOUNS_PREFIXES[5]);
     }};
-
+    private HashMap<String, String> imperativeExceptions = new HashMap<>() {{
+        put(SWAHILI_EXCEPTIONAL_STRINGS[0], SWAHILI_EXCEPTIONAL_JOINERS[0]);
+        put(SWAHILI_EXCEPTIONAL_STRINGS[1], SWAHILI_EXCEPTIONAL_JOINERS[1]);
+        put(SWAHILI_EXCEPTIONAL_STRINGS[2], SWAHILI_EXCEPTIONAL_JOINERS[2]);
+        put(SWAHILI_EXCEPTIONAL_STRINGS[3], SWAHILI_EXCEPTIONAL_JOINERS[3]);
+    }};
 
     private boolean validateSwahiliVerb(String verb) {
         String lowerVerb = verb.toLowerCase(Locale.ROOT);
@@ -81,21 +88,29 @@ public class EnglishSwahiliTranslation implements Translation {
         isNegative = featuresLen != 3;
         String pronoun = splitFeature[index];
         String tense = splitFeature[index+1];
-        System.out.println(tense);
         if(isNegative)
         {
             return this.computeNegativeStatements(pronoun, verb.getSwahiliVerb(), tense);
         }
         return this.computeNonNegativeStatements(pronoun, verb.getSwahiliVerb(), tense);
     }
+
     public String computeNonNegativeStatements(String person, String verb, String tense) {
         String root = verb;
-        if(!this.checkDiSyllables(verb)){
-            root = verb.substring(2);
+        String retString = "";
+        if(tense.equals(IMPERATIVE)){
+            retString = imperativeTenseHandler(root, person);
+            return retString;
         }
-        String teneString = this.tenseJoiner(root, tense);
-        String personString = this.personJoiner(teneString, person);
-        return personString;
+        else{
+            if(!this.checkDiSyllables(verb)){
+                root = verb.substring(2);
+            }
+            String teneString = this.tenseJoiner(root, tense);
+            String personString = this.personJoiner(teneString, person);
+            retString = personString;
+        }
+        return retString;
     }
 
     public String lastCharCheck(String inputString){
@@ -118,6 +133,7 @@ public class EnglishSwahiliTranslation implements Translation {
                 }
         return modifiedString;
     }
+    
     public String computeNegativeStatements(String person, String verb, String tense)
     {
         String returnString = verb;  
@@ -134,8 +150,88 @@ public class EnglishSwahiliTranslation implements Translation {
                 returnString = FUTURE_TENSE_JOINER + verb.substring(2);
                 returnString= this.conjugateNegativeStringModifier(person,returnString);
                 break;
+            case PERFECT:
+                returnString = NEGATIVE_PERFECT_TENSE_JOINER + verb.substring(2);
+                returnString= this.conjugateNegativeStringModifier(person,returnString);
+                break;
         }
         return returnString;
+    }
+
+    public boolean swahiliExceptionalVerbsCheck(String verb){   
+        boolean containsSubstring = false;
+        for (String sub : SWAHILI_EXCEPTIONAL_STRINGS) {
+            if (verb.contains(sub)) {
+                containsSubstring = true;
+                break;
+            }
+        }
+        return containsSubstring;
+    }
+
+    public String imperativeTenseHandler(String root, String person){
+        if(person.equals(GENERAL_PRONOUNS[1])){
+            if(checkDiSyllables(root))
+            {   
+                if(swahiliExceptionalVerbsCheck(root)){
+                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2]))
+                    {
+                        return imperativeExceptions.
+                        get(SWAHILI_EXCEPTIONAL_STRINGS[2]).split("-")[0]
+                        +SWAHILI_EXCEPTIONAL_STRINGS[2];
+                    }
+                    if (root.endsWith(SWAHILI_EXCEPTIONAL_STRINGS[1])) {
+                        root = "n" + root.substring(root.length() - 2, root.length() - 1)
+                        + imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[1]);
+                    }
+                }
+                return root;
+            }
+            root = root.substring(2);
+            if(swahiliExceptionalVerbsCheck(root)){
+                if (root.endsWith(SWAHILI_EXCEPTIONAL_STRINGS[0])) {
+                    root = root.substring(0, root.length() - 1)
+                    + imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[0]);
+                }
+                else if(root.startsWith(SWAHILI_EXCEPTIONAL_STRINGS[3]) 
+                && root.endsWith("a")){
+                    root = root.substring(0, root.length() - 1)
+                    + imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[3]);
+                }
+            }
+            return root;
+        }
+        else if(person.equals(GENERAL_PRONOUNS[4])){
+            if(checkDiSyllables(root))
+            {   
+                if(swahiliExceptionalVerbsCheck(root)){
+                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2]))
+                    {
+                            return imperativeExceptions.
+                            get(SWAHILI_EXCEPTIONAL_STRINGS[2]).split("-")[1]
+                            +SWAHILI_EXCEPTIONAL_STRINGS[2];
+                    }
+                    if (root.endsWith(SWAHILI_EXCEPTIONAL_STRINGS[1])) {
+                        root = "n" + root.substring(root.length() - 2, root.length() - 1)
+                        + imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[1]);
+                    }
+                }
+                if(root.endsWith("a")){
+                    root = root.substring(0, root.length() - 1) + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[1];
+                }
+                else{
+                    root = root + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[0];
+                }
+                return root;
+            }
+            root = root.substring(2);
+            if(root.endsWith("a")){
+                root = root.substring(0, root.length() - 1) + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[1];
+            }else{
+                root = root + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[1];
+            }
+        }
+        return root;
     }
 
     public String tenseJoiner(String root, String tense) {
@@ -151,6 +247,10 @@ public class EnglishSwahiliTranslation implements Translation {
                 break;
             case PERFECT:
                 root = PERFECT_TENSE_JOINER + root;
+                break;
+            case IMPERATIVE:
+                root = IMPERATIVE_TENSE_JOINER + root;
+                break;
         }
         return root;
     }

@@ -32,7 +32,7 @@ public class GameService {
         List<Verb> verbs = verbRepository.findAll();
         Collections.shuffle(verbs);
 
-        List<Verb> learningActivityOneList = verbs.subList(0, verbs.size()-1);
+        List<Verb> learningActivityOneList = verbs.subList(0, 10);
     
         switch(languageId){
             case MyConstants.ITALIAN :
@@ -49,9 +49,10 @@ public class GameService {
                     case MODULE_LEARNING_4 -> {
                         gameTwo(verbs,gameDto,MyConstants.ITALIAN);
                     }
-                    case MODULE_LEARNING_5 -> {
+                    case MODULE_LEARNING_5, MODULE_LEARNING_6 -> {
                         learningTenses(verbs, gameDto, true, MODULE_LEARNING_5,MyConstants.ITALIAN);
                     }
+                    
                 }
                 break;
             case MyConstants.SPANISH :
@@ -69,6 +70,9 @@ public class GameService {
                     }
                     case MODULE_LEARNING_4 -> {
                         gameTwo(verbs,gameDto,MyConstants.SWAHILI);
+                    }
+                    case  MODULE_LEARNING_5, MODULE_LEARNING_6 -> {
+                        learningTenses(verbs, gameDto, true, MODULE_LEARNING_5,MyConstants.SWAHILI);
                     }
                 }        
         }
@@ -156,10 +160,36 @@ public class GameService {
 
         }
         else if(languageId.equals(MyConstants.SWAHILI)){
-            tenses = new String[]{PRESENT, FUTURE, PAST,PERFECT};
-            for (Verb verb : verbs) {
-                if(verb.getEnglishVerb().equals("give")
-                        || verb.getEnglishVerb().equals("eat")
+            if(moduleId == MODULE_LEARNING_5){
+                isNegative = false;
+                tenses = new String[]{IMPERATIVE};
+                String[] IMPERATIVE_PRONOUNS = new String[]{"2s","2p"};
+                for (Verb verb : verbs) {
+                    for (String tens : tenses) {
+                        for (String generalPronoun : IMPERATIVE_PRONOUNS) {
+                            EnglishVerbs englishVerbs =
+                            new EnglishVerbs(verb.getEnglishVerb(),
+                            tens, generalPronoun,isNegative);
+                            String features = 
+                            getFeatures(isNegative, generalPronoun, tens);
+                            String translated = 
+                            verb.getTranslatedVerb
+                            (new EnglishSwahiliTranslation(), features);
+                            GameDto gameDtoEntry = 
+                            new GameDto(verb.getEnglishVerb()
+                            , translated, features, verb.getId(),
+                            verb.getUrlImage(),
+                            englishVerbs.getConjugatedVerb(),
+                            verb.getSwahiliVerb());
+                            gameDtoSecond.add(gameDtoEntry);
+                        }
+                    }
+                }
+                isNegative = true;
+                tenses = new String[]{PRESENT, FUTURE, PAST,PERFECT};
+                for (Verb verb : verbs) {
+                    if(verb.getEnglishVerb().equals("sleep")
+                        || verb.getEnglishVerb().equals("write")
                         || verb.getEnglishVerb().equals("speak")) {
                     for (String tens : tenses) {
                         for (String generalPronoun : GENERAL_PRONOUNS) {
@@ -180,13 +210,40 @@ public class GameService {
                             gameDtoSecond.add(gameDtoEntry);
                         }
                     }
-
+                    }
                 }
-  
-            }
-        }
 
-        
+            }
+            else{
+                tenses = new String[]{PRESENT, FUTURE, PAST,PERFECT};
+                for (Verb verb : verbs) {
+                    if(verb.getEnglishVerb().equals("sleep")
+                        || verb.getEnglishVerb().equals("write")
+                        || verb.getEnglishVerb().equals("speak")) {
+                    for (String tens : tenses) {
+                        for (String generalPronoun : GENERAL_PRONOUNS) {
+                            EnglishVerbs englishVerbs =
+                            new EnglishVerbs(verb.getEnglishVerb(),
+                            tens, generalPronoun,isNegative);
+                            String features = 
+                            getFeatures(isNegative, generalPronoun, tens);
+                            String translated = 
+                            verb.getTranslatedVerb
+                            (new EnglishSwahiliTranslation(), features);
+                            GameDto gameDtoEntry = 
+                            new GameDto(verb.getEnglishVerb()
+                            , translated, features, verb.getId(),
+                            verb.getUrlImage(),
+                            englishVerbs.getConjugatedVerb(),
+                            verb.getSwahiliVerb());
+                            gameDtoSecond.add(gameDtoEntry);
+                        }
+                    }
+                    }
+                }
+            }
+            
+        }
         return gameDtoSecond;
     }
     private List<GameDto> gameTwo(List<Verb> verbs,
@@ -230,21 +287,7 @@ public class GameService {
         return gameDtoThird;
     }
 
-    public List<String> randomOptions(List<Verb> verbs,String answer){
-        List<String> responseList = new ArrayList<String>();
-        Random rand = new Random();
-        for (int i = 0; i < this.numberOfOptions; i++) {
-            int index = rand.nextInt(verbs.size());
-            String verbItalian = verbs.get(index).getItalianVerb();
-            if (!verbItalian.equals(answer) && 
-            !responseList.contains(verbItalian)) {
-                responseList.add(verbItalian);
-            } else {
-                i--;
-            }
-        }
-        return responseList;
-    }
+
 
     String getFeatures(boolean isNegative, String pronoun, String tense){
         return isNegative ? "NEG"+ "+" + pronoun + "+" + tense :
