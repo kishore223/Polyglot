@@ -9,7 +9,7 @@ export function CommonScripts() {
 }
 
 export function genRand(nums_set) {
-  while (nums_set.size < 15) {
+  while (nums_set.size < 10) {
     let num = Math.floor(Math.random() * 69) * 3;
     nums_set.add(num);
   }

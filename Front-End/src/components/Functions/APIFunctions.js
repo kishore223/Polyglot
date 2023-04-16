@@ -340,7 +340,7 @@ export function getGameL2(
           checkPerson(responseJson["game_second"][i]["features"].split("+"))
         );
         conjugate.push(responseJson["game_second"][i]["conjugateEnglishVerb"]);
-        italian.push(responseJson["game_second"][i]["italianVerb"]);
+        italian.push(responseJson["game_second"][i]["verb"]);
       }
       setHeadCards(headings);
       setTransCards(trans);
@@ -390,7 +390,7 @@ export function getGameL3(
           checkPerson(responseJson["game_third"][i]["features"].split("+"))
         );
         conjugate.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
-        italian.push(responseJson["game_third"][i]["italianVerb"]);
+        italian.push(responseJson["game_third"][i]["verb"]);
       }
       setHeadCards(headings);
       setTransCards(trans);
@@ -520,6 +520,39 @@ export function getGameG2(
       }
       setTransCards(trans);
       setImagesCards(images);
+    })
+    .catch();
+}
+
+export function getGameG3(
+  languageId,
+  setLangCount,
+  langCount,
+  trans,
+  engVerb,
+  setTransCards,
+  setEngVerbCards
+) {
+  const game = {
+    languageId,
+    moduleId: 6,
+  };
+  fetch(API_BASE_URL + getGame, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(game),
+  })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setLangCount(Object.keys(responseJson["game_third"]).length);
+      for (var i = 0; i < Object.keys(responseJson["game_third"]).length; i++) {
+        trans.push(responseJson["game_third"][i]["translatedVerb"]);
+        engVerb.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
+      }
+      setTransCards(trans);
+      setEngVerbCards(engVerb);
     })
     .catch();
 }
