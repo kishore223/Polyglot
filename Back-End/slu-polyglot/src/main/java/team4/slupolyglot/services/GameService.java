@@ -296,6 +296,8 @@ public class GameService {
             for (Verb verb : verbs) {
                 for (String generalPronoun : GENERAL_PRONOUNS) {
                     for (String tens : tenses) {
+                        EnglishVerbs englishVerbs =
+                                new EnglishVerbs(verb.getEnglishVerb(), tens, generalPronoun,false);
                         String features =
                                 getFeatures(false, generalPronoun, tens);
                         String translated =
@@ -303,8 +305,8 @@ public class GameService {
                                         (new EnglishItalianTranslation(), features);
                         GameDto gameDtoEntry =
                                 new GameDto(verb.getEnglishVerb()
-                                        , translated, features, verb.getId(),
-                                        verb.getUrlImage());
+                                , translated, features, verb.getId(), verb.getUrlImage(),
+                                englishVerbs.getConjugatedVerb(),verb.getItalianVerb());
                         gameDtoThird.add(gameDtoEntry);
                     }
 
