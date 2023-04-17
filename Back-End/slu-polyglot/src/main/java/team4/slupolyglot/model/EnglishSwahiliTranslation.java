@@ -1,10 +1,8 @@
 package team4.slupolyglot.model;
 
 import team4.slupolyglot.repositories.Translation;
-
 import java.util.HashMap;
 import java.util.Locale;
-
 import static team4.slupolyglot.MyConstants.*;
 
 public class EnglishSwahiliTranslation implements Translation {
@@ -110,8 +108,7 @@ public class EnglishSwahiliTranslation implements Translation {
         isNegative = featuresLen != 3;
         String pronoun = splitFeature[index];
         String tense = splitFeature[index+1];
-        if(isNegative)
-        {
+        if(isNegative){
             return this.computeNegativeStatements(pronoun,
             verb.getSwahiliVerb(), tense);
         }
@@ -172,7 +169,10 @@ public class EnglishSwahiliTranslation implements Translation {
                 returnString= this.conjugateNegativeStringModifier(person,returnString);
                 break;
            case FUTURE:
-                returnString = FUTURE_TENSE_JOINER + verb.substring(2);
+                if(person.equals(GENERAL_PRONOUNS[1]) || person.equals(GENERAL_PRONOUNS[3])){
+                    returnString = verb.substring(2);
+                }
+                returnString = FUTURE_TENSE_JOINER + returnString;
                 returnString= this.conjugateNegativeStringModifier(person,returnString);
                 break;
             case PERFECT:
@@ -196,11 +196,9 @@ public class EnglishSwahiliTranslation implements Translation {
 
     public String imperativeTenseHandler(String root, String person){
         if(person.equals(GENERAL_PRONOUNS[1])){
-            if(checkDiSyllables(root))
-            {   
+            if(checkDiSyllables(root)){   
                 if(swahiliExceptionalVerbsCheck(root)){
-                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2]))
-                    {
+                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2])){
                         return swahiliPronouns.get(GENERAL_PRONOUNS[1]) + " " +
                         imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[2]).split("-")[0]
                         +SWAHILI_EXCEPTIONAL_STRINGS[2];
@@ -227,11 +225,9 @@ public class EnglishSwahiliTranslation implements Translation {
             return swahiliPronouns.get(GENERAL_PRONOUNS[1]) + " " + root;
         }
         else if(person.equals(GENERAL_PRONOUNS[4])){
-            if(checkDiSyllables(root))
-            {   
+            if(checkDiSyllables(root)){   
                 if(swahiliExceptionalVerbsCheck(root)){
-                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2]))
-                    {
+                    if(root.equals(SWAHILI_EXCEPTIONAL_STRINGS[2])){
                             return swahiliPronouns.get(GENERAL_PRONOUNS[2]) + " " +
                             imperativeExceptions.get(SWAHILI_EXCEPTIONAL_STRINGS[2]).split("-")[1]
                             +SWAHILI_EXCEPTIONAL_STRINGS[2];
@@ -253,7 +249,7 @@ public class EnglishSwahiliTranslation implements Translation {
             if(root.endsWith("a")){
                 root = root.substring(0, root.length() - 1) + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[1];
             }else{
-                root = root + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[1];
+                root = root + SWAHILI_IMPERATIVE_PRONOUNS_PREFIXES[0];
             }
         }
         return swahiliPronouns.get(GENERAL_PRONOUNS[2]) + " " + root;
@@ -290,5 +286,4 @@ public class EnglishSwahiliTranslation implements Translation {
         }
         return tensRoot;
     }    
-
 }
