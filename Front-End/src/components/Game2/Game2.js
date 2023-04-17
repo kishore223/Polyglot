@@ -41,7 +41,7 @@ function Game2() {
           language={language}
           languageId={languageId}
           score={parseInt(score)}
-          cardNo={15}
+          cardNo={10}
           cardAll={langCount}
         />
       </div>

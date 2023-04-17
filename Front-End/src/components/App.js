@@ -8,6 +8,7 @@ import Learning2 from "./Learning2/Learning2.js";
 import Learning3 from "./Learning3/Learning3.js";
 import Game1 from "./Game1/Game1.js";
 import Game2 from "./Game2/Game2.js";
+import Game3 from "./Game3/Game3.js";
 import Language from "./Languages/Language.js";
 import { Home } from "./Home/Home.js";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/Learning3" element={<Learning3 />} />
           <Route path="/Activity1" element={<Game1 />} />
           <Route path="/Activity2" element={<Game2 />} />
+          <Route path="/Activity3" element={<Game3 />} />
         </Routes>
       </BrowserRouter>
     </div>

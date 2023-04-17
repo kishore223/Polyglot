@@ -147,7 +147,7 @@ function Dashboard() {
                 languageId={languageId}
                 level="game3"
                 score={score6}
-                desc="Here will be the Description."
+                desc="The OMR Touchh..."
               />
             </div>
           </div>

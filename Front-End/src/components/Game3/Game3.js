@@ -1,122 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Game3.css";
-import { Card, Button } from "react-bootstrap";
-
-function OptionButton({ option, isDisabled, onSelect }) {
-  return (
-    <Button
-      variant="outline-primary"
-      disabled={isDisabled}
-      onClick={() => onSelect(option)}
-    >
-      {option}
-    </Button>
-  );
-}
+import Omr from "./Omr.js";
+import { useSearchParams } from "react-router-dom";
+import { getGameG3 } from "../Functions/APIFunctions.js";
 
 function Game3() {
-  const [currentQuestion, setCurrentQuestion] = useState(1);
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [searchparams] = useSearchParams();
+  let score = useState(searchparams.get("score"));
+  const language = searchparams.get("lang");
+  const languageId = searchparams.get("languageId");
+  const [transCards, setTransCards] = useState([]);
+  const [engVerbCards, setEngVerbCards] = useState([]);
+  const [langCount, setLangCount] = useState(0);
+  const trans = [];
+  const engVerb = [];
 
-  const handleOptionSelect = (option) => {
-    setSelectedOptions({ ...selectedOptions, [currentQuestion]: option });
-    setCurrentQuestion(currentQuestion + 1);
+  const getGame = () => {
+    getGameG3(
+      languageId,
+      setLangCount,
+      langCount,
+      trans,
+      engVerb,
+      setTransCards,
+      setEngVerbCards
+    );
   };
+
+  useEffect(() => {
+    getGame();
+  }, [langCount]);
 
   return (
     <div>
-      <h1 className="quiz-title">Activity 3</h1>
-      <div className="quiz-container">
-        <div className="quiz-body">
-          <div className="quiz">
-            <Card className="quiz-questions">
-              <Card.Body>
-                <Card.Title className="quiz-head" >
-                  Questions
-                </Card.Title>
-                <Card.Text className="question-text">
-                  <div>Love</div>
-                  <div>Hate</div>
-                  <div>Sing</div>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className="quiz-answers">
-              <Card.Body>
-                <Card.Title className="quiz-head">
-                  Answers
-                </Card.Title>
-                <Card.Text className="question-text">
-                  <div>A. Cantare</div>
-                  <div>B. Amore</div>
-                  <div>C. Odio</div>
-                </Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className="quiz-option">
-              <Card.Body>
-                <Card.Title className="quiz-head" >
-                  Options
-                </Card.Title>
-                <div className="quiz-option-row">
-                  <OptionButton
-                    option="A"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="B"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="C"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                </div>
-                <div className="quiz-option-row">
-                  <OptionButton
-                    option="A"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="B"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="C"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                </div>
-                <div className="quiz-option-row">
-                  <OptionButton
-                    option="A"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="B"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                  <OptionButton
-                    option="C"
-                    isDisabled={selectedOptions[currentQuestion]}
-                    onSelect={handleOptionSelect}
-                  />
-                </div>
-              </Card.Body>
-            </Card>
-          </div>
-          <div className="submit-button">
-              <Button >Submit</Button>
-          </div>
-        </div>
+      <div className="color-div">
+        <h1 className="head-h1">ACTIVITY III</h1>
+        <Omr
+          trans={transCards}
+          engVerb={engVerbCards}
+          language={language}
+          languageId={languageId}
+          score={parseInt(score)}
+          cardNo={10}
+          cardAll={langCount}
+        />
       </div>
     </div>
   );
