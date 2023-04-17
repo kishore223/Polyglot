@@ -1,20 +1,24 @@
 package team4.slupolyglot;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 import team4.slupolyglot.model.EnglishSwahiliTranslation;
 import team4.slupolyglot.model.Verb;
 
 
 import static org.junit.Assert.assertEquals;
-
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class SwahiliTests {
     @Test
     public void testSwahiliTranslation() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\sande\\Desktop\\PSD\\git_ultra_pro\\Polyglot\\Back-End\\slu-polyglot\\src\\test\\java\\team4\\slupolyglot\\resources\\testdist.tsv"));
+
+    ClassPathResource resource = new ClassPathResource("swahili_test_cases.tsv");
+    BufferedReader reader =
+                new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
     String line;
     while ((line = reader.readLine()) != null) {
         String[] columns = line.split("\t");
