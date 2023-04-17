@@ -140,6 +140,7 @@ CREATE TABLE `verbs` (
   `italian_verb` varchar(255) DEFAULT NULL,
   `url_image` varchar(255) DEFAULT NULL,
   `translated_verb` varchar(255) DEFAULT NULL,
+  `swahili_verb` varchar(255) DEFAULT NULL, 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -150,7 +151,40 @@ CREATE TABLE `verbs` (
 
 LOCK TABLES `verbs` WRITE;
 /*!40000 ALTER TABLE `verbs` DISABLE KEYS */;
-INSERT INTO `verbs` VALUES (1,'swim','nuotare','https://i.pinimg.com/564x/e4/cf/f8/e4cff885de1bea8c2a8f4e8d9022c16f.jpg',NULL),(2,'fly','volare','https://i.pinimg.com/564x/bb/2c/64/bb2c64a126f3eef15e013ec295387495.jpg',NULL),(3,'study','studiare','https://i.pinimg.com/564x/7b/bb/d2/7bbbd2e312172a811eee1a467e90c41a.jpg',NULL),(4,'work','lavorare','https://i.pinimg.com/564x/1b/f8/1e/1bf81e4bf10490ddb396fa2b9ea2a799.jpg',NULL),(5,'run','correre','https://i.pinimg.com/564x/d9/3e/ad/d93eadf81d1017d7a1291fbb43987e60.jpg',NULL),(6,'talk','parlare','https://i.pinimg.com/564x/73/4f/4e/734f4e32b659003e02da4b7401885d02.jpg',NULL),(7,'sing','cantare','https://i.pinimg.com/564x/d9/76/34/d97634a3930f0b44d7371fe8dc3a3ec3.jpg',NULL),(8,'cook','cucinare','https://i.pinimg.com/564x/af/85/e7/af85e749d95240594036c33594e83fb9.jpg',NULL),(9,'clean','pulire','https://i.pinimg.com/564x/1f/30/c0/1f30c0838364738df2efd0ea10dec830.jpg',NULL),(10,'draw','disegnare','https://i.pinimg.com/564x/b3/a0/ec/b3a0ecf4a61737fb7237a828ec3ca34f.jpg',NULL),(11,'paint','dipingere','https://i.pinimg.com/564x/c5/c7/96/c5c79612f19e98b2c7dbce0f0daff552.jpg',NULL),(12,'laugh','ridere','https://i.pinimg.com/564x/46/5c/9c/465c9c33ae0d6e9348b436fe4edddcf3.jpg',NULL),(13,'cry','piangere','https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',NULL),(14,'speak','parlare','https://i.pinimg.com/564x/41/d9/2d/41d92d07cc3a7c9903bab266a59dfe5c.jpg',NULL),(15,'watch','guardare','https://i.pinimg.com/564x/0d/79/4e/0d794e8ef41cb7e9cb8323eca335def5.jpg',NULL),(16,'eat','mangiare','https://i.pinimg.com/564x/b4/55/e5/b455e585d8dac4f99fcf22ca9e2829f8.jpg',NULL),(17,'drink','bere','https://i.pinimg.com/564x/c3/17/fe/c317fe013fedba61fe970109207b691c.jpg',NULL),(18,'sleep','dormire','https://i.pinimg.com/564x/d4/e2/4d/d4e24d3a5df06ed5e8c1a89d823e5fe8.jpg',NULL),(19,'wake','svegliare','https://i.pinimg.com/564x/0a/98/b2/0a98b2c1c9b18a03167ec3575453330f.jpg',NULL),(20,'go','andare','https://i.pinimg.com/564x/65/95/46/659546693c3a1cd6f441a57f10be6507.jpg',NULL),(21,'think','pensare','https://i.pinimg.com/564x/a2/21/40/a2214003491d4cf70d500a7f49e04826.jpg',NULL),(22,'listen','ascoltare','https://i.pinimg.com/564x/6d/78/7d/6d787dfcd5a76f412b9ae9c31a11b267.jpg',NULL),(23,'read','leggere','https://i.pinimg.com/564x/f7/8f/ec/f78fec21ecf4e824ea0a16d4b3e82f29.jpg',NULL),(24,'write','scrivere','https://i.pinimg.com/564x/ba/36/ae/ba36ae0fa1f4b288ca609661a0386716.jpg',NULL),(25,'play','giocare','https://i.pinimg.com/564x/8f/17/b6/8f17b6705b1b86be17cf784b1dbb0cd5.jpg',NULL),(26,'drive','guidare','https://i.pinimg.com/564x/38/a1/0b/38a10ba1d6b9245c1a885b08ffa5a421.jpg',NULL),(27,'dance','ballare','https://i.pinimg.com/564x/f2/be/49/f2be49f16e7e7bc9acb6487d19040b05.jpg',NULL),(28,'move','muovere','https://i.pinimg.com/564x/d1/1a/1d/d11a1d6b931ac8ef32c4cc39bb685bb7.jpg',NULL),(29,'wait','aspettare','https://i.pinimg.com/564x/d6/8c/74/d68c7428c8656b9eb29aea504efb2780.jpg',NULL),(30,'fight','combattere','https://i.pinimg.com/564x/49/f5/a0/49f5a0d5b36d87ae3a0459676857778d.jpg',NULL),(31,'jump','saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw',NULL),(32,'travel','viaggiare','https://media.istockphoto.com/id/1285301614/photo/young-man-arms-outstretched-by-the-sea-at-sunrise-enjoying-freedom-and-life-people-travel.jpg?s=612x612&w=0&k=20&c=0QW6GnkuFNYcPZhy26XVHuTc2avJTK8u6l_1iT0SlZk=',NULL),(33,'exist','esistere','https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',NULL),(34,'open','aprire','https://c8.alamy.com/compit/gextc5/mano-destra-aprire-la-porta-isolata-su-sfondo-bianco-con-percorso-di-clipping-gextc5.jpg',NULL);
+INSERT INTO polyglot.verbs VALUES
+(1, 'swim', 'nuotare', 'https://i.pinimg.com/564x/e4/cf/f8/e4cff885de1bea8c2a8f4e8d9022c16f.jpg',Null, 'kuogelea'), 
+(2, 'fly', 'volare', 'https://i.pinimg.com/564x/bb/2c/64/bb2c64a126f3eef15e013ec295387495.jpg',Null, 'kuruka'), 
+(3, 'study', 'studiare', 'https://i.pinimg.com/564x/7b/bb/d2/7bbbd2e312172a811eee1a467e90c41a.jpg',Null, 'kujifunza'), 
+(4, 'run', 'correre', 'https://i.pinimg.com/564x/d9/3e/ad/d93eadf81d1017d7a1291fbb43987e60.jpg',Null, 'kukimbia'), 
+(5, 'talk', 'parlare', 'https://i.pinimg.com/564x/73/4f/4e/734f4e32b659003e02da4b7401885d02.jpg',Null, 'kuzungumza'), 
+(6, 'sing', 'cantare', 'https://i.pinimg.com/564x/d9/76/34/d97634a3930f0b44d7371fe8dc3a3ec3.jpg',Null, 'kuimba'), 
+(7, 'cook', 'cucinare', 'https://i.pinimg.com/564x/af/85/e7/af85e749d95240594036c33594e83fb9.jpg',Null, 'kupika'), 
+(8, 'clean', 'pulire', 'https://i.pinimg.com/564x/1f/30/c0/1f30c0838364738df2efd0ea10dec830.jpg',Null, 'kusafisha'), 
+(9, 'draw', 'disegnare', 'https://i.pinimg.com/564x/b3/a0/ec/b3a0ecf4a61737fb7237a828ec3ca34f.jpg',Null, 'kuchora'), 
+(10, 'paint', 'dipingere', 'https://i.pinimg.com/564x/c5/c7/96/c5c79612f19e98b2c7dbce0f0daff552.jpg',Null, 'kupaka rangi'), 
+(11, 'laugh', 'ridere', 'https://i.pinimg.com/564x/46/5c/9c/465c9c33ae0d6e9348b436fe4edddcf3.jpg', Null,'kuchekea'), 
+(12, 'cry', 'piangere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg', Null,'kulia'),
+(13, 'speak', 'parlare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuongea'),
+(14, 'watch', 'guardare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuangalia'),
+(15, 'eat', 'mangiare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg', Null,'kula'),
+(16, 'drink', 'bere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg', Null,'kunywa'),
+(17, 'sleep', 'dormire' ,'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kulala'),
+(18, 'wake', 'svegliare','https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuamka'),
+(19, 'go', 'andare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kwenda'),
+(20, 'think', 'pensare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kufikiria'),
+(21, 'listen', 'ascoltare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kusikiliza'),
+(22, 'read', 'leggere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kusoma'),
+(23, 'write', 'scrivere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuandika'),
+(24, 'play', 'giocare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg', Null,'kucheza'),
+(25, 'drive', 'guidare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuendesha'),
+(26, 'dance', 'ballare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg', Null,'kucheza'),
+(27, 'move', 'muovere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kuhama'),
+(28, 'wait', 'aspettare', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kusubiri'),
+(29, 'fight', 'combattere', 'https://i.pinimg.com/564x/0f/d3/d2/0fd3d29879252f08ca350521debcdfe4.jpg',Null, 'kupigana'),
+(30,'jump','saltare','http://t3.gstatic.com/licensed-image?q=tbn:ANd9GcT72MG4ALk3Ahbqe6KLFDhqgKwL5uJkci2qR5YbbDUbDyiP1Lq4djHBTTtv2f27mRxUeFmV_F7dmdrHiY1bGhw',NULL,'kuruka'),
+(31,'travel','viaggiare','https://media.istockphoto.com/id/1285301614/photo/young-man-arms-outstretched-by-the-sea-at-sunrise-enjoying-freedom-and-life-people-travel.jpg?s=612x612&w=0&k=20&c=0QW6GnkuFNYcPZhy26XVHuTc2avJTK8u6l_1iT0SlZk=',NULL,'kusafiri'),
+(32,'exist','esistere','https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FpdCUyMG9mJTIwd2FpdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80',NULL,'kuwepo'),
+(33,'open','aprire','https://c8.alamy.com/compit/gextc5/mano-destra-aprire-la-porta-isolata-su-sfondo-bianco-con-percorso-di-clipping-gextc5.jpg',NULL,'kufungua');
 /*!40000 ALTER TABLE `verbs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
