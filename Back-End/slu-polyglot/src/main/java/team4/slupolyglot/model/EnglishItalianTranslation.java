@@ -284,7 +284,10 @@ public class EnglishItalianTranslation implements Translation {
     @Override
     public String translate(Verb verb, String features) {
         validateVerb(verb.getItalianVerb());
-        features = features + "+" + verb.getEnglishVerb();
+        String[] preSplitFeature = features.split("\\+");
+
+        if(!preSplitFeature[preSplitFeature.length-1].equals(verb.getEnglishVerb()))
+            features = features + "+" + verb.getEnglishVerb();
 
         if(!validateFeatures(features))
             throw new  IllegalArgumentException("error features");

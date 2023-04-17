@@ -2,11 +2,16 @@ package team4.slupolyglot;
 
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import team4.slupolyglot.model.EnglishItalianTranslation;
+import team4.slupolyglot.model.Verb;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public class TranslationTests {
+import static org.junit.Assert.assertEquals;
+
+public class ItalianTranslationTests {
 
     @Test
     public void testTranslationItalianPresenteIndicativo() throws Exception {
@@ -19,15 +24,20 @@ public class TranslationTests {
             String[] values = line.split("\t");
 
             String feature =  values[0];
-            String enVerb = values[1];
             String itVerb = values[2];
-            System.out.println(feature+ " " + enVerb + " "+ itVerb);
+            String itVerbInfinito = values[3];
 
+            String[] splitFeature = feature.split("\\+");
 
-/*            EnglishItalianTranslation englishItalianTranslation = new EnglishItalianTranslation();
-            String result = englishItalianTranslation.translateTest(itVerb,feature);
+            Verb verb = new Verb();
+            verb.setItalianVerb(itVerbInfinito);
+            verb.setEnglishVerb(splitFeature[2]);
+
+            EnglishItalianTranslation englishItalianTranslation = new EnglishItalianTranslation();
+            String result = englishItalianTranslation.translate(verb, feature);
+
             System.out.println(feature+ " " + itVerb + " "+ result);
-            assertEquals(itVerb, result);*/
+            assertEquals(itVerb, result);
         }
         reader.close();
 
