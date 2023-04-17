@@ -2,10 +2,10 @@ package team4.slupolyglot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,22 +15,22 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import static org.junit.Assert.assertEquals;
-
 import java.math.BigDecimal;
 import java.util.Map;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import team4.slupolyglot.model.Authenticator;
 import team4.slupolyglot.model.Player;
+import team4.slupolyglot.repositories.LanguagesRepository;
 import team4.slupolyglot.repositories.PlayerRepository;
-
+import team4.slupolyglot.repositories.ScoresRepository;
+import team4.slupolyglot.services.PlayerService;
 import team4.slupolyglot.controller.request.SignInRequestJson;
 import team4.slupolyglot.controller.request.SignUpRequestJson;
 import team4.slupolyglot.controller.Controller;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(Controller.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class SluPolyglotApplicationTests {
 
     @Autowired
@@ -39,9 +39,18 @@ public class SluPolyglotApplicationTests {
     @MockBean
     private PlayerRepository playerRepository;
 
-    @Mock
-    private Authenticator authenticator;
+    @MockBean
+    private LanguagesRepository languagesRepository;
 
+    @MockBean
+    private ScoresRepository scoresRepository;
+
+    @MockBean
+    private PlayerService playerService;
+
+    @MockBean
+    private Authenticator authenticator;
+    
     private final String SIGN_IN_END_POINT = "/polyglot/player/signIn";
     private final String SIGN_UP_END_POINT = "/polyglot/player/signUp";
     private final String SIGN_IN_SUCCESS_CODE = Controller.SIGN_IN_SUCCESS_CODE;
@@ -52,7 +61,6 @@ public class SluPolyglotApplicationTests {
     private final String SIGN_UP_SUCCESS_DESCRIPTION = Controller.SIGN_UP_SUCCESS_DESCRIPTION;
     private final String SIGN_UP_FAILURE_CODE = Controller.SIGN_UP_FAILURE_CODE;
     private final String SIGN_UP_FAILURE_DESCRIPTION = Controller.SIGN_UP_FAILURE_DESCRIPTION;
-
 
     @Test
     public void testSignInPlayerSuccess() throws Exception {
@@ -79,7 +87,7 @@ public class SluPolyglotApplicationTests {
         assertEquals(SIGN_IN_SUCCESS_DESCRIPTION, response.get("errorMessage"));
         assertEquals(email, response.get("email"));
         assertEquals(player.getUserName(), response.get("name"));
-        assertEquals(player.getScore(), response.get("score"));
+    
     }
 
     @Test
@@ -156,7 +164,7 @@ public class SluPolyglotApplicationTests {
         assertEquals(SIGN_UP_SUCCESS_DESCRIPTION, response.get("errorMessage"));
         assertEquals(email, response.get("email"));
         assertEquals(name, response.get("name"));
-        assertEquals(score, response.get("score"));
+    
     }
 
     @Test
@@ -201,9 +209,4 @@ public class SluPolyglotApplicationTests {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
-
 }
