@@ -24,6 +24,10 @@ public class EnglishItalianTranslation implements Translation {
 
     private static final String IRE_PRESENTE_INDICATIVO = "IRE_PRESENTE_INDICATIVO";
     private static final String ESSERE_PASSATO_PROSSIMO = "ESSERE_PASSATO_PROSSIMO";
+    private static final String IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO = "IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO";
+    private static final String IRREGULAR_IRE_FILE = "irregular_ire.txt";
+    private static final String VERB_AUSILIARE_ESSERE_FILE = "verb_ausiliare_essere.txt";
+    private static final String VERB_IRREGULAR_PARTICIPIO_FILE = "verb_irregular_participio.txt";
 
 
     HashMap<String, String> pronouns = new HashMap<>() {{
@@ -113,26 +117,43 @@ public class EnglishItalianTranslation implements Translation {
 
     @PostConstruct
     private boolean findIrregularities(String verb, String kindOfIrregularity) throws IOException {
-        ClassPathResource resource;
-
-        if(kindOfIrregularity.equals(IRE_PRESENTE_INDICATIVO))
-            resource = new ClassPathResource("irregular_ire.txt");
-        else if(kindOfIrregularity.equals(ESSERE_PASSATO_PROSSIMO))
-            resource = new ClassPathResource("verb_ausiliare_essere.txt");
-        else
-            throw new IllegalArgumentException("Invalid kindOfIrregularity");
-
+        ClassPathResource resource = switch (kindOfIrregularity) {
+            case IRE_PRESENTE_INDICATIVO -> new ClassPathResource(IRREGULAR_IRE_FILE);
+            case ESSERE_PASSATO_PROSSIMO -> new ClassPathResource(VERB_AUSILIARE_ESSERE_FILE);
+            case IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO -> new ClassPathResource(VERB_IRREGULAR_PARTICIPIO_FILE);
+            default -> throw new IllegalArgumentException("Invalid kindOfIrregularity");
+        };
 
         BufferedReader reader =
                 new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
         String line;
 
         while ((line = reader.readLine()) != null) {
-            if(line.equals(verb))
+            if(line.split("\t")[0].equals(verb))
                 return true;
         }
 
         return false;
+    }
+    @PostConstruct
+    private String mapIrregularity(String verb, String kindOfIrregularity) throws IOException {
+        ClassPathResource resource;
+
+        if(kindOfIrregularity.equals(IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO))
+            resource = new ClassPathResource(VERB_IRREGULAR_PARTICIPIO_FILE);
+        else
+            throw new IllegalArgumentException("Invalid kindOfIrregularity");
+
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            if(line.split("\t")[0].equals(verb))
+                return line.split("\t")[1];
+        }
+
+        throw new IllegalArgumentException("This verb has no irregular form");
     }
     private String passatoProssimo(String root, String infinito, String pronoun) throws IOException {
         String passatoProssimo = null;
@@ -141,16 +162,19 @@ public class EnglishItalianTranslation implements Translation {
         String[] avereEssere = findIrregularities(root+infinito,ESSERE_PASSATO_PROSSIMO) ? essere : avere;
         String negazione = isNegative ? " non " : "";
 
-        switch (infinito) {
-            case PRIMA_CONIUGAZIONE ->
-                    passatoProssimo = root + "ato";
+        if(!findIrregularities(root+infinito,IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO)){
+            switch (infinito) {
+                case PRIMA_CONIUGAZIONE ->
+                        passatoProssimo = root + "ato";
 
-            case SECONDA_CONIUGAZIONE ->
-                    passatoProssimo = root + "uto";
+                case SECONDA_CONIUGAZIONE ->
+                        passatoProssimo = root + "uto";
 
-            case TERZA_CONIUGAZIONE ->
-                    passatoProssimo = root + "ito";
-        }
+                case TERZA_CONIUGAZIONE ->
+                        passatoProssimo = root + "ito";
+            }
+        } else
+            passatoProssimo = mapIrregularity(root+infinito,IRREGULAR_PARTICIPIO_PASSATO_PROSSIMO);
 
         for(int i = 0; i < ITALIAN_PRONOUNS.length; i++){
             if(pronouns.get(pronoun).equals(ITALIAN_PRONOUNS[i]))
@@ -284,7 +308,10 @@ public class EnglishItalianTranslation implements Translation {
     @Override
     public String translate(Verb verb, String features) {
         validateVerb(verb.getItalianVerb());
-        features = features + "+" + verb.getEnglishVerb();
+        String[] preSplitFeature = features.split("\\+");
+
+        if(!preSplitFeature[preSplitFeature.length-1].equals(verb.getEnglishVerb()))
+            features = features + "+" + verb.getEnglishVerb();
 
         if(!validateFeatures(features))
             throw new  IllegalArgumentException("error features");
