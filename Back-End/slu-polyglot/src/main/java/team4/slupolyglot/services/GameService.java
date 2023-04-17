@@ -33,26 +33,28 @@ public class GameService {
         Collections.shuffle(verbs);
 
         List<Verb> learningActivityOneList = verbs.subList(0, 10);
-    
+
         switch(languageId){
             case MyConstants.ITALIAN :
                 switch (moduleId) {
                     case MODULE_LEARNING_1-> {
-                        learningOne(learningActivityOneList, gameDto,MyConstants.ITALIAN);
+                        learningOne(learningActivityOneList, gameDto, ITALIAN);
                     }
                     case MODULE_LEARNING_2->{
-                        gameOne(learningActivityOneList, gameDto,MyConstants.ITALIAN);
+                        gameOne(learningActivityOneList, gameDto, ITALIAN);
                     }
                     case MODULE_LEARNING_3 -> {
-                        learningTenses(verbs, gameDto, false, MODULE_LEARNING_3,MyConstants.ITALIAN);
+                        learningTenses(verbs, gameDto, false, MODULE_LEARNING_3, ITALIAN);
                     }
                     case MODULE_LEARNING_4 -> {
                         gameTwo(verbs,gameDto,MyConstants.ITALIAN);
                     }
-                    case MODULE_LEARNING_5, MODULE_LEARNING_6 -> {
-                        learningTenses(verbs, gameDto, true, MODULE_LEARNING_5,MyConstants.ITALIAN);
+                    case MODULE_LEARNING_5 -> {
+                        learningTenses(verbs, gameDto, true, MODULE_LEARNING_5, ITALIAN);
                     }
-                    
+                    case MODULE_LEARNING_6 ->
+                        gameThree(verbs,gameDto, ITALIAN);
+
                 }
                 break;
             case MyConstants.SPANISH :
@@ -74,7 +76,7 @@ public class GameService {
                     case  MODULE_LEARNING_5, MODULE_LEARNING_6 -> {
                         learningTenses(verbs, gameDto, true, MODULE_LEARNING_5,MyConstants.SWAHILI);
                     }
-                }        
+                }
         }
         return gameDto;
     }
@@ -87,15 +89,15 @@ public class GameService {
             } else if (languageId.equals(MyConstants.SWAHILI)) {
                 translatedVerb = verb.getSwahiliVerb();
             }
-            GameDto gameDtoEntry = new GameDto(verb.getId(), 
+            GameDto gameDtoEntry = new GameDto(verb.getId(),
             verb.getEnglishVerb(), translatedVerb, verb.getUrlImage());
             gameDtoFirst.add(gameDtoEntry);
         }
         return gameDtoFirst;
     }
-    
-    
-    
+
+
+
     private List<GameDto> gameOne(List<Verb> verbs, List<GameDto> gameDtoFirst,String languageId){
         for (Verb verb : verbs) {
             String question = "";
@@ -111,14 +113,14 @@ public class GameService {
             responseList.add(answerString);
             Collections.shuffle(responseList);
             int answerIndex = responseList.indexOf(answerString);
-            GameDto gameDtoEntry=  
+            GameDto gameDtoEntry=
             new GameDto(verb.getId(),question,responseList.get(0),responseList.get(1),
-            responseList.get(2),responseList.get(3),optionsArray[answerIndex],verb.getUrlImage());                           
+            responseList.get(2),responseList.get(3),optionsArray[answerIndex],verb.getUrlImage());
             gameDtoFirst.add(gameDtoEntry);
         }
-    return gameDtoFirst; 
-    } 
-    
+        return gameDtoFirst;
+    }
+
 
     private List<GameDto> learningTenses(List<Verb> verbs, List<GameDto> gameDtoSecond, boolean isNegative,
                                          int moduleId,String languageId) {
@@ -170,12 +172,12 @@ public class GameService {
                             EnglishVerbs englishVerbs =
                             new EnglishVerbs(verb.getEnglishVerb(),
                             tens, generalPronoun,isNegative);
-                            String features = 
+                            String features =
                             getFeatures(isNegative, generalPronoun, tens);
-                            String translated = 
+                            String translated =
                             verb.getTranslatedVerb
                             (new EnglishSwahiliTranslation(), features);
-                            GameDto gameDtoEntry = 
+                            GameDto gameDtoEntry =
                             new GameDto(verb.getEnglishVerb()
                             , translated, features, verb.getId(),
                             verb.getUrlImage(),
@@ -196,12 +198,12 @@ public class GameService {
                             EnglishVerbs englishVerbs =
                             new EnglishVerbs(verb.getEnglishVerb(),
                             tens, generalPronoun,isNegative);
-                            String features = 
+                            String features =
                             getFeatures(isNegative, generalPronoun, tens);
-                            String translated = 
+                            String translated =
                             verb.getTranslatedVerb
                             (new EnglishSwahiliTranslation(), features);
-                            GameDto gameDtoEntry = 
+                            GameDto gameDtoEntry =
                             new GameDto(verb.getEnglishVerb()
                             , translated, features, verb.getId(),
                             verb.getUrlImage(),
@@ -225,12 +227,12 @@ public class GameService {
                             EnglishVerbs englishVerbs =
                             new EnglishVerbs(verb.getEnglishVerb(),
                             tens, generalPronoun,isNegative);
-                            String features = 
+                            String features =
                             getFeatures(isNegative, generalPronoun, tens);
-                            String translated = 
+                            String translated =
                             verb.getTranslatedVerb
                             (new EnglishSwahiliTranslation(), features);
-                            GameDto gameDtoEntry = 
+                            GameDto gameDtoEntry =
                             new GameDto(verb.getEnglishVerb()
                             , translated, features, verb.getId(),
                             verb.getUrlImage(),
@@ -242,7 +244,7 @@ public class GameService {
                     }
                 }
             }
-            
+
         }
         return gameDtoSecond;
     }
@@ -252,18 +254,18 @@ public class GameService {
             for (Verb verb : verbs) {
                 for (String generalPronoun : GENERAL_PRONOUNS) {
                     for (String tens : tenses) {
-                        String features = 
+                        String features =
                         getFeatures(false, generalPronoun, tens);
-                        String translated = 
+                        String translated =
                         verb.getTranslatedVerb
                         (new EnglishItalianTranslation(), features);
-                        GameDto gameDtoEntry = 
+                        GameDto gameDtoEntry =
                         new GameDto(verb.getEnglishVerb()
                         , translated, features, verb.getId(),
                         verb.getUrlImage());
                         gameDtoThird.add(gameDtoEntry);
                     }
-    
+
                 }
             }
         } else if (languageId.equals(MyConstants.SWAHILI)) {
@@ -275,7 +277,7 @@ public class GameService {
                         (false, generalPronoun, tens);
                         String translated = verb.getTranslatedVerb
                         (new EnglishSwahiliTranslation(), features);
-                        GameDto gameDtoEntry = 
+                        GameDto gameDtoEntry =
                         new GameDto(verb.getEnglishVerb()
                         , translated, features, verb.getId(),
                         verb.getUrlImage());
@@ -287,16 +289,51 @@ public class GameService {
         return gameDtoThird;
     }
 
+    private List<GameDto> gameThree(List<Verb> verbs,
+                                  List<GameDto> gameDtoThird,String languageId) {
+        if (languageId.equals(MyConstants.ITALIAN)) {
+            tenses = new String[]{PERFECT};
+            for (Verb verb : verbs) {
+                for (String generalPronoun : GENERAL_PRONOUNS) {
+                    for (String tens : tenses) {
+                        String features =
+                                getFeatures(false, generalPronoun, tens);
+                        String translated =
+                                verb.getTranslatedVerb
+                                        (new EnglishItalianTranslation(), features);
+                        GameDto gameDtoEntry =
+                                new GameDto(verb.getEnglishVerb()
+                                        , translated, features, verb.getId(),
+                                        verb.getUrlImage());
+                        gameDtoThird.add(gameDtoEntry);
+                    }
+
+                }
+                String[] IMPERATIVE_PRONOUNS =  {"2s","1p","2p"};
+                for (String imperativePronoun : IMPERATIVE_PRONOUNS) {
+                    EnglishVerbs englishVerbs =
+                            new EnglishVerbs(verb.getEnglishVerb(), IMPERATIVE, imperativePronoun,false);
+                    String features = getFeatures(false, imperativePronoun, IMPERATIVE);
+                    String translated = verb.getTranslatedVerb(new EnglishItalianTranslation(), features);
+                    GameDto gameDtoEntry = new GameDto(verb.getEnglishVerb()
+                            , translated, features, verb.getId(), verb.getUrlImage(),
+                            englishVerbs.getConjugatedVerb(),verb.getItalianVerb());
+                    gameDtoThird.add(gameDtoEntry);
+                }
+            }
+        }
+        return gameDtoThird;
+    }
 
 
     String getFeatures(boolean isNegative, String pronoun, String tense){
         return isNegative ? "NEG"+ "+" + pronoun + "+" + tense :
                 pronoun + "+" + tense;
     }
-    
+
     public List<String> randomOptions(List<Verb> verbs,
     String answer,String languageId){
-        List<String> responseList = new ArrayList<String>();    
+        List<String> responseList = new ArrayList<String>();
         Random rand = new Random();
         String verb = "";
         for (int i = 0; i < this.numberOfOptions; i++) {
