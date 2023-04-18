@@ -15,21 +15,18 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       - 
-        name: Setup SSH
-        env:
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-        run:
-          echo "$VPS_SSH_KEY" > ./private_key
-          sudo apt-get install -y sshpass
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> known_hosts
-      - 
-        name: Deploy to VPS
-        env:
-          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
-        run:
-          sudo chmod 600 ./private_key && ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts -i ./private_key $VPS_USER@$VPS_HOST "cd /home/$VPS_USER/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d"
+        name: Deploy to VPS using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+        script:
+          cd /home/${{ secrets.VPS_USER }}/Polyglot
+          git pull
+          cd docker
+          docker-compose pull
+          docker-compose up --remove-orphans --force-recreate -d
       - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
