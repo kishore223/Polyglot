@@ -19,6 +19,7 @@ jobs:
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run:
+          mkdir -p ~/.ssh/
           echo "$VPS_SSH_KEY" > ~/.ssh/id_rsa
           sudo chmod 600 ~/.ssh/id_rsa
           sudo apt-get install -y sshpass
