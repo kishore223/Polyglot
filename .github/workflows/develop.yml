@@ -17,7 +17,8 @@ jobs:
       - 
         name: Setup SSH
         run:
-          echo -e "${{ secrets.VPS_SSH_KEY }}" | install -m 600 /dev/stdin private_key
+          echo -e "${{ secrets.VPS_SSH_KEY }}" > private_key
+          sudo chmod 600 private_key
           sudo apt-get install -y sshpass
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> known_hosts
       - 
