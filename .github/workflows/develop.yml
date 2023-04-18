@@ -19,8 +19,7 @@ jobs:
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run:
-          echo "$VPS_SSH_KEY" > private_key
-          sudo chmod 600 private_key
+          echo "$VPS_SSH_KEY" > ./private_key
           sudo apt-get install -y sshpass
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> known_hosts
       - 
@@ -30,10 +29,7 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run:
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts $VPS_USER@$VPS_HOST <<EOF
-          $(echo "${{ secrets.VPS_SSH_KEY }}")
-          cd /home/***/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d
-          EOF
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts -i ./private_key $VPS_USER@$VPS_HOST "cd /home/$VPS_USER/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d"
       - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
