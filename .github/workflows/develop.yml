@@ -29,7 +29,7 @@ jobs:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run:
-          chmod 600 private_key && ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts -i private_key $VPS_USER@$VPS_HOST "cd /home/fulvius/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d "
+          chmod 600 private_key && sudo ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts -i private_key $VPS_USER@$VPS_HOST "cd /home/fulvius/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d "
       - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
