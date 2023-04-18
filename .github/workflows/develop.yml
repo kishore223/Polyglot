@@ -15,15 +15,6 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       - 
-        name: Deploy to VPS using SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script:
-            cd /home/${{ secrets.VPS_USER }}/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d
-      - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -57,3 +48,13 @@ jobs:
           file: ./Front-End/DockerfileReact
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/polyglot-csci-5030-01-2023-fe:testci
+      - 
+        name: Deploy to VPS using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script:
+            cd /home/${{ secrets.VPS_USER }}/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d
+
