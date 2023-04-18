@@ -22,11 +22,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script:
-            cd /home/${{ secrets.VPS_USER }}/Polyglot
-            git pull
-            cd docker
-            docker-compose pull
-            docker-compose up --remove-orphans --force-recreate -d
+            cd /home/${{ secrets.VPS_USER }}/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d
       - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
