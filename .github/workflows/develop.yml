@@ -19,18 +19,21 @@ jobs:
         env:
           VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run:
-          mkdir -p ~/.ssh/
-          echo "$VPS_SSH_KEY" > ~/.ssh/id_rsa
-          sudo chmod 600 ~/.ssh/id_rsa
+          echo "$VPS_SSH_KEY" > private_key
+          sudo chmod 600 private_key
           sudo apt-get install -y sshpass
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> known_hosts
       - 
         name: Deploy to VPS
         env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run:
-          chmod 600 ~/.ssh/id_rsa && sudo ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts  $VPS_USER@$VPS_HOST "cd /home/fulvius/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d "
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=known_hosts $VPS_USER@$VPS_HOST <<EOF
+          $VPS_SSH_KEY
+          cd /home/fulvius/Polyglot && git pull && cd docker && docker-compose pull && docker-compose up --remove-orphans --force-recreate -d
+          EOF
       - 
         name: Set up JDK 17
         uses: actions/setup-java@v3
