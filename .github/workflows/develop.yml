@@ -5,7 +5,7 @@ on:
     branches:
       - "develop"
       - "game-3"
-      - "fulvius31-game-3"
+      - "main"
 
 jobs:
   build:
