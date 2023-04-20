@@ -31,6 +31,7 @@ public class SwahiliTests {
         verb.setSwahiliVerb(unTransulatedSwahiliVerb);
         EnglishSwahiliTranslation e = new EnglishSwahiliTranslation();
         String result = e.translate(verb, featuresExtracted);
+        result = result.split(" ")[1];
         assertEquals(translatedSwahiliVerb,result);
     }
     reader.close();

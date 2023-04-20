@@ -5,14 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import team4.slupolyglot.model.Authenticator;
-import team4.slupolyglot.model.EnglishSwahiliTranslation;
-import team4.slupolyglot.model.EnglishVerbs;
 import team4.slupolyglot.model.Languages;
 import team4.slupolyglot.repositories.LanguagesRepository;
 import team4.slupolyglot.repositories.ScoresRepository;
@@ -23,23 +19,9 @@ import team4.slupolyglot.controller.request.PlayerLanguageRequestJson;
 import team4.slupolyglot.model.Player;
 import team4.slupolyglot.model.ResponseJson;
 import team4.slupolyglot.model.Scores;
-import team4.slupolyglot.model.Verb;
-import team4.slupolyglot.model.Dictionary;
 import team4.slupolyglot.repositories.PlayerRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-
-import org.springframework.http.HttpHeaders;
-//import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -289,47 +271,4 @@ public class Controller
             return responseMap;
         }
     }
-
-    @PostMapping("/swahiliAlgorithmCheck")
-    public ResponseEntity<byte[]> processTsv(@RequestParam("file") MultipartFile file) throws IOException {
-    try {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
-        StringBuilder resultBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] columns = line.split("\t");
-            String features = columns[0];
-            String[] splitFeature = features.split("\\+");
-            int featuresLen = splitFeature.length;
-            int index = featuresLen == 3 ? 0 : 1;
-            boolean isNegative = featuresLen != 3;
-            String pronoun = splitFeature[index];
-            String tense = splitFeature[index+1];
-            String unTransulatedSwahiliVerb = features.substring(features.lastIndexOf("+") + 1);
-            String featuresExtracted = features.substring(0, features.lastIndexOf("+"));
-            Verb verb = new Verb(); 
-            verb.setSwahiliVerb(unTransulatedSwahiliVerb);
-            Dictionary dict = new Dictionary();
-            String englishVerb = dict.getEnglishVerb(unTransulatedSwahiliVerb);
-            EnglishSwahiliTranslation swahiliTranslation = new EnglishSwahiliTranslation();
-            EnglishVerbs englishVerbs = new EnglishVerbs(englishVerb,tense, pronoun, isNegative);
-            String column1 = features;
-            String column2 = englishVerbs.getConjugatedVerb();
-            String column3 = swahiliTranslation.translate(verb, featuresExtracted);
-            resultBuilder.append(column1 + "   "+column2+"  "+column3).append("\n");
-        }
-        reader.close();
-        byte[] content = resultBuilder.toString().getBytes();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", "verbForms.tsv");
-        headers.setContentLength(content.length);
-        return ResponseEntity.ok().headers(headers).body(content);
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return ResponseEntity.internalServerError().body(null);
-    }
-
-    
 }
