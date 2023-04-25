@@ -160,3 +160,11 @@
   border-radius: 5px;
   font-weight: 600;
 }
+
+@media screen and (min-width: 992px) {
+  .btn-sty {
+    padding-top: 6%;
+    padding-bottom: 6%;
+    margin: 6% auto;
+  }
+}
