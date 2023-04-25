@@ -14,12 +14,16 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 
 function Lang(props) {
   return (
-    <Button className="btn-sty" onClick={props.onClick}>
-      <Nav.Link eventKey={props.language} className="nav-link-sty">
-        <FaLanguage className="icon-sty" />
-        <p className="span-sty">{props.language}</p>
-      </Nav.Link>
-    </Button>
+    <>
+      <div className="col-1"></div>
+      <Button className="col-lg-12 col-4 btn-sty" onClick={props.onClick}>
+        <Nav.Link eventKey={props.language} className="nav-link-sty">
+          <FaLanguage className="icon-sty" />
+          <p className="span-sty">{props.language}</p>
+        </Nav.Link>
+      </Button>
+      <div className="col-1"></div>
+    </>
   );
 }
 
@@ -93,12 +97,12 @@ function Dashcard(props) {
     <Card className="card-main">
       <Card.Body>
         <div className="row">
-          <div className="col-sm-0.5 sta-div"></div>
-          <div className="col-sm-1 icon-div-two">
+          <div className="col-0.5 sta-div"></div>
+          <div className="col-2 icon-div-two">
             {props.game === "learn" && <BsCardHeading className="icon-card" />}
             {props.game === "game" && <MdLocalActivity className="icon-card" />}
           </div>
-          <div className="col-sm-10">
+          <div className="col-10">
             <Card.Title>
               <div className="card-title-main">
                 {props.heading}{" "}
@@ -115,7 +119,7 @@ function Dashcard(props) {
                     <Badge className="badge-card-adv">Advanced</Badge>
                   )}
               </div>
-              <p className="p-desc">{props.desc}</p>
+              <p className="p-desc p-desc-dash">{props.desc}</p>
               {Math.ceil(props.score) === 100 && (
                 <span className="span-acc span-pass">
                   <BsCheckCircleFill className="icon-acc" /> Completed

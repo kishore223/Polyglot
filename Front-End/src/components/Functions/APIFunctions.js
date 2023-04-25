@@ -375,34 +375,16 @@ export function getGameL3(
   })
     .then((response) => response.json())
     .then((responseJson) => {
-      if (languageId === "2004") {
-        setLangCount(Object.keys(responseJson["game_third"]).length - 57);
-        for (
-          var i = 57;
-          i < Object.keys(responseJson["game_third"]).length;
-          i++
-        ) {
-          headings.push(responseJson["game_third"][i]["englishVerb"]);
-          images.push(responseJson["game_third"][i]["urlImage"]);
-          trans.push(responseJson["game_third"][i]["translatedVerb"]);
-          features.push(
-            checkPerson(responseJson["game_third"][i]["features"].split("+"))
-          );
-          conjugate.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
-          italian.push(responseJson["game_third"][i]["verb"]);
-        }
-      } else {
-        setLangCount(Object.keys(responseJson["game_third"]).length);
-        for (i = 0; i < Object.keys(responseJson["game_third"]).length; i++) {
-          headings.push(responseJson["game_third"][i]["englishVerb"]);
-          images.push(responseJson["game_third"][i]["urlImage"]);
-          trans.push(responseJson["game_third"][i]["translatedVerb"]);
-          features.push(
-            checkPerson(responseJson["game_third"][i]["features"].split("+"))
-          );
-          conjugate.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
-          italian.push(responseJson["game_third"][i]["verb"]);
-        }
+      setLangCount(Object.keys(responseJson["game_third"]).length);
+      for (var i = 0; i < Object.keys(responseJson["game_third"]).length; i++) {
+        headings.push(responseJson["game_third"][i]["englishVerb"]);
+        images.push(responseJson["game_third"][i]["urlImage"]);
+        trans.push(responseJson["game_third"][i]["translatedVerb"]);
+        features.push(
+          checkPerson(responseJson["game_third"][i]["features"].split("+"))
+        );
+        conjugate.push(responseJson["game_third"][i]["conjugateEnglishVerb"]);
+        italian.push(responseJson["game_third"][i]["verb"]);
       }
       setHeadCards(headings);
       setTransCards(trans);
