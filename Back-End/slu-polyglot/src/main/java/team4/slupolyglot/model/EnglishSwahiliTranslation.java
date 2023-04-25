@@ -68,12 +68,7 @@ public class EnglishSwahiliTranslation implements Translation {
 
     private boolean checkDiSyllables(String verb){
         verb = verb.toLowerCase(Locale.ROOT);
-        boolean flag = false;
-        int syllableCount = SyllableCounter.countSyllables(verb);
-        if (syllableCount == 2) {
-            flag = true;
-        }
-        return flag;
+        return !SyllableCounter.checkMutliSyllable(verb);
     }
     
     private boolean validateFeatures(String features){
@@ -146,7 +141,7 @@ public class EnglishSwahiliTranslation implements Translation {
     
     public String computeNegativeStatements(String person, String verb, String tense)
     {
-        String returnString = verb;  
+        String returnString = verb;
         switch(tense) {
             case PRESENT:
                 returnString = verb.substring(2);
@@ -159,6 +154,9 @@ public class EnglishSwahiliTranslation implements Translation {
                 this.conjugateNegativeStringModifier(person,returnString);
                 break;
            case FUTURE:
+                if(!checkDiSyllables(verb)){
+                    returnString = verb.substring(2);
+                }
                 if(person.equals(GENERAL_PRONOUNS[1]) ||
                  person.equals(GENERAL_PRONOUNS[3])){
                     returnString = verb.substring(2);
@@ -168,6 +166,7 @@ public class EnglishSwahiliTranslation implements Translation {
                 this.conjugateNegativeStringModifier(person,returnString);
                 break;
             case PERFECT:
+                returnString = verb.substring(2);
                 returnString = 
                 NEGATIVE_PERFECT_TENSE_JOINER + verb.substring(2);
                 returnString= 
