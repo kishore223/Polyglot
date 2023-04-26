@@ -2,7 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@400&family=Lilita+One&family=Raleway:wght@600&family=Urbanist:wght@500&display=swap");
 
 .padding-main {
-  padding: 3%;
+  padding: 30px 3% 0;
+  height: 90vh;
 }
 
 .prg-bar {
@@ -14,7 +15,7 @@
 }
 
 .card-width {
-  width: 80%;
+  width: 90%;
   margin: auto;
   /*background-color: rgba(255, 65, 77, 0.3) !important;*/
   border: 1px solid rgba(128, 128, 128, 0.4);
@@ -38,16 +39,23 @@
   font-weight: 800;
 }
 
-.card-width-color {
-  /*background-color: rgba(26, 166, 183, 0.2) !important;*/
-}
-
 .marg-top {
   margin-top: 2rem;
 }
 
 .img-card {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
   border-radius: 10px;
+}
+
+.card-learn1 {
+  padding-top: 50px;
+}
+
+.card-learn2 {
+  padding-top: 10px;
 }
 
 .btn-left {
@@ -63,7 +71,7 @@
 }
 
 .card-head {
-  font-size: 5rem;
+  font-size: 4rem;
   font-style: italic;
   color: #002d40;
   font-weight: 1000;
@@ -71,9 +79,39 @@
   text-align: center;
 }
 
+.top-p {
+  margin-bottom: 0;
+  text-align: center !important;
+  padding-top: 5%;
+}
+
+.button-contianer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8%;
+}
+
+.learn2-p {
+  font-size: 3rem;
+}
+
 @media (min-width: 992px) {
+  .padding-main {
+    padding: 3%;
+  }
+
+  .card-learn1 {
+    padding-top: 0px;
+  }
+
+  .card-learn2 {
+    padding-top: 0px;
+  }
+
   .img-card {
-    width: 40%;
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
     margin: 2%;
   }
 
@@ -100,15 +138,16 @@
   .btn-right {
     font-size: 5rem;
   }
-}
 
-.marg-auto {
-  margin: auto;
-}
+  .top-p {
+    margin-bottom: 0;
+    text-align: center;
+    padding-top: 0%;
+  }
 
-.button-contianer {
-  display: flex;
-  justify-content: space-between;
+  .button-contianer {
+    padding-top: 0%;
+  }
 }
 
 .flip-btn {
@@ -141,11 +180,6 @@
   color: #002d40;
   font-family: "Jost", sans-serif;
   text-align: justify;
-}
-
-.top-p {
-  margin-bottom: 0;
-  text-align: center;
 }
 
 .p-center {

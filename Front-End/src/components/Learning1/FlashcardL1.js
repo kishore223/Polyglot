@@ -63,20 +63,24 @@ function FlashcardL1(props) {
 
   return (
     <div className="padding-main">
-      <div className="button-contianer">
-        <BsXCircleFill
-          className="btn-color"
-          onClick={(e) => {
-            direct(e);
-          }}
-        />
-        <ProgressBar
-          now={Math.ceil(cardCount)}
-          label={`${Math.ceil(cardCount)}%`}
-          className="prg-bar"
-        />
+      <div className="row">
+        <div className="col-1">
+          <BsXCircleFill
+            className="btn-color"
+            onClick={(e) => {
+              direct(e);
+            }}
+          />
+        </div>
+        <div className="col-11">
+          <ProgressBar
+            now={Math.ceil(cardCount)}
+            label={`${Math.ceil(cardCount)}%`}
+            className="prg-bar"
+          />{" "}
+        </div>
       </div>
-      <div style={myStyle}>
+      <div style={myStyle} className="card-learn1">
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
           <Card className="text-center card-width marg-top">
             <Card.Body>
