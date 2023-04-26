@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./Cards.css";
 import CardItem from "./CardItem.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
 import { email } from "../Functions/CommonScripts.js";
 import { getRegisterLanguages, assignLang } from "../Functions/APIFunctions.js";
 
 function Cards() {
   const navigate = useNavigate();
-  const [langDashCode, setLangDashCode] = useState([]);
   const [langDash, setLangDash] = useState([]);
   const languageNameCode = [];
   const languageName = [];
@@ -24,96 +23,131 @@ function Cards() {
       languageName,
       languageNameCode,
       langCount,
-      setLangDash,
-      setLangDashCode
+      setLangDash
     );
   }, [langCount]);
 
   return (
     <div>
       <div className="cards">
-        {!(
-          langDash.includes("Italian") &&
-          langDash.includes("French") &&
-          langDash.includes("Spanish") &&
-          langDash.includes("Swahili")
-        ) && <h1 className="card-home">Select a Language</h1>}
+        <h1 className="card-home">Languages</h1>
         <div className="cards__container">
           <div className="cards__wrapper">
             <ul className="cards__items">
-              {!langDash.includes("Italian") && (
-                <CardItem
-                  className="card-item"
-                  src="/images/learn-italian-language-online-education-concept.jpg"
-                  text="Learn Italian"
-                  onClick={(e) => {
-                    cardsCheck(e, "2001", "Italian");
-                  }}
-                />
-              )}
-              {!langDash.includes("French") && (
-                <CardItem
-                  className="card-item"
-                  src="/images/learn-french-language-online-education-concept.jpg"
-                  text="Learn French"
-                  onClick={(e) => {
-                    cardsCheck(e, "2002", "French");
-                  }}
-                />
-              )}
-              {!langDash.includes("Spanish") && (
-                <CardItem
-                  className="card-item"
-                  src="/images/learn-spanish-language-online-education-concept.jpg"
-                  text="Learn Spanish"
-                  onClick={(e) => {
-                    cardsCheck(e, "2003", "Spanish");
-                  }}
-                />
-              )}
-              {!langDash.includes("Swahili") && (
-                <CardItem
-                  className="card-item"
-                  src="/images/learn-swahili-language-online-education-concept.png"
-                  text="Learn Swahili"
-                  onClick={(e) => {
-                    cardsCheck(e, "2004", "Swahili");
-                  }}
-                />
-              )}
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div className="cards">
-        {(langDash.includes("Italian") ||
-          langDash.includes("French") ||
-          langDash.includes("Spanish") ||
-          langDash.includes("Swahili")) && (
-          <h1 className="card-home">Enrolled Languages</h1>
-        )}
-        <div className="cards__container">
-          <div className="cards__wrapper">
-            <ul className="cards__items">
-              {Array.from(new Set(langDashCode)).map((lan, i) => (
-                <CardItem
-                  key={lan[0] + "enroll" + i}
-                  className="card-item"
-                  src={
-                    lan[0] === "Swahili"
-                      ? "/images/learn-swahili-language-online-education-concept.png"
-                      : "/images/learn-" +
-                        lan[0] +
-                        "-language-online-education-concept.jpg"
-                  }
-                  text={"Learn " + lan[0]}
-                  onClick={(e) => {
-                    navigate(
-                      "/Dashboard?lang=" + lan[0] + "&languageId=" + lan[1]
-                    );
-                  }}
-                />
-              ))}
+              <div className="row">
+                {!langDash.includes("Italian") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-italian-language-online-education-concept.jpg"
+                    text="Learn Italian"
+                    btnText="ENROLL"
+                    onClick={(e) => {
+                      cardsCheck(e, "2001", "Italian");
+                    }}
+                  />
+                )}
+                {langDash.includes("Italian") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-italian-language-online-education-concept.jpg"
+                    text="Learn Italian"
+                    btnText="RESUME"
+                    onClick={(e) => {
+                      navigate({
+                        pathname: "/Dashboard",
+                        search: createSearchParams({
+                          lang: "Italian",
+                          languageId: "2001",
+                        }).toString(),
+                      });
+                    }}
+                  />
+                )}
+                {!langDash.includes("French") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-french-language-online-education-concept.jpg"
+                    text="Learn French"
+                    btnText="ENROLL"
+                    onClick={(e) => {
+                      cardsCheck(e, "2002", "French");
+                    }}
+                  />
+                )}
+                {langDash.includes("French") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-french-language-online-education-concept.jpg"
+                    text="Learn French"
+                    btnText="RESUME"
+                    onClick={(e) => {
+                      navigate({
+                        pathname: "/Dashboard",
+                        search: createSearchParams({
+                          lang: "French",
+                          languageId: "2002",
+                        }).toString(),
+                      });
+                    }}
+                  />
+                )}
+                {!langDash.includes("Spanish") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-spanish-language-online-education-concept.jpg"
+                    text="Learn Spanish"
+                    btnText="ENROLL"
+                    onClick={(e) => {
+                      cardsCheck(e, "2003", "Spanish");
+                    }}
+                  />
+                )}
+                {langDash.includes("Spanish") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-spanish-language-online-education-concept.jpg"
+                    text="Learn Spanish"
+                    btnText="RESUME"
+                    onClick={(e) => {
+                      navigate({
+                        pathname: "/Dashboard",
+                        search: createSearchParams({
+                          lang: "Spanish",
+                          languageId: "2003",
+                        }).toString(),
+                      });
+                    }}
+                  />
+                )}
+                {!langDash.includes("Swahili") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-swahili-language-online-education-concept.jpg"
+                    text="Learn Swahili"
+                    btnText="ENROLL"
+                    onClick={(e) => {
+                      cardsCheck(e, "2004", "Swahili");
+                    }}
+                  />
+                )}
+                {langDash.includes("Swahili") && (
+                  <CardItem
+                    className="card-item"
+                    src="/images/learn-swahili-language-online-education-concept.jpg"
+                    text="Learn Swahili"
+                    btnText="RESUME"
+                    onClick={(e) => {
+                      navigate({
+                        pathname: "/Dashboard",
+                        search: createSearchParams({
+                          lang: "Swahili",
+                          languageId: "2004",
+                        }).toString(),
+                      });
+                    }}
+                  />
+                )}
+              </div>
             </ul>
           </div>
         </div>

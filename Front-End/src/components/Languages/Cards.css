@@ -1,6 +1,10 @@
 .cards {
-  padding: 4rem;
+  padding: 5% 2%;
   background: #fff;
+  height: 90vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-home {
@@ -16,9 +20,7 @@ h1 {
   display: block;
   flex-flow: column;
   align-items: center;
-  max-width: 1120px;
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .cards__wrapper {
@@ -28,6 +30,7 @@ h1 {
 
 .cards__items {
   margin-bottom: 24px;
+  padding-left: 0;
 }
 
 .card-item {
@@ -41,6 +44,7 @@ h1 {
   flex: 1;
   margin: 0 1rem;
   border-radius: 10px;
+  padding: 4%;
 }
 
 .cards__item__link {
@@ -60,25 +64,6 @@ h1 {
   width: 100%;
   padding-top: 67%;
   overflow: hidden;
-}
-
-.fade-img {
-  animation-name: fade-img;
-  animation-duration: 2s;
-}
-
-.cards__item__pic-wrap::after {
-  content: attr(data-category);
-  position: absolute;
-  bottom: 0;
-  margin-left: 10px;
-  padding: 6px 8px;
-  max-width: calc((100%) - 60px);
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  background-color: #1f98f4;
-  box-sizing: border-box;
 }
 
 .cards__item__img {
@@ -108,22 +93,4 @@ h1 {
   color: #252e48;
   font-size: 24px;
   line-height: 24px;
-}
-
-@media only screen and (min-width: 1200px) {
-  .content__blog__container {
-    width: 84%;
-  }
-}
-
-@media only screen and (min-width: 1024px) {
-  .cards__items {
-    display: flex;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .cards__item {
-    margin-bottom: 2rem;
-  }
 }

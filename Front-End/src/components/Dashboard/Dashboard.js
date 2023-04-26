@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Dashboard.css";
 import { Lang, Dashcard } from "./Dashcard.js";
 import Navbar from "../Navbar/NavBar.js";
-import Nav from "react-bootstrap/Nav";
 import BgLearning from "../Bg-Learning_1.svg";
 import { useSearchParams } from "react-router-dom";
 import { getLanguageDashboard, getScores } from "../Functions/APIFunctions.js";
@@ -75,7 +74,7 @@ function Dashboard() {
       <Navbar />
       <div className="row">
         <div className="col-lg-2 bg-color">
-          <Nav className="flex-column nav-sty">
+          <div className="row">
             {langDashCode.map((lan) => (
               <Lang
                 key={lan[0].toUpperCase()}
@@ -83,7 +82,7 @@ function Dashboard() {
                 onClick={(e) => language(e, lan[1])}
               />
             ))}
-          </Nav>
+          </div>
         </div>
         <div className="col-lg-10">
           <div className="row">

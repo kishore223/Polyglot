@@ -13,7 +13,7 @@
 }
 
 .icon-sty {
-  font-size: 2rem;
+  font-size: 100%;
 }
 
 .span-sty {
@@ -23,17 +23,14 @@
   font-weight: 700;
 }
 
-.nav-sty {
-  margin-top: 10%;
-}
-
 .btn-sty {
   text-align: center;
-  margin-bottom: 8%;
-  margin-top: 8%;
+  padding-top: 2%;
+  padding-bottom: 2%;
   background-color: #002d40;
   border-radius: 30px;
   border-color: #002d40;
+  margin: 2% auto;
 }
 
 .btn-sty:hover {
@@ -50,7 +47,11 @@
   background-color: rgba(255, 65, 77, 0.4) !important;
   padding-top: 2%;
   padding-bottom: 2%;
-  margin: auto;
+  margin-right: 2%;
+  margin-left: 2%;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 12%;
   border-radius: 5px;
 }
 
@@ -112,13 +113,13 @@
   margin-bottom: 1%;
 }
 
-.p-desc {
+.p-desc-dash {
   margin-top: 2%;
   margin-bottom: 0% !important;
   font-size: 18px !important;
   color: #002d40;
   font-family: "Jost", sans-serif;
-  text-align: justify;
+  text-align: left !important;
 }
 
 .span-acc {
@@ -158,4 +159,12 @@
   border: unset;
   border-radius: 5px;
   font-weight: 600;
+}
+
+@media screen and (min-width: 992px) {
+  .btn-sty {
+    padding-top: 6%;
+    padding-bottom: 6%;
+    margin: 6% auto;
+  }
 }
