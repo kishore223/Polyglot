@@ -66,20 +66,24 @@ function FlashcardL2(props) {
 
   return (
     <div className="padding-main">
-      <div className="button-contianer">
-        <BsXCircleFill
-          className="btn-color"
-          onClick={(e) => {
-            direct(e);
-          }}
-        />
-        <ProgressBar
-          now={Math.ceil(cardCount)}
-          label={`${Math.ceil(cardCount)}%`}
-          className="prg-bar"
-        />
+      <div className="row">
+        <div className="col-1">
+          <BsXCircleFill
+            className="btn-color"
+            onClick={(e) => {
+              direct(e);
+            }}
+          />
+        </div>
+        <div className="col-11">
+          <ProgressBar
+            now={Math.ceil(cardCount)}
+            label={`${Math.ceil(cardCount)}%`}
+            className="prg-bar"
+          />
+        </div>
       </div>
-      <div style={myStyle}>
+      <div style={myStyle} className="card-learn2">
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
           <Card className="text-center card-width marg-top">
             <Card.Body>
@@ -120,10 +124,9 @@ function FlashcardL2(props) {
                 {Math.ceil((cardCount / 100) * (cardNo / 3))}/{cardNo / 3}
               </h4>
               <p className="p-desc top-p">This is the {language} Verb</p>
-              <Card.Title className="card-head head-color">
+              <Card.Title className="card-head head-color learn2-p">
                 {italian[parseInt((cardCount / 100) * cardNo)]}
               </Card.Title>
-              {/*<p className="p-desc">{descrp[count]}</p>*/}
               <div>
                 <p className="p-desc top-p">Conjugate English Verb</p>
                 <div className="table-responsive">
@@ -132,7 +135,7 @@ function FlashcardL2(props) {
                       <tr className="table-info">
                         <th scope="col">No.</th>
                         <th scope="col">Conjugation</th>
-                        <th scope="col">Italian Tense</th>
+                        <th scope="col">{language} Tense</th>
                         <th scope="col">English Tense</th>
                       </tr>
                     </thead>
